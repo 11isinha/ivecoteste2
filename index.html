@@ -55,7 +55,7 @@
       return <span ref={spanRef} className="inline-flex items-center justify-center shrink-0" {...props}></span>;
     };
 
-    // Ícones Globais
+    // Ícones
     const LayoutDashboard = (p) => <LucideIcon name="layout-dashboard" {...p} />;
     const Leaf = (p) => <LucideIcon name="leaf" {...p} />;
     const Sparkles = (p) => <LucideIcon name="sparkles" {...p} />;
@@ -64,42 +64,83 @@
     const Camera = (p) => <LucideIcon name="camera" {...p} />;
     const ScanLine = (p) => <LucideIcon name="scan-line" {...p} />;
     const PlusCircle = (p) => <LucideIcon name="plus-circle" {...p} />;
-    const Bell = (p) => <LucideIcon name="bell" {...p} />;
-    const Search = (p) => <LucideIcon name="search" {...p} />;
     const CheckCircle2 = (p) => <LucideIcon name="check-circle-2" {...p} />;
-    const AlertCircle = (p) => <LucideIcon name="alert-circle" {...p} />;
-    const MapPin = (p) => <LucideIcon name="map-pin" {...p} />;
     const Printer = (p) => <LucideIcon name="printer" {...p} />;
     const Wrench = (p) => <LucideIcon name="wrench" {...p} />;
     const Box = (p) => <LucideIcon name="box" {...p} />;
     const Truck = (p) => <LucideIcon name="truck" {...p} />;
     const Zap = (p) => <LucideIcon name="zap" {...p} />;
     const ShieldCheck = (p) => <LucideIcon name="shield-check" {...p} />;
-    const Send = (p) => <LucideIcon name="send" {...p} />;
+    const Layers = (p) => <LucideIcon name="layers" {...p} />;
+    const Thermometer = (p) => <LucideIcon name="thermometer" {...p} />;
+    const Play = (p) => <LucideIcon name="play" {...p} />;
+    const Pause = (p) => <LucideIcon name="pause" {...p} />;
+    const XCircle = (p) => <LucideIcon name="x-circle" {...p} />;
+    const Eye = (p) => <LucideIcon name="eye" {...p} />;
+    const ArrowUpRight = (p) => <LucideIcon name="arrow-up-right" {...p} />;
+    const FileText = (p) => <LucideIcon name="file-text" {...p} />;
+    const BarChart3 = (p) => <LucideIcon name="bar-chart-3" {...p} />;
 
-    // --- DADOS INICIAIS ---
+    // DADOS EXPANDIDOS DO ESTOQUE DE PEÇAS
     const INITIAL_STOCK = [
-      { id: '1', name: 'Alternador 28V 100A', code: 'IVE-ALT-281', status: 'Disponível', location: 'SP - Anchieta', isReconditioned: true },
-      { id: '2', name: 'Compressor de Ar Monocilíndrico', code: 'IVE-CMP-001', status: 'Indisponível', location: 'SP - Leste', isReconditioned: false },
-      { id: '3', name: 'Turbo Compressor Garrett Dual Stage', code: 'IVE-TUR-992', status: 'Disponível', location: 'Curitiba - PR', isReconditioned: true },
-      { id: '4', name: 'Farol Direito Full LED Matrix', code: 'IVE-LED-104', status: 'Descarte Reciclável', location: 'SP - Anchieta', isReconditioned: false },
-      { id: '5', name: 'Disco de Freio Ventilado Dianteiro', code: 'IVE-DSC-883', status: 'Disponível', location: 'Campinas - SP', isReconditioned: true }
-    ];
-
-    const INITIAL_REQUESTS = [
-      { id: 'REQ-8821', part: 'Suporte do Tampão de Óleo', status: 'Aguardando Aprovação', requestedBy: 'IVECO Campinas', date: 'Hoje, 10:30' },
-      { id: 'REQ-8820', part: 'Coletor de Ar Secundário', status: 'Aprovado para Envio', requestedBy: 'IVECO BH', date: 'Ontem' },
-      { id: 'REQ-8819', part: 'Módulo de Injeção Eletrônica', status: 'Em Análise de Viabilidade', requestedBy: 'SP - Anchieta', date: '04 de Set' }
+      { 
+        id: '1', 
+        name: 'ALAVANCA COMANDO VALVULA IVECO STRALIS', 
+        code: '425141', 
+        status: 'Disponível', 
+        quantity: 2,
+        condition: 'Recuperável',
+        year: 2024,
+        location: 'Almoxarifado B – Prateleira 04 – Gaveta 12',
+        compatibility: 'IVECO S-WAY / STRALIS',
+        material: 'PA12-CF (Reforçado Fibra de Carbono)',
+        images: [
+          'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80',
+          'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=600&q=80',
+          'https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=600&q=80'
+        ]
+      },
+      { 
+        id: '2', 
+        name: 'SUPORTE DO TAMPAO DE OLEO MOTOR S-WAY', 
+        code: 'IVE-SUP-881', 
+        status: 'Disponível', 
+        quantity: 5,
+        condition: 'Novo 3D Homologado',
+        year: 2026,
+        location: 'Almoxarifado A – Prateleira 01 – Gaveta 03',
+        compatibility: 'IVECO S-WAY / TECTOR',
+        material: 'PEEK Alta Resistência Termal',
+        images: [
+          'https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?auto=format&fit=crop&w=600&q=80',
+          'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80'
+        ]
+      },
+      { 
+        id: '3', 
+        name: 'COLETOR DE ADMISSAO SECUNDARIO', 
+        code: 'IVE-COL-009', 
+        status: 'Indisponível', 
+        quantity: 0,
+        condition: 'Aguardando Impressão',
+        year: 2025,
+        location: 'Hub 3D - Fila de Produção',
+        compatibility: 'IVECO DAILY / HI-WAY',
+        material: 'PA12-CF',
+        images: [
+          'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=600&q=80'
+        ]
+      }
     ];
 
     function App() {
       const [activeTab, setActiveTab] = useState('dashboard');
       const [stockList, setStockList] = useState(INITIAL_STOCK);
-      const [requestList, setRequestList] = useState(INITIAL_REQUESTS);
-      const [stockFilter, setStockFilter] = useState('Todos');
+      const [selectedPart, setSelectedPart] = useState(null);
+      const [activeImageIdx, setActiveImageIdx] = useState(0);
       const [searchTerm, setSearchTerm] = useState('');
 
-      // Câmera Real WebRTC & Scanner
+      // Câmera Real WebRTC
       const [cameraActive, setCameraActive] = useState(false);
       const [cameraError, setCameraError] = useState('');
       const [isScanning, setIsScanning] = useState(false);
@@ -107,23 +148,26 @@
       const videoRef = useRef(null);
       const streamRef = useRef(null);
 
-      // Fila de Impressão 3D
-      const [printQueue, setPrintQueue] = useState([
-        { id: '1', name: 'Suporte do Motor PA12-CF', status: 'Imprimindo (68%)', time: '40 min' },
-        { id: '2', name: 'Conector do Coletor de Admissão', status: 'Aguardando Início', time: '1h 10m' }
+      // HUB IMPRESSÃO 3D - ESTADO DINÂMICO
+      const [printers, setPrinters] = useState([
+        { id: '1', name: 'Impressora 3D #01 (Industrial PEEK)', status: 'Imprimindo', progress: 74, tempBed: '120°C', tempNozzle: '380°C', file: 'ALAVANCA_STR_425141.gcode' },
+        { id: '2', name: 'Impressora 3D #02 (PA12-CF Heavy)', status: 'Disponível', progress: 100, tempBed: '25°C', tempNozzle: '25°C', file: 'Aguardando trabalho...' },
+        { id: '3', name: 'Impressora 3D #03 (Reciclagem Local)', status: 'Manutenção Preventiva', progress: 0, tempBed: '0°C', tempNozzle: '0°C', file: 'Standby' }
       ]);
 
-      // Modais e Toasts
+      const [printQueue, setPrintQueue] = useState([
+        { id: 'Q-101', name: 'Suporte Tampão Óleo Motor', material: 'PA12-CF', timeEst: '45 min', requestedBy: 'IVECO Campinas', status: 'Em Fila' },
+        { id: 'Q-102', name: 'Coletor de Ar Secundário', material: 'PEEK', timeEst: '1h 20m', requestedBy: 'IVECO SP - Anchieta', status: 'Em Fila' }
+      ]);
+
       const [toastMessage, setToastMessage] = useState(null);
-      const [showNewPartModal, setShowNewPartModal] = useState(false);
-      const [newPartData, setNewPartData] = useState({ name: '', code: '', location: 'SP - Anchieta' });
 
       const triggerToast = (msg) => {
         setToastMessage(msg);
         setTimeout(() => setToastMessage(null), 3500);
       };
 
-      // Câmera WebRTC
+      // Câmera WebRTC Real
       const startCamera = async () => {
         setCameraError('');
         try {
@@ -138,7 +182,7 @@
           setCameraActive(true);
         } catch (err) {
           console.error("Erro Câmera:", err);
-          setCameraError('Permissão negada ou câmera não suportada no navegador.');
+          setCameraError('Permissão negada ou câmera não suportada no dispositivo.');
           setCameraActive(false);
         }
       };
@@ -156,68 +200,47 @@
         setTimeout(() => {
           setIsScanning(false);
           setScannedResult({
-            name: 'Suporte Suplementar do Chassi S-Way',
-            code: 'IVE-3D-9981-CF',
-            condition: 'Microfissura detectada (Viável para Impressão Aditiva)',
-            material: 'PA12-CF (Nylon Reforçado com Fibra de Carbono)',
-            co2Savings: '24.2 kg CO₂',
-            timeToPrint: '1h 45m'
+            name: 'ALAVANCA COMANDO VALVULA IVECO STRALIS',
+            code: '425141',
+            condition: 'Superfície desgastada (Recuperável via Aditiva)',
+            material: 'PA12-CF (Nylon Reforçado)',
+            co2Savings: '18.4 kg CO₂',
+            timeToPrint: '1h 15m'
           });
           stopCamera();
-        }, 2500);
+        }, 2200);
       };
 
       const sendTo3DPrinter = (partName) => {
         setPrintQueue(prev => [...prev, {
-          id: String(prev.length + 1),
+          id: `Q-${Date.now().toString().slice(-3)}`,
           name: partName,
-          status: 'Na Fila de Impressão',
-          time: '1h 20m'
+          material: 'PA12-CF',
+          timeEst: '55 min',
+          requestedBy: 'IVECO São Paulo',
+          status: 'Em Fila'
         }]);
-        triggerToast(`Peça "${partName}" enviada para a Fila do Hub 3D!`);
+        triggerToast(`Peça "${partName}" enviada com sucesso para a fila de Impressão 3D!`);
         setActiveTab('hub3d');
       };
 
-      const handleAddStock = (e) => {
-        e.preventDefault();
-        if (!newPartData.name || !newPartData.code) return;
-        const newItem = {
-          id: String(Date.now()),
-          name: newPartData.name,
-          code: newPartData.code,
-          status: 'Disponível',
-          location: newPartData.location,
-          isReconditioned: true
-        };
-        setStockList([newItem, ...stockList]);
-        setShowNewPartModal(false);
-        setNewPartData({ name: '', code: '', location: 'SP - Anchieta' });
-        triggerToast('Nova peça cadastrada com sucesso!');
-      };
-
-      // Filtro de Peças
-      const filteredStock = stockList.filter(item => {
-        const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                              item.code.toLowerCase().includes(searchTerm.toLowerCase());
-        if (stockFilter === 'Todos') return matchesSearch;
-        if (stockFilter === 'Disponível') return matchesSearch && item.status === 'Disponível';
-        if (stockFilter === 'Indisponível') return matchesSearch && item.status === 'Indisponível';
-        if (stockFilter === 'Descarte') return matchesSearch && item.status === 'Descarte Reciclável';
-        return matchesSearch;
-      });
+      const filteredStock = stockList.filter(item => 
+        item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        item.code.toLowerCase().includes(searchTerm.toLowerCase())
+      );
 
       return (
         <div className="min-h-screen bg-[#0B0F17] text-slate-100 flex font-sans antialiased">
           
-          {/* TOAST DE NOTIFICAÇÃO */}
+          {/* TOAST FLUTUANTE */}
           {toastMessage && (
-            <div className="fixed top-5 right-5 z-50 bg-emerald-600 text-white font-semibold text-xs px-4 py-3 rounded-xl shadow-2xl border border-emerald-400/40 flex items-center gap-2 animate-bounce">
+            <div className="fixed top-5 right-5 z-50 bg-emerald-500 text-slate-950 font-extrabold text-xs px-4 py-3 rounded-xl shadow-2xl border border-emerald-300 flex items-center gap-2 animate-bounce">
               <CheckCircle2 className="w-4 h-4" />
               <span>{toastMessage}</span>
             </div>
           )}
 
-          {/* BARRA LATERAL (SIDEBAR) */}
+          {/* SIDEBAR */}
           <aside className="w-64 bg-[#0F172A] border-r border-slate-800 flex flex-col justify-between shrink-0 hidden md:flex">
             <div>
               <div className="p-5 border-b border-slate-800/80 flex items-center gap-3">
@@ -228,12 +251,12 @@
                   <h1 className="font-extrabold text-sm tracking-wide text-white flex items-center gap-1">
                     ECOOFICINA <span className="text-emerald-400 text-xs">4.0</span>
                   </h1>
-                  <p className="text-[10px] text-slate-400 font-mono">HUB SP-ANCHIETA</p>
+                  <p className="text-[10px] text-slate-400 font-mono">REDE BRASIL DE REUSO</p>
                 </div>
               </div>
 
               <nav className="p-3 space-y-1 text-xs">
-                <div className="px-3 py-1 text-[10px] font-bold text-slate-500 uppercase tracking-wider">Navegação</div>
+                <div className="px-3 py-1 text-[10px] font-bold text-slate-500 uppercase tracking-wider">Navegação Principal</div>
 
                 <button
                   onClick={() => { setActiveTab('dashboard'); stopCamera(); }}
@@ -241,7 +264,7 @@
                     activeTab === 'dashboard' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
                   }`}>
                   <LayoutDashboard className="w-4 h-4" />
-                  <span>Início / Dashboard</span>
+                  <span>Início / Visão Geral</span>
                 </button>
 
                 <button
@@ -250,16 +273,19 @@
                     activeTab === 'scanner' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
                   }`}>
                   <ScanLine className="w-4 h-4 text-cyan-400" />
-                  <span>Scanner IA Câmera</span>
+                  <span>Scanner IA & Câmera</span>
                 </button>
 
                 <button
                   onClick={() => { setActiveTab('hub3d'); stopCamera(); }}
-                  className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg font-medium transition ${
+                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg font-medium transition ${
                     activeTab === 'hub3d' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
                   }`}>
-                  <Printer className="w-4 h-4 text-blue-400" />
-                  <span>Hub Impressão 3D</span>
+                  <div className="flex items-center gap-2.5">
+                    <Printer className="w-4 h-4 text-blue-400" />
+                    <span>Hub de Impressão 3D</span>
+                  </div>
+                  <span className="bg-blue-500/20 text-blue-400 text-[10px] font-bold px-1.5 py-0.5 rounded">Ativo</span>
                 </button>
 
                 <button
@@ -271,7 +297,7 @@
                     <PackageCheck className="w-4 h-4" />
                     <span>Estoque de Peças</span>
                   </div>
-                  <span className="bg-slate-800 text-slate-300 text-[10px] px-1.5 py-0.5 rounded-full">{stockList.length}</span>
+                  <span className="bg-slate-800 text-slate-300 text-[10px] px-2 py-0.5 rounded-full">{stockList.length}</span>
                 </button>
 
                 <button
@@ -280,158 +306,139 @@
                     activeTab === 'esg' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
                   }`}>
                   <Leaf className="w-4 h-4 text-emerald-400" />
-                  <span>Impacto ESG & CO₂</span>
+                  <span>Relatório Descarbonização</span>
                 </button>
               </nav>
             </div>
 
-            <div className="p-4 border-t border-slate-800/80 bg-slate-950/40">
-              <div className="flex items-center gap-2 text-xs text-slate-400 mb-1">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-                <span className="font-semibold text-slate-300">Conectado à Rede IVECO</span>
+            <div className="p-4 border-t border-slate-800/80 bg-slate-950/50">
+              <div className="flex items-center gap-2 text-xs text-slate-300 mb-1">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span className="font-bold">Hub 3D Ativo • Descarbonização</span>
               </div>
-              <p className="text-[10px] text-slate-500">Impressoras 3D Ativas: 4/4</p>
+              <p className="text-[10px] text-slate-500">Frota Conectada IVECO 2026</p>
             </div>
           </aside>
 
-          {/* ÁREA PRINCIPAL */}
+          {/* MAIN CONTENT AREA */}
           <main className="flex-1 overflow-y-auto p-4 md:p-8">
 
-            {/* HEADER SUPERIOR */}
+            {/* HEADER */}
             <header className="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-800 pb-5 mb-6 gap-4">
               <div>
-                <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                  IVECO ECOOFICINA 4.0
-                  <span className="text-xs font-normal text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">
-                    Sustentável
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-[10px] font-bold text-cyan-400 bg-cyan-500/10 border border-cyan-500/30 px-2 py-0.5 rounded-full uppercase">
+                    Rede Conectada de Recondicionamento & Polímeros Reforçados
                   </span>
-                </h2>
-                <p className="text-xs text-slate-400 mt-1">Diagnóstico por Visão Computacional, Reuso e Manufatura Aditiva On-Demand</p>
+                </div>
+                <h2 className="text-xl font-bold text-white">HUB DE INOVAÇÃO & DESCARBONIZAÇÃO</h2>
               </div>
 
               <div className="flex items-center gap-3">
                 <button 
-                  onClick={() => setActiveTab('scanner')} 
+                  onClick={() => setActiveTab('scanner')}
                   className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-2 shadow-lg shadow-emerald-500/20">
                   <Camera className="w-4 h-4" />
-                  Novo Escaneamento Real
+                  Iniciar Diagnóstico IA
                 </button>
               </div>
             </header>
 
-            {/* TAB: DASHBOARD (COM O BANNER HERO DO CAMINHÃO IVECO) */}
+            {/* TAB: DASHBOARD COM VÍDEO DO CAMINHÃO NO FUNDO */}
             {activeTab === 'dashboard' && (
               <div className="space-y-6">
 
-                {/* BANNER DE INÍCIO - CAMINHÃO IVECO S-WAY ESG */}
-                <div className="relative rounded-2xl overflow-hidden border border-slate-800 bg-gradient-to-r from-slate-950 via-slate-900 to-blue-950 p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl">
-                  <div className="max-w-xl space-y-3 z-10">
-                    <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full uppercase tracking-wider">
+                {/* HERO COM VÍDEO NO FUNDO */}
+                <div className="relative rounded-3xl overflow-hidden border border-slate-800 min-h-[420px] flex items-end p-6 md:p-10 shadow-2xl">
+                  
+                  {/* Vídeo do Caminhão no Fundo */}
+                  <video 
+                    autoPlay 
+                    loop 
+                    muted 
+                    playsInline 
+                    className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
+                    <source src="IVECO22222.mp4" type="video/mp4" />
+                    Seu navegador não suporta vídeos HTML5.
+                  </video>
+
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F17] via-[#0B0F17]/70 to-transparent z-10"></div>
+
+                  {/* Conteúdo Sobreposto */}
+                  <div className="relative z-20 space-y-4 max-w-2xl">
+                    <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-bold text-[11px] px-3 py-1 rounded-full uppercase tracking-wider inline-flex items-center gap-1.5">
                       <Sparkles className="w-3.5 h-3.5" />
-                      Manufatura Aditiva Circular 2026
+                      MANUFATURA ADITIVA & SUSTENTABILIDADE IVECO
                     </span>
-                    <h1 className="text-2xl md:text-3xl font-black text-white tracking-tight leading-tight">
-                      Descarbonizando a Frota IVECO com Impressão 3D e Reuso Inteligente
+
+                    <h1 className="text-3xl md:text-5xl font-black text-white tracking-tight leading-tight">
+                      Descarbonização & Peças 3D Sob Demanda
                     </h1>
-                    <p className="text-xs md:text-sm text-slate-300">
-                      Reduza em até 85% a pegada de carbono do transporte de peças sobressalentes produzindo componentes homologados diretamente nas oficinas credenciadas.
+
+                    <p className="text-xs md:text-sm text-slate-300 leading-relaxed">
+                      Acelerando a transição sustentável da frota pesada através do recondicionamento inteligente, estoque digital homologado e polímeros reforçados com fibra de carbono (PA12-CF / PEEK) — gerando até <strong className="text-emerald-400">65% de alívio de massa</strong> e <strong className="text-cyan-400">eliminação total de frete logístico</strong>.
                     </p>
-                    <div className="pt-2 flex flex-wrap gap-3">
+
+                    <div className="pt-2 flex flex-wrap items-center gap-3">
                       <button 
-                        onClick={() => setActiveTab('scanner')}
-                        className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs px-5 py-3 rounded-xl transition flex items-center gap-2">
+                        onClick={() => setActiveTab('scanner')} 
+                        className="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-5 py-3 rounded-xl transition flex items-center gap-2 shadow-lg shadow-blue-600/30">
                         <ScanLine className="w-4 h-4" />
-                        Escanear Peça com Câmera Real
+                        Iniciar Diagnóstico IA
                       </button>
                       <button 
-                        onClick={() => setActiveTab('hub3d')}
-                        className="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs px-5 py-3 rounded-xl transition flex items-center gap-2">
-                        <Printer className="w-4 h-4 text-blue-400" />
-                        Ver Hub de Impressão 3D
+                        onClick={() => setActiveTab('stock')} 
+                        className="bg-slate-900/80 hover:bg-slate-800 text-slate-200 border border-slate-700 font-bold text-xs px-5 py-3 rounded-xl transition flex items-center gap-2 backdrop-blur-md">
+                        <Layers className="w-4 h-4 text-cyan-400" />
+                        Catálogo CAD Digital
                       </button>
                     </div>
-                  </div>
 
-                  {/* IMAGEM DO CAMINHÃO IVECO */}
-                  <div className="relative z-10 shrink-0 w-full md:w-80 h-48 rounded-xl overflow-hidden border border-slate-700/60 shadow-2xl group">
-                    <img 
-                      src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=800&q=80" 
-                      alt="Caminhão IVECO Eco-Friendly" 
-                      className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80"></div>
-                    <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[11px] font-bold text-white">
-                      <span className="flex items-center gap-1"><Truck className="w-3.5 h-3.5 text-emerald-400" /> IVECO S-WAY Heavy</span>
-                      <span className="bg-emerald-500/80 text-slate-950 px-2 py-0.5 rounded text-[9px]">100% Homologado</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* MÉTRICAS PRINCIPAIS DA OFICINA */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                  <div className="bg-slate-900 border border-slate-800 p-4 rounded-xl flex items-center gap-4">
-                    <div className="p-3 bg-blue-500/10 text-blue-400 rounded-lg border border-blue-500/20">
-                      <Box className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <p className="text-xs text-slate-400 font-medium">Peças no Estoque</p>
-                      <p className="text-xl font-bold text-white">{stockList.length}</p>
-                    </div>
-                  </div>
-
-                  <div className="bg-slate-900 border border-slate-800 p-4 rounded-xl flex items-center gap-4">
-                    <div className="p-3 bg-emerald-500/10 text-emerald-400 rounded-lg border border-emerald-500/20">
-                      <Zap className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <p className="text-xs text-slate-400 font-medium">Peças Prontas p/ Troca</p>
-                      <p className="text-xl font-bold text-emerald-400">42</p>
-                    </div>
-                  </div>
-
-                  <div className="bg-slate-900 border border-slate-800 p-4 rounded-xl flex items-center gap-4">
-                    <div className="p-3 bg-cyan-500/10 text-cyan-400 rounded-lg border border-cyan-500/20">
-                      <Printer className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <p className="text-xs text-slate-400 font-medium">Peças Recicladas 3D</p>
-                      <p className="text-xl font-bold text-cyan-400">87</p>
-                    </div>
-                  </div>
-
-                  <div className="bg-slate-900 border border-slate-800 p-4 rounded-xl flex items-center gap-4">
-                    <div className="p-3 bg-emerald-500/10 text-emerald-400 rounded-lg border border-emerald-500/20">
-                      <Leaf className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <p className="text-xs text-slate-400 font-medium">CO₂ Evitado Acumulado</p>
-                      <p className="text-xl font-bold text-emerald-400">1.250 kg</p>
+                    {/* Cards de Métricas Flutuantes */}
+                    <div className="grid grid-cols-3 gap-3 pt-4 border-t border-slate-800/80">
+                      <div className="bg-slate-950/70 border border-slate-800 p-2.5 rounded-xl text-center backdrop-blur-md">
+                        <p className="text-emerald-400 font-black text-base md:text-lg">-65%</p>
+                        <p className="text-[10px] text-slate-400">Alívio de Peso (PA12-CF)</p>
+                      </div>
+                      <div className="bg-slate-950/70 border border-slate-800 p-2.5 rounded-xl text-center backdrop-blur-md">
+                        <p className="text-cyan-400 font-black text-base md:text-lg">Zero Frete</p>
+                        <p className="text-[10px] text-slate-400">Estoque Digital Local</p>
+                      </div>
+                      <div className="bg-slate-950/70 border border-slate-800 p-2.5 rounded-xl text-center backdrop-blur-md">
+                        <p className="text-blue-400 font-black text-base md:text-lg">100%</p>
+                        <p className="text-[10px] text-slate-400">Homologado Engenharia</p>
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                {/* SOLICITAÇÕES RECENTES */}
-                <div className="bg-slate-900 border border-slate-800 rounded-xl p-5">
+                {/* RESUMO RÁPIDO DO ESTOQUE */}
+                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5">
                   <div className="flex justify-between items-center mb-4">
                     <h3 className="font-bold text-sm text-white flex items-center gap-2">
                       <Wrench className="w-4 h-4 text-emerald-400" />
-                      Solicitações da Rede Concessionária IVECO
+                      Componentes Destaque em Estoque
                     </h3>
-                    <button onClick={() => setActiveTab('stock')} className="text-xs text-emerald-400 hover:underline font-medium">
-                      Ver todas as peças
+                    <button onClick={() => setActiveTab('stock')} className="text-xs text-emerald-400 hover:underline font-semibold">
+                      Ver Catálogo Completo →
                     </button>
                   </div>
 
-                  <div className="space-y-3">
-                    {requestList.map(req => (
-                      <div key={req.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-3.5 bg-slate-950 rounded-lg border border-slate-800/80 gap-2">
-                        <div>
-                          <p className="font-semibold text-xs text-slate-200">{req.part}</p>
-                          <p className="text-[11px] text-slate-400">{req.requestedBy} • {req.date}</p>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {stockList.map(item => (
+                      <div 
+                        key={item.id} 
+                        onClick={() => { setSelectedPart(item); setActiveImageIdx(0); }}
+                        className="bg-slate-950 border border-slate-800/80 rounded-xl p-3 flex gap-3 items-center hover:border-emerald-500/50 cursor-pointer transition group">
+                        <img src={item.images[0]} alt={item.name} className="w-16 h-16 object-cover rounded-lg shrink-0 border border-slate-800" />
+                        <div className="overflow-hidden">
+                          <p className="font-bold text-xs text-slate-200 group-hover:text-emerald-400 truncate">{item.name}</p>
+                          <p className="text-[10px] font-mono text-slate-500 mt-0.5">CÓD: {item.code}</p>
+                          <span className="inline-block mt-1 text-[9px] font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                            {item.status} ({item.quantity} un)
+                          </span>
                         </div>
-                        <span className="text-xs font-bold px-2.5 py-1 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20 w-fit">
-                          {req.status}
-                        </span>
                       </div>
                     ))}
                   </div>
@@ -439,40 +446,245 @@
               </div>
             )}
 
-            {/* TAB: SCANNER COM VÍDEO DA CÂMERA REAL */}
+            {/* TAB: ESTOQUE DE PEÇAS COM IMAGENS E MODAL DE DETALHES */}
+            {activeTab === 'stock' && (
+              <div className="space-y-6">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                  <div>
+                    <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                      <PackageCheck className="w-5 h-5 text-emerald-400" />
+                      Catálogo de Componentes Recondicionados e Impressos
+                    </h3>
+                    <p className="text-xs text-slate-400">Consulte fotos técnicas, disponibilidade e localização física no almoxarifado</p>
+                  </div>
+
+                  <input 
+                    type="text" 
+                    placeholder="Filtrar por nome ou código..." 
+                    value={searchTerm} 
+                    onChange={e => setSearchTerm(e.target.value)}
+                    className="bg-slate-900 border border-slate-800 text-xs text-white rounded-xl px-4 py-2.5 w-full md:w-72 focus:outline-none focus:border-emerald-500" 
+                  />
+                </div>
+
+                {/* GRID DE CARDS DO ESTOQUE COM IMAGENS */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                  {filteredStock.map(item => (
+                    <div 
+                      key={item.id} 
+                      className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-slate-700 transition flex flex-col justify-between">
+                      <div>
+                        <div className="relative aspect-video bg-slate-950 overflow-hidden">
+                          <img src={item.images[0]} alt={item.name} className="w-full h-full object-cover" />
+                          <span className={`absolute top-2 right-2 text-[10px] font-extrabold px-2.5 py-1 rounded-full border shadow-lg ${
+                            item.status === 'Disponível' ? 'bg-emerald-500 text-slate-950 border-emerald-300' : 'bg-amber-500 text-slate-950 border-amber-300'
+                          }`}>
+                            {item.status}
+                          </span>
+                        </div>
+
+                        <div className="p-4 space-y-2">
+                          <h4 className="font-bold text-xs text-white leading-snug">{item.name}</h4>
+                          <p className="text-[10px] font-mono text-emerald-400">Código: {item.code}</p>
+
+                          <div className="space-y-1 pt-2 border-t border-slate-800/80 text-[11px] text-slate-400">
+                            <p><strong className="text-slate-300">Condição:</strong> {item.condition}</p>
+                            <p><strong className="text-slate-300">Quantidade:</strong> {item.quantity} unidades</p>
+                            <p className="truncate"><strong className="text-slate-300">Local:</strong> {item.location}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="p-4 pt-0 flex gap-2">
+                        <button 
+                          onClick={() => { setSelectedPart(item); setActiveImageIdx(0); }}
+                          className="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs py-2 rounded-xl transition flex items-center justify-center gap-1.5 border border-slate-700">
+                          <Eye className="w-3.5 h-3.5" />
+                          Ver Detalhes
+                        </button>
+                        <button 
+                          onClick={() => sendTo3DPrinter(item.name)}
+                          className="bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 border border-blue-500/30 font-bold text-xs px-3 py-2 rounded-xl transition">
+                          <Printer className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* TAB: HUB DE IMPRESSÃO 3D FUNCIONAL */}
+            {activeTab === 'hub3d' && (
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                    <Printer className="w-5 h-5 text-blue-400" />
+                    Hub de Manufatura Aditiva On-Demand
+                  </h3>
+                  <p className="text-xs text-slate-400">Monitoramento de temperatura, filamentos e controle da fila de produção local</p>
+                </div>
+
+                {/* IMPRESSORAS 3D MONITORAMENTO EM TEMPO REAL */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {printers.map(p => (
+                    <div key={p.id} className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <h4 className="font-bold text-xs text-white">{p.name}</h4>
+                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded mt-1 inline-block ${
+                            p.status === 'Imprimindo' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' :
+                            p.status === 'Disponível' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' :
+                            'bg-red-500/20 text-red-400 border border-red-500/30'
+                          }`}>
+                            {p.status}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="space-y-1">
+                        <div className="flex justify-between text-[10px] text-slate-400 font-mono">
+                          <span>Progresso</span>
+                          <span>{p.progress}%</span>
+                        </div>
+                        <div className="w-full h-2 bg-slate-950 rounded-full overflow-hidden border border-slate-800">
+                          <div className="h-full bg-blue-500 transition-all duration-500" style={{ width: `${p.progress}%` }}></div>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-2 text-[10px] bg-slate-950 p-2 rounded-xl border border-slate-800/80">
+                        <div className="flex items-center gap-1.5 text-slate-400">
+                          <Thermometer className="w-3 h-3 text-red-400" />
+                          <span>Extrusor: <strong className="text-slate-200">{p.tempNozzle}</strong></span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-slate-400">
+                          <Thermometer className="w-3 h-3 text-amber-400" />
+                          <span>Mesa: <strong className="text-slate-200">{p.tempBed}</strong></span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* FILA DE IMPRESSÃO GERENCIÁVEL */}
+                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5">
+                  <h4 className="font-bold text-xs text-white mb-3">Fila de Produção de Peças Sob Demanda</h4>
+                  <div className="space-y-2">
+                    {printQueue.map((item, idx) => (
+                      <div key={item.id} className="bg-slate-950 border border-slate-800/80 rounded-xl p-3 flex flex-col md:flex-row justify-between items-start md:items-center gap-2">
+                        <div>
+                          <p className="font-bold text-xs text-slate-200">{idx + 1}. {item.name}</p>
+                          <p className="text-[10px] text-slate-400">Material: <span className="text-cyan-400 font-semibold">{item.material}</span> • Solicitante: {item.requestedBy}</p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-[10px] font-mono text-slate-400 bg-slate-900 px-2.5 py-1 rounded border border-slate-800">
+                            Est: {item.timeEst}
+                          </span>
+                          <button 
+                            onClick={() => {
+                              setPrintQueue(printQueue.filter(q => q.id !== item.id));
+                              triggerToast('Item removido da fila.');
+                            }}
+                            className="text-red-400 hover:text-red-300 p-1">
+                            <XCircle className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* TAB: RELATÓRIO DE DESCARBONIZAÇÃO ESG COMPLETO */}
+            {activeTab === 'esg' && (
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                    <Leaf className="w-5 h-5 text-emerald-400" />
+                    Relatório de Descarbonização da Rede IVECO
+                  </h3>
+                  <p className="text-xs text-slate-400">Métricas de impacto ambiental geradas pela substituição de logística convencional por manufatura aditiva local</p>
+                </div>
+
+                {/* CARDS DE INDICADORES ESG */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-1">
+                    <span className="text-xs text-slate-400">Total CO₂ Evitado</span>
+                    <p className="text-2xl font-black text-emerald-400">1.250 kg</p>
+                    <p className="text-[10px] text-slate-500">Equivalente ao plantio de 89 árvores/ano</p>
+                  </div>
+                  <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-1">
+                    <span className="text-xs text-slate-400">Km Rodados Eliminados (Frete)</span>
+                    <p className="text-2xl font-black text-cyan-400">14.800 km</p>
+                    <p className="text-[10px] text-slate-500">Eliminação total de emissões de frete rodoviário</p>
+                  </div>
+                  <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-1">
+                    <span className="text-xs text-slate-400">Reaproveitamento de Polímeros</span>
+                    <p className="text-2xl font-black text-blue-400">94.2%</p>
+                    <p className="text-[10px] text-slate-500">Taxa de reciclabilidade em matriz PA12-CF</p>
+                  </div>
+                </div>
+
+                {/* TABELA COMPARATIVA DE IMPACTO */}
+                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5">
+                  <h4 className="font-bold text-xs text-white mb-3">Comparativo de Impacto Ambiental por Peça</h4>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-xs">
+                      <thead className="bg-slate-950 text-slate-400 border-b border-slate-800">
+                        <tr>
+                          <th className="p-3">Componente Homologado</th>
+                          <th className="p-3">Produção Tradicional (Aço)</th>
+                          <th className="p-3">Impressão 3D Local (PA12-CF)</th>
+                          <th className="p-3 text-emerald-400">Redução CO₂</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-800/80">
+                        <tr>
+                          <td className="p-3 font-semibold text-slate-200">Alavanca Comando Válvula</td>
+                          <td className="p-3 text-slate-400">22.5 kg CO₂ / peça</td>
+                          <td className="p-3 text-cyan-400">4.1 kg CO₂ / peça</td>
+                          <td className="p-3 font-bold text-emerald-400">- 81.7%</td>
+                        </tr>
+                        <tr>
+                          <td className="p-3 font-semibold text-slate-200">Suporte do Tampão de Óleo</td>
+                          <td className="p-3 text-slate-400">14.2 kg CO₂ / peça</td>
+                          <td className="p-3 text-cyan-400">2.0 kg CO₂ / peça</td>
+                          <td className="p-3 font-bold text-emerald-400">- 85.9%</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* TAB: SCANNER CÂMERA REAL WEBRTC */}
             {activeTab === 'scanner' && (
               <div className="max-w-2xl mx-auto space-y-6">
                 <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center">
                   <h3 className="text-lg font-bold text-white mb-2 flex items-center justify-center gap-2">
                     <Camera className="w-5 h-5 text-emerald-400" />
-                    Diagnóstico por Visão Computacional (Câmera ao Vivo)
+                    Diagnóstico por Visão Computacional ao Vivo
                   </h3>
                   <p className="text-xs text-slate-400 mb-6">
-                    Aponte a câmera para a peça física danificada para obter a análise geométrica e a matriz de reuso 3D.
+                    Aponte a câmera para a peça danificada para avaliar rachaduras e gerar o modelo 3D equivalente.
                   </p>
 
-                  {/* Viewport da Câmera Real */}
-                  <div className="relative aspect-video bg-slate-950 rounded-xl overflow-hidden border border-slate-800 flex items-center justify-center mb-4 shadow-inner">
+                  <div className="relative aspect-video bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 flex items-center justify-center mb-4">
                     {cameraActive ? (
-                      <video 
-                        ref={videoRef} 
-                        autoPlay 
-                        playsInline 
-                        muted 
-                        className="w-full h-full object-cover" 
-                      />
+                      <video ref={videoRef} autoPlay playsInline muted className="w-full h-full object-cover" />
                     ) : (
                       <div className="text-center p-6 space-y-3">
                         <ScanLine className="w-12 h-12 text-slate-600 mx-auto animate-pulse" />
-                        <p className="text-xs text-slate-400">A câmera está desativada. Clique no botão abaixo para ligar.</p>
+                        <p className="text-xs text-slate-400">Câmera desativada. Ligue a câmera para escaneamento.</p>
                       </div>
                     )}
 
                     {isScanning && (
-                      <div className="absolute inset-0 bg-emerald-950/50 border-2 border-emerald-400 flex flex-col items-center justify-center backdrop-blur-sm z-20">
+                      <div className="absolute inset-0 bg-emerald-950/60 border-2 border-emerald-400 flex flex-col items-center justify-center backdrop-blur-sm z-20">
                         <RefreshCw className="w-8 h-8 text-emerald-400 animate-spin mb-2" />
-                        <p className="text-xs font-bold text-white">Analisando geometria do componente...</p>
-                        <p className="text-[10px] text-emerald-300 mt-1">Identificando liga de polímero e tolerancia estrutural</p>
+                        <p className="text-xs font-bold text-white">Processando malha geométrica e código técnico...</p>
                       </div>
                     )}
                   </div>
@@ -483,27 +695,17 @@
                     </div>
                   )}
 
-                  {/* Botoes de Ação */}
                   <div className="flex gap-3 justify-center">
                     {!cameraActive ? (
-                      <button 
-                        onClick={startCamera} 
-                        className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs px-5 py-3 rounded-xl transition flex items-center gap-2">
-                        <Camera className="w-4 h-4" />
-                        Ligar Câmera Real
+                      <button onClick={startCamera} className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs px-5 py-3 rounded-xl transition flex items-center gap-2">
+                        <Camera className="w-4 h-4" /> Ligar Câmera Real
                       </button>
                     ) : (
                       <>
-                        <button 
-                          onClick={handleScanPart} 
-                          disabled={isScanning}
-                          className="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs px-5 py-3 rounded-xl transition flex items-center gap-2">
-                          <ScanLine className="w-4 h-4" />
-                          Escanear Peça Agora
+                        <button onClick={handleScanPart} disabled={isScanning} className="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs px-5 py-3 rounded-xl transition flex items-center gap-2">
+                          <ScanLine className="w-4 h-4" /> Escanear Componente
                         </button>
-                        <button 
-                          onClick={stopCamera} 
-                          className="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs px-4 py-3 rounded-xl transition">
+                        <button onClick={stopCamera} className="bg-slate-800 text-slate-300 font-bold text-xs px-4 py-3 rounded-xl">
                           Desligar
                         </button>
                       </>
@@ -511,202 +713,130 @@
                   </div>
                 </div>
 
-                {/* Resultado da Câmera / Escaneamento */}
                 {scannedResult && (
-                  <div className="bg-slate-900 border border-emerald-500/30 rounded-2xl p-5 space-y-4 animate-fade-in">
+                  <div className="bg-slate-900 border border-emerald-500/30 rounded-2xl p-5 space-y-4">
                     <div className="flex justify-between items-center border-b border-slate-800 pb-3">
                       <div>
                         <h4 className="font-bold text-sm text-white">{scannedResult.name}</h4>
-                        <p className="text-xs font-mono text-emerald-400">{scannedResult.code}</p>
+                        <p className="text-xs font-mono text-emerald-400">CÓDIGO: {scannedResult.code}</p>
                       </div>
                       <span className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-bold px-2.5 py-1 rounded-full">
-                        Viável para Impressão 3D
+                        Homologado para Reuso
                       </span>
                     </div>
 
                     <div className="grid grid-cols-2 gap-3 text-xs">
-                      <div className="bg-slate-950 p-3 rounded-lg border border-slate-800">
-                        <span className="text-slate-400 block text-[10px]">Diagnóstico da Câmera:</span>
+                      <div className="bg-slate-950 p-2.5 rounded-lg border border-slate-800">
+                        <span className="text-slate-400 block text-[10px]">Diagnóstico:</span>
                         <span className="font-semibold text-slate-200">{scannedResult.condition}</span>
                       </div>
-                      <div className="bg-slate-950 p-3 rounded-lg border border-slate-800">
-                        <span className="text-slate-400 block text-[10px]">Filamento / Material Homologado:</span>
+                      <div className="bg-slate-950 p-2.5 rounded-lg border border-slate-800">
+                        <span className="text-slate-400 block text-[10px]">Filamento Recomendado:</span>
                         <span className="font-semibold text-cyan-400">{scannedResult.material}</span>
                       </div>
                     </div>
 
                     <button 
                       onClick={() => sendTo3DPrinter(scannedResult.name)}
-                      className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs py-3 rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20">
-                      <Printer className="w-4 h-4" />
-                      Enviar para a Impressora 3D do Hub
+                      className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs py-3 rounded-xl transition flex items-center justify-center gap-2">
+                      <Printer className="w-4 h-4" /> Enviar para Fila de Impressão 3D
                     </button>
                   </div>
                 )}
               </div>
             )}
 
-            {/* TAB: HUB IMPRESSÃO 3D */}
-            {activeTab === 'hub3d' && (
-              <div className="space-y-6">
-                <div className="flex justify-between items-center">
-                  <div>
-                    <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                      <Printer className="w-5 h-5 text-blue-400" />
-                      Fila e Impressoras 3D do Hub
-                    </h3>
-                    <p className="text-xs text-slate-400 mt-0.5">Produção local com filamentos de fibra de carbono e polímeros certificados IVECO</p>
+          </main>
+
+          {/* MODAL DETALHES DO COMPONENTE COM GALERIA DE FOTOS (REFERÊNCIA SEGUNDA FOTO) */}
+          {selectedPart && (
+            <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto">
+              <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 w-full max-w-2xl space-y-5 shadow-2xl relative">
+                
+                <div className="flex justify-between items-center border-b border-slate-800 pb-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">
+                      IVECO São Paulo
+                    </span>
+                    <h3 className="text-sm font-extrabold text-white">Detalhes do Componente</h3>
                   </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {printQueue.map(item => (
-                    <div key={item.id} className="bg-slate-900 border border-slate-800 rounded-xl p-4 flex items-center justify-between">
-                      <div>
-                        <h4 className="font-bold text-xs text-white">{item.name}</h4>
-                        <p className="text-[11px] text-slate-400 mt-1 flex items-center gap-1">
-                          <Zap className="w-3 h-3 text-amber-400" /> Tempo Estimado: {item.time}
-                        </p>
-                      </div>
-                      <span className="bg-blue-500/20 text-blue-400 font-bold text-xs px-3 py-1.5 rounded-lg border border-blue-500/30">
-                        {item.status}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* TAB: ESTOQUE DE PEÇAS & CADASTRO */}
-            {activeTab === 'stock' && (
-              <div className="space-y-4">
-                <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-                  <div className="flex items-center gap-2 w-full sm:w-auto">
-                    <input 
-                      type="text" 
-                      placeholder="Buscar por peça ou código..." 
-                      value={searchTerm} 
-                      onChange={e => setSearchTerm(e.target.value)}
-                      className="bg-slate-900 border border-slate-800 text-xs text-white rounded-xl px-4 py-2.5 w-full sm:w-64 focus:outline-none focus:border-emerald-500" 
-                    />
-                    <select 
-                      value={stockFilter} 
-                      onChange={e => setStockFilter(e.target.value)}
-                      className="bg-slate-900 border border-slate-800 text-xs text-slate-300 rounded-xl px-3 py-2.5 focus:outline-none">
-                      <option value="Todos">Todos</option>
-                      <option value="Disponível">Disponível</option>
-                      <option value="Indisponível">Indisponível</option>
-                      <option value="Descarte">Descarte</option>
-                    </select>
-                  </div>
-
-                  <button 
-                    onClick={() => setShowNewPartModal(true)}
-                    className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-2 w-full sm:w-auto justify-center">
-                    <PlusCircle className="w-4 h-4" />
-                    Cadastrar Nova Peça
+                  <button onClick={() => setSelectedPart(null)} className="text-slate-400 hover:text-white font-bold text-xs bg-slate-800 px-3 py-1.5 rounded-lg">
+                    Fechar [X]
                   </button>
                 </div>
 
-                <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-xl">
-                  <table className="w-full text-left text-xs">
-                    <thead className="bg-slate-950 text-slate-400 border-b border-slate-800">
-                      <tr>
-                        <th className="p-3.5">Código</th>
-                        <th className="p-3.5">Nome da Peça</th>
-                        <th className="p-3.5">Localização</th>
-                        <th className="p-3.5">Status</th>
-                        <th className="p-3.5 text-right">Ação</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-800/80">
-                      {filteredStock.map(item => (
-                        <tr key={item.id} className="hover:bg-slate-800/40 transition">
-                          <td className="p-3.5 font-mono text-emerald-400 font-semibold">{item.code}</td>
-                          <td className="p-3.5 font-semibold text-slate-200">{item.name}</td>
-                          <td className="p-3.5 text-slate-400">{item.location}</td>
-                          <td className="p-3.5">
-                            <span className={`px-2.5 py-1 rounded-md text-[10px] font-bold ${
-                              item.status === 'Disponível' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-red-500/10 text-red-400 border border-red-500/20'
-                            }`}>
-                              {item.status}
-                            </span>
-                          </td>
-                          <td className="p-3.5 text-right">
-                            <button 
-                              onClick={() => sendTo3DPrinter(item.name)}
-                              className="text-[11px] font-semibold text-cyan-400 hover:text-cyan-300 bg-cyan-500/10 px-2.5 py-1 rounded border border-cyan-500/20">
-                              Gerar Réplica 3D
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            )}
+                {/* GALERIA DE IMAGENS DO COMPONENTE */}
+                <div className="space-y-3">
+                  <div className="relative aspect-video bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 flex items-center justify-center">
+                    <img src={selectedPart.images[activeImageIdx]} alt="Componente IVECO" className="w-full h-full object-contain p-4" />
+                    <span className="absolute bottom-2 right-2 text-[9px] bg-slate-900/80 text-slate-400 px-2 py-0.5 rounded font-mono">
+                      WEBP COMPRIMIDO
+                    </span>
+                  </div>
 
-            {/* TAB: IMPACTO ESG */}
-            {activeTab === 'esg' && (
-              <div className="space-y-6">
-                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center max-w-xl mx-auto space-y-4">
-                  <Leaf className="w-12 h-12 text-emerald-400 mx-auto" />
-                  <h3 className="text-lg font-bold text-white">Relatório de Descarbonização da Rede IVECO</h3>
-                  <p className="text-xs text-slate-400 leading-relaxed">
-                    A fabricação local on-demand via manufatura aditiva elimina o descolamento de transporte logístico rodoviário e reduz em até 85% as emissões de dióxido de carbono por lote sobressalente.
-                  </p>
-                  <div className="pt-2 border-t border-slate-800 text-xs font-semibold text-emerald-400">
-                    Total Evitado no Hub SP-Anchieta: 1.250 kg de CO₂
+                  {/* THUMBNAILS DAS IMAGENS */}
+                  <div className="flex justify-center gap-2">
+                    {selectedPart.images.map((img, idx) => (
+                      <button 
+                        key={idx}
+                        onClick={() => setActiveImageIdx(idx)}
+                        className={`w-12 h-12 rounded-lg overflow-hidden border-2 transition ${
+                          activeImageIdx === idx ? 'border-emerald-400 scale-105' : 'border-slate-800 opacity-60'
+                        }`}>
+                        <img src={img} className="w-full h-full object-cover" />
+                      </button>
+                    ))}
                   </div>
                 </div>
-              </div>
-            )}
 
-          </main>
+                {/* FICHA TÉCNICA DETALHADA */}
+                <div className="bg-slate-950 rounded-2xl p-4 border border-slate-800/80 space-y-3 text-xs">
+                  <div>
+                    <h4 className="font-extrabold text-sm text-white uppercase">{selectedPart.name}</h4>
+                    <p className="text-[11px] font-mono text-slate-400">Código: {selectedPart.code}</p>
+                  </div>
 
-          {/* MODAL CADASTRAR PEÇA */}
-          {showNewPartModal && (
-            <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 w-full max-w-md space-y-4 shadow-2xl">
-                <h3 className="text-base font-bold text-white">Cadastrar Peça no Estoque</h3>
-                <form onSubmit={handleAddStock} className="space-y-3 text-xs">
-                  <div>
-                    <label className="block text-slate-400 mb-1">Nome do Componente</label>
-                    <input 
-                      type="text" 
-                      required 
-                      placeholder="Ex: Suporte de Articulação" 
-                      value={newPartData.name} 
-                      onChange={e => setNewPartData({...newPartData, name: e.target.value})}
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:outline-none focus:border-emerald-500" 
-                    />
+                  <div className="grid grid-cols-2 gap-4 border-t border-b border-slate-800/80 py-3">
+                    <div>
+                      <span className="text-[10px] text-slate-500 block uppercase font-bold">STATUS</span>
+                      <span className="font-bold text-emerald-400">{selectedPart.status}</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-slate-500 block uppercase font-bold">QUANTIDADE</span>
+                      <span className="font-bold text-slate-200">{selectedPart.quantity} unidades</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-slate-500 block uppercase font-bold">CONDIÇÃO</span>
+                      <span className="font-bold text-slate-200">{selectedPart.condition}</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-slate-500 block uppercase font-bold">ANO / FABR.</span>
+                      <span className="font-bold text-slate-200">{selectedPart.year}</span>
+                    </div>
                   </div>
-                  <div>
-                    <label className="block text-slate-400 mb-1">Código IVECO</label>
-                    <input 
-                      type="text" 
-                      required 
-                      placeholder="Ex: IVE-PART-009" 
-                      value={newPartData.code} 
-                      onChange={e => setNewPartData({...newPartData, code: e.target.value})}
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:outline-none focus:border-emerald-500" 
-                    />
+
+                  <div className="space-y-1">
+                    <span className="text-[10px] text-slate-500 block uppercase font-bold">LOCALIZAÇÃO FÍSICA</span>
+                    <p className="font-mono text-emerald-400 font-semibold">{selectedPart.location}</p>
                   </div>
-                  <div className="flex justify-end gap-2 pt-3">
-                    <button 
-                      type="button" 
-                      onClick={() => setShowNewPartModal(false)} 
-                      className="px-4 py-2.5 bg-slate-800 text-slate-300 font-bold rounded-xl">
-                      Cancelar
-                    </button>
-                    <button 
-                      type="submit" 
-                      className="px-4 py-2.5 bg-emerald-500 text-slate-950 font-bold rounded-xl">
-                      Salvar Peça
-                    </button>
+
+                  <div className="space-y-1">
+                    <span className="text-[10px] text-slate-500 block uppercase font-bold">COMPATIBILIDADE</span>
+                    <p className="font-semibold text-slate-300">{selectedPart.compatibility}</p>
                   </div>
-                </form>
+                </div>
+
+                <div className="flex gap-2">
+                  <button 
+                    onClick={() => {
+                      sendTo3DPrinter(selectedPart.name);
+                      setSelectedPart(null);
+                    }}
+                    className="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs py-3 rounded-xl transition flex items-center justify-center gap-2">
+                    <Printer className="w-4 h-4" /> Solicitar Réplica no Hub 3D
+                  </button>
+                </div>
+
               </div>
             </div>
           )}
