@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IVECO ECOOFICINA 4.0 - Hub de Manufatura Aditiva & ESG</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- React & ReactDOM CDN -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <!-- Babel para suporte a JSX no navegador -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen font-sans">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    function App() {
+      const [cameraActive, setCameraActive] = useState(false);
+      const [cameraError, setCameraError] = useState("");
+      const videoRef = useRef(null);
+
+      // Função para iniciar a câmera WebRTC
+      const startCamera = async () => {
+        setCameraError("");
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({
+            video: { width: { ideal: 1280 }, height: { ideal: 720 }, facingMode: "environment" },
+            audio: false
+          });
+          if (videoRef.current) {
+            videoRef.current.srcObject = stream;
+            videoRef.current.play();
+          }
+          setCameraActive(true);
+        } catch (err) {
+          console.error("Erro ao acessar a câmera:", err);
+          setCameraError("Não foi possível acessar a câmera. Verifique as permissões do navegador.");
+        }
+      };
+
+      // Função para parar a câmera
+      const stopCamera = () => {
+        if (videoRef.current && videoRef.current.srcObject) {
+          const stream = videoRef.current.srcObject;
+          const tracks = stream.getTracks();
+          tracks.forEach(track => track.stop());
+          videoRef.current.srcObject = null;
+        }
+        setCameraActive(false);
+      };
+
+      useEffect(() => {
+        // Inicializa os ícones do Lucide após renderizar
+        if (window.lucide) {
+          window.lucide.createIcons();
+        }
+      });
+
+      return (
+        <div class="p-6 max-w-7xl mx-auto space-y-8">
+          {/* Cabeçalho */}
+          <header class="flex flex-col md:flex-row justify-between items-center bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-xl">
+            <div>
+              <h1 class="text-3xl font-bold text-blue-400">IVECO ECOOFICINA 4.0</h1>
+              <p class="text-slate-400 text-sm mt-1">Hub de Manufatura Aditiva & Diagnóstico ESG em Tempo Real</p>
+            </div>
+            <div class="mt-4 md:mt-0 flex items-center space-x-3 bg-slate-900/80 px-4 py-2 rounded-xl border border-slate-700">
+              <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span class="text-sm font-semibold text-emerald-400">Sistema Online & Sincronizado</span>
+            </div>
+          </header>
+
+          {/* Painel Principal com Vídeo WebRTC */}
+          <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Módulo de Diagnóstico WebRTC */}
+            <section class="lg:col-span-2 bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-xl space-y-4">
+              <div class="flex justify-between items-center">
+                <h2 class="text-xl font-bold text-slate-100 flex items-center gap-2">
+                  <i data-lucide="video" class="text-blue-400"></i>
+                  Diagnóstico Visual por Visão Computacional (WebRTC)
+                </h2>
+                {!cameraActive ? (
+                  <button 
+                    onClick={startCamera} 
+                    class="bg-blue-600 hover:bg-blue-500 text-white font-medium px-4 py-2 rounded-xl transition-all shadow-lg flex items-center gap-2"
+                  >
+                    <i data-lucide="camera"></i> Ligar Câmera
+                  </button>
+                ) : (
+                  <button 
+                    onClick={stopCamera} 
+                    class="bg-rose-600 hover:bg-rose-500 text-white font-medium px-4 py-2 rounded-xl transition-all shadow-lg flex items-center gap-2"
+                  >
+                    <i data-lucide="camera-off"></i> Desligar Câmera
+                  </button>
+                )}
+              </div>
+
+              {/* Contêiner do Vídeo */}
+              <div class="relative w-full h-[400px] bg-slate-950 rounded-xl overflow-hidden border border-slate-700 flex items-center justify-center">
+                <video 
+                  ref={videoRef} 
+                  autoPlay 
+                  playsInline 
+                  muted 
+                  class={`w-full h-full object-cover ${cameraActive ? 'block' : 'hidden'}`}
+                ></video>
+
+                {!cameraActive && (
+                  <div class="text-center space-y-3 p-6">
+                    <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mx-auto border border-slate-700 text-slate-400">
+                      <i data-lucide="video-off" class="w-8 h-8"></i>
+                    </div>
+                    <p class="text-slate-400">A transmissão de vídeo ao vivo está desligada.</p>
+                    <p class="text-xs text-slate-500">Clique em "Ligar Câmera" para escnear componentes e detectar desgaste/fissuras.</p>
+                  </div>
+                )}
+
+                {/* Overlays Visuais de IA quando a câmera estiver ativa */}
+                {cameraActive && (
+                  <div class="absolute inset-0 pointer-events-none border-2 border-blue-500/30 m-4 rounded-lg flex flex-col justify-between p-4">
+                    <div class="flex justify-between items-center text-xs text-blue-400 font-mono bg-slate-900/80 px-3 py-1 rounded-md w-max">
+                      <span>IA DETECT: PA12-CF COMPATÍVEL</span>
+                    </div>
+                    <div class="text-right text-xs text-emerald-400 font-mono bg-slate-900/80 px-3 py-1 rounded-md w-max self-end">
+                      <span>DESGASTE DETECTADO: 14%</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {cameraError && (
+                <div class="p-4 bg-rose-950/50 border border-rose-800 text-rose-300 rounded-xl text-sm">
+                  {cameraError}
+                </div>
+              )}
+            </section>
+
+            {/* Painel ESG & Impressão 3D */}
+            <section class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-xl space-y-6">
+              <h2 class="text-xl font-bold text-slate-100 flex items-center gap-2">
+                <i data-lucide="printer" class="text-emerald-400"></i>
+                Telemetria & ESG
+              </h2>
+
+              <div class="space-y-4">
+                <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-700">
+                  <span class="text-xs text-slate-400">Redução de CO₂ Estimada</span>
+                  <p class="text-2xl font-bold text-emerald-400 mt-1">- 65% Emissões</p>
+                </div>
+
+                <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-700">
+                  <span class="text-xs text-slate-400">Material Utilizado</span>
+                  <p class="text-lg font-semibold text-slate-200 mt-1">PA12-CF (Fibra de Carbono)</p>
+                </div>
+
+                <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-700">
+                  <span class="text-xs text-slate-400">Status da Impressora 3D</span>
+                  <div class="flex items-center justify-between mt-2">
+                    <span class="text-sm font-medium text-blue-400">Aquecendo Extrusor</span>
+                    <span class="text-xs bg-blue-950 text-blue-300 px-2.5 py-1 rounded-full border border-blue-800">210°C / 230°C</span>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </main>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
