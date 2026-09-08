@@ -63,25 +63,15 @@
     const RefreshCw = (p) => <LucideIcon name="refresh-cw" {...p} />;
     const Camera = (p) => <LucideIcon name="camera" {...p} />;
     const ScanLine = (p) => <LucideIcon name="scan-line" {...p} />;
-    const PlusCircle = (p) => <LucideIcon name="plus-circle" {...p} />;
     const CheckCircle2 = (p) => <LucideIcon name="check-circle-2" {...p} />;
     const Printer = (p) => <LucideIcon name="printer" {...p} />;
     const Wrench = (p) => <LucideIcon name="wrench" {...p} />;
-    const Box = (p) => <LucideIcon name="box" {...p} />;
-    const Truck = (p) => <LucideIcon name="truck" {...p} />;
-    const Zap = (p) => <LucideIcon name="zap" {...p} />;
-    const ShieldCheck = (p) => <LucideIcon name="shield-check" {...p} />;
     const Layers = (p) => <LucideIcon name="layers" {...p} />;
     const Thermometer = (p) => <LucideIcon name="thermometer" {...p} />;
-    const Play = (p) => <LucideIcon name="play" {...p} />;
-    const Pause = (p) => <LucideIcon name="pause" {...p} />;
     const XCircle = (p) => <LucideIcon name="x-circle" {...p} />;
     const Eye = (p) => <LucideIcon name="eye" {...p} />;
-    const ArrowUpRight = (p) => <LucideIcon name="arrow-up-right" {...p} />;
-    const FileText = (p) => <LucideIcon name="file-text" {...p} />;
-    const BarChart3 = (p) => <LucideIcon name="bar-chart-3" {...p} />;
 
-    // DADOS EXPANDIDOS DO ESTOQUE DE PEÇAS
+    // ESTOQUE COM IMAGENS REAIS DE PEÇAS MECÂNICAS PESADAS
     const INITIAL_STOCK = [
       { 
         id: '1', 
@@ -95,9 +85,9 @@
         compatibility: 'IVECO S-WAY / STRALIS',
         material: 'PA12-CF (Reforçado Fibra de Carbono)',
         images: [
-          'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80',
-          'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=600&q=80',
-          'https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=600&q=80'
+          'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=800&q=80',
+          'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
+          'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=800&q=80'
         ]
       },
       { 
@@ -112,8 +102,8 @@
         compatibility: 'IVECO S-WAY / TECTOR',
         material: 'PEEK Alta Resistência Termal',
         images: [
-          'https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?auto=format&fit=crop&w=600&q=80',
-          'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80'
+          'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=800&q=80',
+          'https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=800&q=80'
         ]
       },
       { 
@@ -128,7 +118,8 @@
         compatibility: 'IVECO DAILY / HI-WAY',
         material: 'PA12-CF',
         images: [
-          'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=600&q=80'
+          'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=800&q=80',
+          'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=800&q=80'
         ]
       }
     ];
@@ -148,16 +139,16 @@
       const videoRef = useRef(null);
       const streamRef = useRef(null);
 
-      // HUB IMPRESSÃO 3D - ESTADO DINÂMICO
-      const [printers, setPrinters] = useState([
+      // HUB IMPRESSÃO 3D DETALHADO
+      const [printers] = useState([
         { id: '1', name: 'Impressora 3D #01 (Industrial PEEK)', status: 'Imprimindo', progress: 74, tempBed: '120°C', tempNozzle: '380°C', file: 'ALAVANCA_STR_425141.gcode' },
         { id: '2', name: 'Impressora 3D #02 (PA12-CF Heavy)', status: 'Disponível', progress: 100, tempBed: '25°C', tempNozzle: '25°C', file: 'Aguardando trabalho...' },
         { id: '3', name: 'Impressora 3D #03 (Reciclagem Local)', status: 'Manutenção Preventiva', progress: 0, tempBed: '0°C', tempNozzle: '0°C', file: 'Standby' }
       ]);
 
       const [printQueue, setPrintQueue] = useState([
-        { id: 'Q-101', name: 'Suporte Tampão Óleo Motor', material: 'PA12-CF', timeEst: '45 min', requestedBy: 'IVECO Campinas', status: 'Em Fila' },
-        { id: 'Q-102', name: 'Coletor de Ar Secundário', material: 'PEEK', timeEst: '1h 20m', requestedBy: 'IVECO SP - Anchieta', status: 'Em Fila' }
+        { id: 'Q-101', name: 'Suporte Tampão Óleo Motor', material: 'PA12-CF', timeEst: '45 min', requestedBy: 'IVECO Campinas' },
+        { id: 'Q-102', name: 'Coletor de Ar Secundário', material: 'PEEK', timeEst: '1h 20m', requestedBy: 'IVECO SP - Anchieta' }
       ]);
 
       const [toastMessage, setToastMessage] = useState(null);
@@ -167,7 +158,6 @@
         setTimeout(() => setToastMessage(null), 3500);
       };
 
-      // Câmera WebRTC Real
       const startCamera = async () => {
         setCameraError('');
         try {
@@ -176,13 +166,10 @@
             audio: false
           });
           streamRef.current = stream;
-          if (videoRef.current) {
-            videoRef.current.srcObject = stream;
-          }
+          if (videoRef.current) videoRef.current.srcObject = stream;
           setCameraActive(true);
         } catch (err) {
-          console.error("Erro Câmera:", err);
-          setCameraError('Permissão negada ou câmera não suportada no dispositivo.');
+          setCameraError('Permissão negada ou câmera não disponível no dispositivo.');
           setCameraActive(false);
         }
       };
@@ -217,10 +204,9 @@
           name: partName,
           material: 'PA12-CF',
           timeEst: '55 min',
-          requestedBy: 'IVECO São Paulo',
-          status: 'Em Fila'
+          requestedBy: 'IVECO São Paulo'
         }]);
-        triggerToast(`Peça "${partName}" enviada com sucesso para a fila de Impressão 3D!`);
+        triggerToast(`Peça "${partName}" enviada para a fila de Impressão 3D!`);
         setActiveTab('hub3d');
       };
 
@@ -232,18 +218,18 @@
       return (
         <div className="min-h-screen bg-[#0B0F17] text-slate-100 flex font-sans antialiased">
           
-          {/* TOAST FLUTUANTE */}
+          {/* NOTIFICAÇÃO TOAST */}
           {toastMessage && (
-            <div className="fixed top-5 right-5 z-50 bg-emerald-500 text-slate-950 font-extrabold text-xs px-4 py-3 rounded-xl shadow-2xl border border-emerald-300 flex items-center gap-2 animate-bounce">
+            <div className="fixed top-5 right-5 z-50 bg-emerald-500 text-slate-950 font-extrabold text-xs px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 border border-emerald-300 animate-bounce">
               <CheckCircle2 className="w-4 h-4" />
               <span>{toastMessage}</span>
             </div>
           )}
 
-          {/* SIDEBAR */}
+          {/* SIDEBAR LATERAL */}
           <aside className="w-64 bg-[#0F172A] border-r border-slate-800 flex flex-col justify-between shrink-0 hidden md:flex">
             <div>
-              <div className="p-5 border-b border-slate-800/80 flex items-center gap-3">
+              <div className="p-5 border-b border-slate-800 flex items-center gap-3">
                 <div className="bg-blue-600 font-black text-white text-base px-2.5 py-1 rounded tracking-tighter shadow-lg shadow-blue-600/30">
                   IVECO
                 </div>
@@ -256,62 +242,28 @@
               </div>
 
               <nav className="p-3 space-y-1 text-xs">
-                <div className="px-3 py-1 text-[10px] font-bold text-slate-500 uppercase tracking-wider">Navegação Principal</div>
-
-                <button
-                  onClick={() => { setActiveTab('dashboard'); stopCamera(); }}
-                  className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg font-medium transition ${
-                    activeTab === 'dashboard' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
-                  }`}>
-                  <LayoutDashboard className="w-4 h-4" />
-                  <span>Início / Visão Geral</span>
+                <button onClick={() => { setActiveTab('dashboard'); stopCamera(); }} className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg font-medium transition ${activeTab === 'dashboard' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'}`}>
+                  <LayoutDashboard className="w-4 h-4" /> Início / Visão Geral
                 </button>
-
-                <button
-                  onClick={() => { setActiveTab('scanner'); }}
-                  className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg font-medium transition ${
-                    activeTab === 'scanner' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
-                  }`}>
-                  <ScanLine className="w-4 h-4 text-cyan-400" />
-                  <span>Scanner IA & Câmera</span>
+                <button onClick={() => setActiveTab('scanner')} className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg font-medium transition ${activeTab === 'scanner' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'}`}>
+                  <ScanLine className="w-4 h-4 text-cyan-400" /> Scanner IA & Câmera
                 </button>
-
-                <button
-                  onClick={() => { setActiveTab('hub3d'); stopCamera(); }}
-                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg font-medium transition ${
-                    activeTab === 'hub3d' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
-                  }`}>
+                <button onClick={() => { setActiveTab('hub3d'); stopCamera(); }} className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg font-medium transition ${activeTab === 'hub3d' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'}`}>
+                  <Printer className="w-4 h-4 text-blue-400" /> Hub de Impressão 3D
+                </button>
+                <button onClick={() => { setActiveTab('stock'); stopCamera(); }} className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg font-medium transition ${activeTab === 'stock' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'}`}>
                   <div className="flex items-center gap-2.5">
-                    <Printer className="w-4 h-4 text-blue-400" />
-                    <span>Hub de Impressão 3D</span>
-                  </div>
-                  <span className="bg-blue-500/20 text-blue-400 text-[10px] font-bold px-1.5 py-0.5 rounded">Ativo</span>
-                </button>
-
-                <button
-                  onClick={() => { setActiveTab('stock'); stopCamera(); }}
-                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg font-medium transition ${
-                    activeTab === 'stock' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
-                  }`}>
-                  <div className="flex items-center gap-2.5">
-                    <PackageCheck className="w-4 h-4" />
-                    <span>Estoque de Peças</span>
+                    <PackageCheck className="w-4 h-4" /> Estoque de Peças
                   </div>
                   <span className="bg-slate-800 text-slate-300 text-[10px] px-2 py-0.5 rounded-full">{stockList.length}</span>
                 </button>
-
-                <button
-                  onClick={() => { setActiveTab('esg'); stopCamera(); }}
-                  className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg font-medium transition ${
-                    activeTab === 'esg' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
-                  }`}>
-                  <Leaf className="w-4 h-4 text-emerald-400" />
-                  <span>Relatório Descarbonização</span>
+                <button onClick={() => { setActiveTab('esg'); stopCamera(); }} className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg font-medium transition ${activeTab === 'esg' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'}`}>
+                  <Leaf className="w-4 h-4 text-emerald-400" /> Relatório Descarbonização
                 </button>
               </nav>
             </div>
 
-            <div className="p-4 border-t border-slate-800/80 bg-slate-950/50">
+            <div className="p-4 border-t border-slate-800 bg-slate-950/50">
               <div className="flex items-center gap-2 text-xs text-slate-300 mb-1">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
                 <span className="font-bold">Hub 3D Ativo • Descarbonização</span>
@@ -320,52 +272,41 @@
             </div>
           </aside>
 
-          {/* MAIN CONTENT AREA */}
+          {/* MAIN CONTENT */}
           <main className="flex-1 overflow-y-auto p-4 md:p-8">
 
-            {/* HEADER */}
             <header className="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-800 pb-5 mb-6 gap-4">
               <div>
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-[10px] font-bold text-cyan-400 bg-cyan-500/10 border border-cyan-500/30 px-2 py-0.5 rounded-full uppercase">
-                    Rede Conectada de Recondicionamento & Polímeros Reforçados
-                  </span>
-                </div>
-                <h2 className="text-xl font-bold text-white">HUB DE INOVAÇÃO & DESCARBONIZAÇÃO</h2>
+                <span className="text-[10px] font-bold text-cyan-400 bg-cyan-500/10 border border-cyan-500/30 px-2 py-0.5 rounded-full uppercase">
+                  Rede Conectada de Recondicionamento & Polímeros Reforçados
+                </span>
+                <h2 className="text-xl font-bold text-white mt-1">HUB DE INOVAÇÃO & DESCARBONIZAÇÃO</h2>
               </div>
-
-              <div className="flex items-center gap-3">
-                <button 
-                  onClick={() => setActiveTab('scanner')}
-                  className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-2 shadow-lg shadow-emerald-500/20">
-                  <Camera className="w-4 h-4" />
-                  Iniciar Diagnóstico IA
-                </button>
-              </div>
+              <button onClick={() => setActiveTab('scanner')} className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-2 shadow-lg shadow-emerald-500/20">
+                <Camera className="w-4 h-4" /> Iniciar Diagnóstico IA
+              </button>
             </header>
 
-            {/* TAB: DASHBOARD COM VÍDEO DO CAMINHÃO NO FUNDO */}
+            {/* TAB: DASHBOARD COM VÍDEO DO CAMINHÃO FUNCIONAL */}
             {activeTab === 'dashboard' && (
               <div className="space-y-6">
 
-                {/* HERO COM VÍDEO NO FUNDO */}
                 <div className="relative rounded-3xl overflow-hidden border border-slate-800 min-h-[420px] flex items-end p-6 md:p-10 shadow-2xl">
                   
-                  {/* Vídeo do Caminhão no Fundo */}
+                  {/* VÍDEO DO CAMINHÃO COM FALLBACK ONLINE GARANTIDO */}
                   <video 
                     autoPlay 
                     loop 
                     muted 
                     playsInline 
+                    preload="auto"
                     className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
                     <source src="IVECO22222.mp4" type="video/mp4" />
-                    Seu navegador não suporta vídeos HTML5.
+                    <source src="https://assets.mixkit.co/videos/preview/mixkit-semi-truck-driving-on-a-highway-41525-large.mp4" type="video/mp4" />
                   </video>
 
-                  {/* Gradient Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F17] via-[#0B0F17]/70 to-transparent z-10"></div>
 
-                  {/* Conteúdo Sobreposto */}
                   <div className="relative z-20 space-y-4 max-w-2xl">
                     <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-bold text-[11px] px-3 py-1 rounded-full uppercase tracking-wider inline-flex items-center gap-1.5">
                       <Sparkles className="w-3.5 h-3.5" />
@@ -381,21 +322,14 @@
                     </p>
 
                     <div className="pt-2 flex flex-wrap items-center gap-3">
-                      <button 
-                        onClick={() => setActiveTab('scanner')} 
-                        className="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-5 py-3 rounded-xl transition flex items-center gap-2 shadow-lg shadow-blue-600/30">
-                        <ScanLine className="w-4 h-4" />
-                        Iniciar Diagnóstico IA
+                      <button onClick={() => setActiveTab('scanner')} className="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-5 py-3 rounded-xl transition flex items-center gap-2 shadow-lg shadow-blue-600/30">
+                        <ScanLine className="w-4 h-4" /> Iniciar Diagnóstico IA
                       </button>
-                      <button 
-                        onClick={() => setActiveTab('stock')} 
-                        className="bg-slate-900/80 hover:bg-slate-800 text-slate-200 border border-slate-700 font-bold text-xs px-5 py-3 rounded-xl transition flex items-center gap-2 backdrop-blur-md">
-                        <Layers className="w-4 h-4 text-cyan-400" />
-                        Catálogo CAD Digital
+                      <button onClick={() => setActiveTab('stock')} className="bg-slate-900/80 hover:bg-slate-800 text-slate-200 border border-slate-700 font-bold text-xs px-5 py-3 rounded-xl transition flex items-center gap-2 backdrop-blur-md">
+                        <Layers className="w-4 h-4 text-cyan-400" /> Catálogo CAD Digital
                       </button>
                     </div>
 
-                    {/* Cards de Métricas Flutuantes */}
                     <div className="grid grid-cols-3 gap-3 pt-4 border-t border-slate-800/80">
                       <div className="bg-slate-950/70 border border-slate-800 p-2.5 rounded-xl text-center backdrop-blur-md">
                         <p className="text-emerald-400 font-black text-base md:text-lg">-65%</p>
@@ -413,12 +347,11 @@
                   </div>
                 </div>
 
-                {/* RESUMO RÁPIDO DO ESTOQUE */}
+                {/* COMPONENTES DESTAQUE */}
                 <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5">
                   <div className="flex justify-between items-center mb-4">
                     <h3 className="font-bold text-sm text-white flex items-center gap-2">
-                      <Wrench className="w-4 h-4 text-emerald-400" />
-                      Componentes Destaque em Estoque
+                      <Wrench className="w-4 h-4 text-emerald-400" /> Componentes Destaque em Estoque
                     </h3>
                     <button onClick={() => setActiveTab('stock')} className="text-xs text-emerald-400 hover:underline font-semibold">
                       Ver Catálogo Completo →
@@ -427,10 +360,7 @@
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {stockList.map(item => (
-                      <div 
-                        key={item.id} 
-                        onClick={() => { setSelectedPart(item); setActiveImageIdx(0); }}
-                        className="bg-slate-950 border border-slate-800/80 rounded-xl p-3 flex gap-3 items-center hover:border-emerald-500/50 cursor-pointer transition group">
+                      <div key={item.id} onClick={() => { setSelectedPart(item); setActiveImageIdx(0); }} className="bg-slate-950 border border-slate-800 rounded-xl p-3 flex gap-3 items-center hover:border-emerald-500/50 cursor-pointer transition group">
                         <img src={item.images[0]} alt={item.name} className="w-16 h-16 object-cover rounded-lg shrink-0 border border-slate-800" />
                         <div className="overflow-hidden">
                           <p className="font-bold text-xs text-slate-200 group-hover:text-emerald-400 truncate">{item.name}</p>
@@ -446,14 +376,13 @@
               </div>
             )}
 
-            {/* TAB: ESTOQUE DE PEÇAS COM IMAGENS E MODAL DE DETALHES */}
+            {/* TAB: ESTOQUE DE PEÇAS COM GALERIA DE FOTOS REALISTAS */}
             {activeTab === 'stock' && (
               <div className="space-y-6">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                   <div>
                     <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                      <PackageCheck className="w-5 h-5 text-emerald-400" />
-                      Catálogo de Componentes Recondicionados e Impressos
+                      <PackageCheck className="w-5 h-5 text-emerald-400" /> Catálogo de Componentes Recondicionados e Impressos
                     </h3>
                     <p className="text-xs text-slate-400">Consulte fotos técnicas, disponibilidade e localização física no almoxarifado</p>
                   </div>
@@ -467,12 +396,9 @@
                   />
                 </div>
 
-                {/* GRID DE CARDS DO ESTOQUE COM IMAGENS */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                   {filteredStock.map(item => (
-                    <div 
-                      key={item.id} 
-                      className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-slate-700 transition flex flex-col justify-between">
+                    <div key={item.id} className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-slate-700 transition flex flex-col justify-between">
                       <div>
                         <div className="relative aspect-video bg-slate-950 overflow-hidden">
                           <img src={item.images[0]} alt={item.name} className="w-full h-full object-cover" />
@@ -487,7 +413,7 @@
                           <h4 className="font-bold text-xs text-white leading-snug">{item.name}</h4>
                           <p className="text-[10px] font-mono text-emerald-400">Código: {item.code}</p>
 
-                          <div className="space-y-1 pt-2 border-t border-slate-800/80 text-[11px] text-slate-400">
+                          <div className="space-y-1 pt-2 border-t border-slate-800 text-[11px] text-slate-400">
                             <p><strong className="text-slate-300">Condição:</strong> {item.condition}</p>
                             <p><strong className="text-slate-300">Quantidade:</strong> {item.quantity} unidades</p>
                             <p className="truncate"><strong className="text-slate-300">Local:</strong> {item.location}</p>
@@ -496,15 +422,10 @@
                       </div>
 
                       <div className="p-4 pt-0 flex gap-2">
-                        <button 
-                          onClick={() => { setSelectedPart(item); setActiveImageIdx(0); }}
-                          className="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs py-2 rounded-xl transition flex items-center justify-center gap-1.5 border border-slate-700">
-                          <Eye className="w-3.5 h-3.5" />
-                          Ver Detalhes
+                        <button onClick={() => { setSelectedPart(item); setActiveImageIdx(0); }} className="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs py-2 rounded-xl transition flex items-center justify-center gap-1.5 border border-slate-700">
+                          <Eye className="w-3.5 h-3.5" /> Ver Detalhes
                         </button>
-                        <button 
-                          onClick={() => sendTo3DPrinter(item.name)}
-                          className="bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 border border-blue-500/30 font-bold text-xs px-3 py-2 rounded-xl transition">
+                        <button onClick={() => sendTo3DPrinter(item.name)} className="bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 border border-blue-500/30 font-bold text-xs px-3 py-2 rounded-xl transition">
                           <Printer className="w-3.5 h-3.5" />
                         </button>
                       </div>
@@ -519,13 +440,11 @@
               <div className="space-y-6">
                 <div>
                   <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                    <Printer className="w-5 h-5 text-blue-400" />
-                    Hub de Manufatura Aditiva On-Demand
+                    <Printer className="w-5 h-5 text-blue-400" /> Hub de Manufatura Aditiva On-Demand
                   </h3>
                   <p className="text-xs text-slate-400">Monitoramento de temperatura, filamentos e controle da fila de produção local</p>
                 </div>
 
-                {/* IMPRESSORAS 3D MONITORAMENTO EM TEMPO REAL */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {printers.map(p => (
                     <div key={p.id} className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
@@ -552,26 +471,23 @@
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-2 gap-2 text-[10px] bg-slate-950 p-2 rounded-xl border border-slate-800/80">
+                      <div className="grid grid-cols-2 gap-2 text-[10px] bg-slate-950 p-2 rounded-xl border border-slate-800">
                         <div className="flex items-center gap-1.5 text-slate-400">
-                          <Thermometer className="w-3 h-3 text-red-400" />
-                          <span>Extrusor: <strong className="text-slate-200">{p.tempNozzle}</strong></span>
+                          <Thermometer className="w-3 h-3 text-red-400" /> Extrusor: <strong className="text-slate-200">{p.tempNozzle}</strong>
                         </div>
                         <div className="flex items-center gap-1.5 text-slate-400">
-                          <Thermometer className="w-3 h-3 text-amber-400" />
-                          <span>Mesa: <strong className="text-slate-200">{p.tempBed}</strong></span>
+                          <Thermometer className="w-3 h-3 text-amber-400" /> Mesa: <strong className="text-slate-200">{p.tempBed}</strong>
                         </div>
                       </div>
                     </div>
                   ))}
                 </div>
 
-                {/* FILA DE IMPRESSÃO GERENCIÁVEL */}
                 <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5">
                   <h4 className="font-bold text-xs text-white mb-3">Fila de Produção de Peças Sob Demanda</h4>
                   <div className="space-y-2">
                     {printQueue.map((item, idx) => (
-                      <div key={item.id} className="bg-slate-950 border border-slate-800/80 rounded-xl p-3 flex flex-col md:flex-row justify-between items-start md:items-center gap-2">
+                      <div key={item.id} className="bg-slate-950 border border-slate-800 rounded-xl p-3 flex flex-col md:flex-row justify-between items-start md:items-center gap-2">
                         <div>
                           <p className="font-bold text-xs text-slate-200">{idx + 1}. {item.name}</p>
                           <p className="text-[10px] text-slate-400">Material: <span className="text-cyan-400 font-semibold">{item.material}</span> • Solicitante: {item.requestedBy}</p>
@@ -580,12 +496,7 @@
                           <span className="text-[10px] font-mono text-slate-400 bg-slate-900 px-2.5 py-1 rounded border border-slate-800">
                             Est: {item.timeEst}
                           </span>
-                          <button 
-                            onClick={() => {
-                              setPrintQueue(printQueue.filter(q => q.id !== item.id));
-                              triggerToast('Item removido da fila.');
-                            }}
-                            className="text-red-400 hover:text-red-300 p-1">
+                          <button onClick={() => setPrintQueue(printQueue.filter(q => q.id !== item.id))} className="text-red-400 hover:text-red-300 p-1">
                             <XCircle className="w-4 h-4" />
                           </button>
                         </div>
@@ -596,18 +507,16 @@
               </div>
             )}
 
-            {/* TAB: RELATÓRIO DE DESCARBONIZAÇÃO ESG COMPLETO */}
+            {/* TAB: RELATÓRIO DE DESCARBONIZAÇÃO ESG */}
             {activeTab === 'esg' && (
               <div className="space-y-6">
                 <div>
                   <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                    <Leaf className="w-5 h-5 text-emerald-400" />
-                    Relatório de Descarbonização da Rede IVECO
+                    <Leaf className="w-5 h-5 text-emerald-400" /> Relatório de Descarbonização da Rede IVECO
                   </h3>
                   <p className="text-xs text-slate-400">Métricas de impacto ambiental geradas pela substituição de logística convencional por manufatura aditiva local</p>
                 </div>
 
-                {/* CARDS DE INDICADORES ESG */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-1">
                     <span className="text-xs text-slate-400">Total CO₂ Evitado</span>
@@ -626,7 +535,6 @@
                   </div>
                 </div>
 
-                {/* TABELA COMPARATIVA DE IMPACTO */}
                 <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5">
                   <h4 className="font-bold text-xs text-white mb-3">Comparativo de Impacto Ambiental por Peça</h4>
                   <div className="overflow-x-auto">
@@ -639,7 +547,7 @@
                           <th className="p-3 text-emerald-400">Redução CO₂</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-slate-800/80">
+                      <tbody className="divide-y divide-slate-800">
                         <tr>
                           <td className="p-3 font-semibold text-slate-200">Alavanca Comando Válvula</td>
                           <td className="p-3 text-slate-400">22.5 kg CO₂ / peça</td>
@@ -664,12 +572,9 @@
               <div className="max-w-2xl mx-auto space-y-6">
                 <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center">
                   <h3 className="text-lg font-bold text-white mb-2 flex items-center justify-center gap-2">
-                    <Camera className="w-5 h-5 text-emerald-400" />
-                    Diagnóstico por Visão Computacional ao Vivo
+                    <Camera className="w-5 h-5 text-emerald-400" /> Diagnóstico por Visão Computacional ao Vivo
                   </h3>
-                  <p className="text-xs text-slate-400 mb-6">
-                    Aponte a câmera para a peça danificada para avaliar rachaduras e gerar o modelo 3D equivalente.
-                  </p>
+                  <p className="text-xs text-slate-400 mb-6">Aponte a câmera para a peça danificada para avaliar rachaduras e gerar o modelo 3D equivalente.</p>
 
                   <div className="relative aspect-video bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 flex items-center justify-center mb-4">
                     {cameraActive ? (
@@ -689,11 +594,7 @@
                     )}
                   </div>
 
-                  {cameraError && (
-                    <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-xs text-red-400">
-                      {cameraError}
-                    </div>
-                  )}
+                  {cameraError && <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-xs text-red-400">{cameraError}</div>}
 
                   <div className="flex gap-3 justify-center">
                     {!cameraActive ? (
@@ -705,9 +606,7 @@
                         <button onClick={handleScanPart} disabled={isScanning} className="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs px-5 py-3 rounded-xl transition flex items-center gap-2">
                           <ScanLine className="w-4 h-4" /> Escanear Componente
                         </button>
-                        <button onClick={stopCamera} className="bg-slate-800 text-slate-300 font-bold text-xs px-4 py-3 rounded-xl">
-                          Desligar
-                        </button>
+                        <button onClick={stopCamera} className="bg-slate-800 text-slate-300 font-bold text-xs px-4 py-3 rounded-xl">Desligar</button>
                       </>
                     )}
                   </div>
@@ -720,9 +619,7 @@
                         <h4 className="font-bold text-sm text-white">{scannedResult.name}</h4>
                         <p className="text-xs font-mono text-emerald-400">CÓDIGO: {scannedResult.code}</p>
                       </div>
-                      <span className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-bold px-2.5 py-1 rounded-full">
-                        Homologado para Reuso
-                      </span>
+                      <span className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-bold px-2.5 py-1 rounded-full">Homologado para Reuso</span>
                     </div>
 
                     <div className="grid grid-cols-2 gap-3 text-xs">
@@ -736,9 +633,7 @@
                       </div>
                     </div>
 
-                    <button 
-                      onClick={() => sendTo3DPrinter(scannedResult.name)}
-                      className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs py-3 rounded-xl transition flex items-center justify-center gap-2">
+                    <button onClick={() => sendTo3DPrinter(scannedResult.name)} className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs py-3 rounded-xl transition flex items-center justify-center gap-2">
                       <Printer className="w-4 h-4" /> Enviar para Fila de Impressão 3D
                     </button>
                   </div>
@@ -748,55 +643,41 @@
 
           </main>
 
-          {/* MODAL DETALHES DO COMPONENTE COM GALERIA DE FOTOS (REFERÊNCIA SEGUNDA FOTO) */}
+          {/* MODAL DETALHES DO COMPONENTE COM GALERIA COMPLETA */}
           {selectedPart && (
             <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto">
               <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 w-full max-w-2xl space-y-5 shadow-2xl relative">
                 
                 <div className="flex justify-between items-center border-b border-slate-800 pb-3">
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">
-                      IVECO São Paulo
-                    </span>
+                    <span className="text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">IVECO São Paulo</span>
                     <h3 className="text-sm font-extrabold text-white">Detalhes do Componente</h3>
                   </div>
-                  <button onClick={() => setSelectedPart(null)} className="text-slate-400 hover:text-white font-bold text-xs bg-slate-800 px-3 py-1.5 rounded-lg">
-                    Fechar [X]
-                  </button>
+                  <button onClick={() => setSelectedPart(null)} className="text-slate-400 hover:text-white font-bold text-xs bg-slate-800 px-3 py-1.5 rounded-lg">Fechar [X]</button>
                 </div>
 
-                {/* GALERIA DE IMAGENS DO COMPONENTE */}
                 <div className="space-y-3">
                   <div className="relative aspect-video bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 flex items-center justify-center">
-                    <img src={selectedPart.images[activeImageIdx]} alt="Componente IVECO" className="w-full h-full object-contain p-4" />
-                    <span className="absolute bottom-2 right-2 text-[9px] bg-slate-900/80 text-slate-400 px-2 py-0.5 rounded font-mono">
-                      WEBP COMPRIMIDO
-                    </span>
+                    <img src={selectedPart.images[activeImageIdx]} alt="Componente IVECO" className="w-full h-full object-cover" />
+                    <span className="absolute bottom-2 right-2 text-[9px] bg-slate-900/80 text-slate-400 px-2 py-0.5 rounded font-mono">WEBP COMPRIMIDO</span>
                   </div>
 
-                  {/* THUMBNAILS DAS IMAGENS */}
                   <div className="flex justify-center gap-2">
                     {selectedPart.images.map((img, idx) => (
-                      <button 
-                        key={idx}
-                        onClick={() => setActiveImageIdx(idx)}
-                        className={`w-12 h-12 rounded-lg overflow-hidden border-2 transition ${
-                          activeImageIdx === idx ? 'border-emerald-400 scale-105' : 'border-slate-800 opacity-60'
-                        }`}>
+                      <button key={idx} onClick={() => setActiveImageIdx(idx)} className={`w-12 h-12 rounded-lg overflow-hidden border-2 transition ${activeImageIdx === idx ? 'border-emerald-400 scale-105' : 'border-slate-800 opacity-60'}`}>
                         <img src={img} className="w-full h-full object-cover" />
                       </button>
                     ))}
                   </div>
                 </div>
 
-                {/* FICHA TÉCNICA DETALHADA */}
-                <div className="bg-slate-950 rounded-2xl p-4 border border-slate-800/80 space-y-3 text-xs">
+                <div className="bg-slate-950 rounded-2xl p-4 border border-slate-800 space-y-3 text-xs">
                   <div>
                     <h4 className="font-extrabold text-sm text-white uppercase">{selectedPart.name}</h4>
                     <p className="text-[11px] font-mono text-slate-400">Código: {selectedPart.code}</p>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4 border-t border-b border-slate-800/80 py-3">
+                  <div className="grid grid-cols-2 gap-4 border-t border-b border-slate-800 py-3">
                     <div>
                       <span className="text-[10px] text-slate-500 block uppercase font-bold">STATUS</span>
                       <span className="font-bold text-emerald-400">{selectedPart.status}</span>
@@ -826,16 +707,9 @@
                   </div>
                 </div>
 
-                <div className="flex gap-2">
-                  <button 
-                    onClick={() => {
-                      sendTo3DPrinter(selectedPart.name);
-                      setSelectedPart(null);
-                    }}
-                    className="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs py-3 rounded-xl transition flex items-center justify-center gap-2">
-                    <Printer className="w-4 h-4" /> Solicitar Réplica no Hub 3D
-                  </button>
-                </div>
+                <button onClick={() => { sendTo3DPrinter(selectedPart.name); setSelectedPart(null); }} className="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs py-3 rounded-xl transition flex items-center justify-center gap-2">
+                  <Printer className="w-4 h-4" /> Solicitar Réplica no Hub 3D
+                </button>
 
               </div>
             </div>
