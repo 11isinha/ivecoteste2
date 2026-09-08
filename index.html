@@ -70,6 +70,8 @@
     const Thermometer = (p) => <LucideIcon name="thermometer" {...p} />;
     const XCircle = (p) => <LucideIcon name="x-circle" {...p} />;
     const Eye = (p) => <LucideIcon name="eye" {...p} />;
+    const PlusCircle = (p) => <LucideIcon name="plus-circle" {...p} />;
+    const X = (p) => <LucideIcon name="x" {...p} />;
 
     // ESTOQUE COM IMAGENS REAIS DE PEÇAS MECÂNICAS PESADAS
     const INITIAL_STOCK = [
@@ -131,6 +133,16 @@
       const [selectedPart, setSelectedPart] = useState(null);
       const [activeImageIdx, setActiveImageIdx] = useState(0);
       const [searchTerm, setSearchTerm] = useState('');
+      const [stockFilter, setStockFilter] = useState('Todos');
+
+      // Modal de Cadastro de Peças
+      const [showCadastrarModal, setShowCadastrarModal] = useState(false);
+      const [newPartName, setNewPartName] = useState('');
+      const [newPartCode, setNewPartCode] = useState('');
+      const [newPartQuantity, setNewPartQuantity] = useState('1');
+      const [newPartLocation, setNewPartLocation] = useState('Almoxarifado Principal');
+      const [newPartImageUrl, setNewPartImageUrl] = useState('');
+      const [newPartStatus, setNewPartStatus] = useState('Disponível');
 
       // Câmera Real WebRTC
       const [cameraActive, setCameraActive] = useState(false);
@@ -157,6 +169,37 @@
       const triggerToast = (msg) => {
         setToastMessage(msg);
         setTimeout(() => setToastMessage(null), 3500);
+      };
+
+      // Função para Cadastrar Nova Peça no Estoque
+      const handleCadastrarPeca = (e) => {
+        e.preventDefault();
+        if (!newPartName.trim()) return;
+
+        const newPart = {
+          id: String(Date.now()),
+          name: newPartName.toUpperCase(),
+          code: newPartCode.trim() || `IVE-${Math.floor(1000 + Math.random() * 9000)}`,
+          status: newPartStatus,
+          quantity: Number(newPartQuantity) || 1,
+          condition: 'Novo Cadastrado',
+          year: new Date().getFullYear(),
+          location: newPartLocation,
+          compatibility: 'IVECO Frota Pesada',
+          material: 'PA12-CF Polímero Reforçado',
+          images: [
+            newPartImageUrl.trim() || 'https://images.tcdn.com.br/img/img_prod/920964/engrenagem_do_comando_de_valvula_para_iveco_cursor_8_euro_3_99436187_17565_1_4e7fa24537e2bc9521e272a7a40cdedb.jpg'
+          ]
+        };
+
+        setStockList([newPart, ...stockList]);
+        setShowCadastrarModal(false);
+        setNewPartName('');
+        setNewPartCode('');
+        setNewPartQuantity('1');
+        setNewPartImageUrl('');
+        triggerToast(`Peça "${newPart.name}" cadastrada com sucesso no estoque!`);
+        setActiveTab('stock');
       };
 
       const startCamera = async () => {
@@ -211,14 +254,15 @@
         setActiveTab('hub3d');
       };
 
-      const filteredStock = stockList.filter(item => 
-        item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-        item.code.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+      const filteredStock = stockList.filter(item => {
+        const matches = item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                        item.code.toLowerCase().includes(searchTerm.toLowerCase());
+        if (stockFilter === 'Todos') return matches;
+        return matches && item.status === stockFilter;
+      });
 
       return (
         <div className="min-h-screen bg-[#0B0F17] text-slate-100 flex font-sans antialiased">
-
 
           {/* NOTIFICAÇÃO TOAST */}
           {toastMessage && (
@@ -284,9 +328,15 @@
                 </span>
                 <h2 className="text-xl font-bold text-white mt-1">HUB DE INOVAÇÃO & DESCARBONIZAÇÃO</h2>
               </div>
-              <button onClick={() => setActiveTab('scanner')} className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-2 shadow-lg shadow-emerald-500/20">
-                <Camera className="w-4 h-4" /> Iniciar Diagnóstico IA
-              </button>
+              
+              <div className="flex items-center gap-3">
+                <button onClick={() => setShowCadastrarModal(true)} className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-2 shadow-lg">
+                  <PlusCircle className="w-4 h-4" /> + Cadastrar Peça
+                </button>
+                <button onClick={() => setActiveTab('scanner')} className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-2 shadow-lg shadow-emerald-500/20">
+                  <Camera className="w-4 h-4" /> Iniciar Diagnóstico IA
+                </button>
+              </div>
             </header>
 
             {/* TAB: DASHBOARD COM VÍDEO DO CAMINHÃO FUNCIONAL */}
@@ -306,13 +356,12 @@
                     <source src="./iveco_animacao.mp4" type="video/mp4" />
                   </video>
 
-                  {/* Camadas para manter o texto legível sem esconder o vídeo */}
                   <div className="absolute inset-0 bg-gradient-to-r from-[#05070C]/95 via-[#05070C]/65 to-[#05070C]/20 z-10"></div>
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F17] via-transparent to-[#0B0F17]/20 z-10"></div>
 
                   <div className="absolute top-5 right-5 z-20 flex items-center gap-2 rounded-full border border-white/10 bg-black/30 px-3 py-1.5 backdrop-blur-md">
                     <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span className="text-[10px] font-bold tracking-wider text-white/80">ECOOFICINA 4.0 • AO VIVO</span>
+                    <span className="text-[10px] font-bold tracking-wider text-white/85">ECOOFICINA 4.0 • AO VIVO</span>
                   </div>
 
                   <div className="relative z-20 space-y-4 max-w-2xl">
@@ -384,24 +433,29 @@
               </div>
             )}
 
-            {/* TAB: ESTOQUE DE PEÇAS COM GALERIA DE FOTOS REALISTAS */}
+            {/* TAB: ESTOQUE DE PEÇAS COM CADASTRO E BUSCA */}
             {activeTab === 'stock' && (
               <div className="space-y-6">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                   <div>
                     <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                      <PackageCheck className="w-5 h-5 text-emerald-400" /> Catálogo de Componentes Recondicionados e Impressos
+                      <PackageCheck className="w-5 h-5 text-emerald-400" /> Catálogo de Componentes e Estoque
                     </h3>
-                    <p className="text-xs text-slate-400">Consulte fotos técnicas, disponibilidade e localização física no almoxarifado</p>
+                    <p className="text-xs text-slate-400">Consulte fotos técnicas, disponibilidade e adicione novas peças</p>
                   </div>
 
-                  <input 
-                    type="text" 
-                    placeholder="Filtrar por nome ou código..." 
-                    value={searchTerm} 
-                    onChange={e => setSearchTerm(e.target.value)}
-                    className="bg-slate-900 border border-slate-800 text-xs text-white rounded-xl px-4 py-2.5 w-full md:w-72 focus:outline-none focus:border-emerald-500" 
-                  />
+                  <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
+                    <input 
+                      type="text" 
+                      placeholder="Filtrar por nome ou código..." 
+                      value={searchTerm} 
+                      onChange={e => setSearchTerm(e.target.value)}
+                      className="bg-slate-900 border border-slate-800 text-xs text-white rounded-xl px-4 py-2.5 w-full md:w-64 focus:outline-none focus:border-emerald-500" 
+                    />
+                    <button onClick={() => setShowCadastrarModal(true)} className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 whitespace-nowrap">
+                      <PlusCircle className="w-4 h-4" /> Nova Peça
+                    </button>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -542,36 +596,6 @@
                     <p className="text-[10px] text-slate-500">Taxa de reciclabilidade em matriz PA12-CF</p>
                   </div>
                 </div>
-
-                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5">
-                  <h4 className="font-bold text-xs text-white mb-3">Comparativo de Impacto Ambiental por Peça</h4>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-left text-xs">
-                      <thead className="bg-slate-950 text-slate-400 border-b border-slate-800">
-                        <tr>
-                          <th className="p-3">Componente Homologado</th>
-                          <th className="p-3">Produção Tradicional (Aço)</th>
-                          <th className="p-3">Impressão 3D Local (PA12-CF)</th>
-                          <th className="p-3 text-emerald-400">Redução CO₂</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-slate-800">
-                        <tr>
-                          <td className="p-3 font-semibold text-slate-200">Alavanca Comando Válvula</td>
-                          <td className="p-3 text-slate-400">22.5 kg CO₂ / peça</td>
-                          <td className="p-3 text-cyan-400">4.1 kg CO₂ / peça</td>
-                          <td className="p-3 font-bold text-emerald-400">- 81.7%</td>
-                        </tr>
-                        <tr>
-                          <td className="p-3 font-semibold text-slate-200">Suporte do Tampão de Óleo</td>
-                          <td className="p-3 text-slate-400">14.2 kg CO₂ / peça</td>
-                          <td className="p-3 text-cyan-400">2.0 kg CO₂ / peça</td>
-                          <td className="p-3 font-bold text-emerald-400">- 85.9%</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
               </div>
             )}
 
@@ -651,7 +675,99 @@
 
           </main>
 
-          {/* MODAL DETALHES DO COMPONENTE COM GALERIA COMPLETA */}
+          {/* MODAL CADASTRAR NOVA PEÇA */}
+          {showCadastrarModal && (
+            <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
+              <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+                <div className="flex justify-between items-center border-b border-slate-800 pb-3">
+                  <h3 className="font-bold text-base text-white flex items-center gap-2">
+                    <PlusCircle className="w-5 h-5 text-emerald-400" />
+                    Cadastrar Nova Peça no Estoque
+                  </h3>
+                  <button onClick={() => setShowCadastrarModal(false)} className="text-slate-400 hover:text-white">
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+
+                <form onSubmit={handleCadastrarPeca} className="space-y-3 text-xs">
+                  <div>
+                    <label className="text-slate-300 font-medium block mb-1">Nome da Peça *</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Ex: Bomba de Alta Pressão"
+                      value={newPartName}
+                      onChange={e => setNewPartName(e.target.value)}
+                      className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-slate-200 focus:outline-none focus:border-emerald-500"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label className="text-slate-300 font-medium block mb-1">Código IVECO</label>
+                      <input
+                        type="text"
+                        placeholder="Ex: IVE-9921"
+                        value={newPartCode}
+                        onChange={e => setNewPartCode(e.target.value)}
+                        className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-slate-200 focus:outline-none focus:border-emerald-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-slate-300 font-medium block mb-1">Quantidade</label>
+                      <input
+                        type="number"
+                        min="1"
+                        value={newPartQuantity}
+                        onChange={e => setNewPartQuantity(e.target.value)}
+                        className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-slate-200 focus:outline-none focus:border-emerald-500"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="text-slate-300 font-medium block mb-1">Localização no Almoxarifado</label>
+                    <input
+                      type="text"
+                      placeholder="Ex: Prateleira 02 - Gaveta 05"
+                      value={newPartLocation}
+                      onChange={e => setNewPartLocation(e.target.value)}
+                      className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-slate-200 focus:outline-none focus:border-emerald-500"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-slate-300 font-medium block mb-1">Link da Imagem (Opcional)</label>
+                    <input
+                      type="url"
+                      placeholder="https://exemplo.com/foto.jpg"
+                      value={newPartImageUrl}
+                      onChange={e => setNewPartImageUrl(e.target.value)}
+                      className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-slate-200 focus:outline-none focus:border-emerald-500"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-slate-300 font-medium block mb-1">Status do Item</label>
+                    <select
+                      value={newPartStatus}
+                      onChange={e => setNewPartStatus(e.target.value)}
+                      className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-slate-200 focus:outline-none focus:border-emerald-500">
+                      <option value="Disponível">Disponível</option>
+                      <option value="Indisponível">Indisponível</option>
+                    </select>
+                  </div>
+
+                  <div className="pt-2 flex gap-2">
+                    <button type="button" onClick={() => setShowCadastrarModal(false)} className="flex-1 py-2.5 bg-slate-800 text-slate-300 font-bold rounded-xl transition">Cancelar</button>
+                    <button type="submit" className="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl transition shadow-lg">Salvar Peça</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
+
+          {/* MODAL DETALHES DA PEÇA */}
           {selectedPart && (
             <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto">
               <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 w-full max-w-2xl space-y-5 shadow-2xl relative">
@@ -667,15 +783,6 @@
                 <div className="space-y-3">
                   <div className="relative aspect-video bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 flex items-center justify-center">
                     <img src={selectedPart.images[activeImageIdx]} alt="Componente IVECO" className="w-full h-full object-cover" />
-                    <span className="absolute bottom-2 right-2 text-[9px] bg-slate-900/80 text-slate-400 px-2 py-0.5 rounded font-mono">WEBP COMPRIMIDO</span>
-                  </div>
-
-                  <div className="flex justify-center gap-2">
-                    {selectedPart.images.map((img, idx) => (
-                      <button key={idx} onClick={() => setActiveImageIdx(idx)} className={`w-12 h-12 rounded-lg overflow-hidden border-2 transition ${activeImageIdx === idx ? 'border-emerald-400 scale-105' : 'border-slate-800 opacity-60'}`}>
-                        <img src={img} className="w-full h-full object-cover" />
-                      </button>
-                    ))}
                   </div>
                 </div>
 
@@ -686,32 +793,10 @@
                   </div>
 
                   <div className="grid grid-cols-2 gap-4 border-t border-b border-slate-800 py-3">
-                    <div>
-                      <span className="text-[10px] text-slate-500 block uppercase font-bold">STATUS</span>
-                      <span className="font-bold text-emerald-400">{selectedPart.status}</span>
-                    </div>
-                    <div>
-                      <span className="text-[10px] text-slate-500 block uppercase font-bold">QUANTIDADE</span>
-                      <span className="font-bold text-slate-200">{selectedPart.quantity} unidades</span>
-                    </div>
-                    <div>
-                      <span className="text-[10px] text-slate-500 block uppercase font-bold">CONDIÇÃO</span>
-                      <span className="font-bold text-slate-200">{selectedPart.condition}</span>
-                    </div>
-                    <div>
-                      <span className="text-[10px] text-slate-500 block uppercase font-bold">ANO / FABR.</span>
-                      <span className="font-bold text-slate-200">{selectedPart.year}</span>
-                    </div>
-                  </div>
-
-                  <div className="space-y-1">
-                    <span className="text-[10px] text-slate-500 block uppercase font-bold">LOCALIZAÇÃO FÍSICA</span>
-                    <p className="font-mono text-emerald-400 font-semibold">{selectedPart.location}</p>
-                  </div>
-
-                  <div className="space-y-1">
-                    <span className="text-[10px] text-slate-500 block uppercase font-bold">COMPATIBILIDADE</span>
-                    <p className="font-semibold text-slate-300">{selectedPart.compatibility}</p>
+                    <div><span className="text-[10px] text-slate-500 block uppercase font-bold">STATUS</span><span className="font-bold text-emerald-400">{selectedPart.status}</span></div>
+                    <div><span className="text-[10px] text-slate-500 block uppercase font-bold">QUANTIDADE</span><span className="font-bold text-slate-200">{selectedPart.quantity} unidades</span></div>
+                    <div><span className="text-[10px] text-slate-500 block uppercase font-bold">CONDIÇÃO</span><span className="font-bold text-slate-200">{selectedPart.condition}</span></div>
+                    <div><span className="text-[10px] text-slate-500 block uppercase font-bold">LOCALIZAÇÃO</span><span className="font-bold text-slate-200">{selectedPart.location}</span></div>
                   </div>
                 </div>
 
