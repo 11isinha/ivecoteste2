@@ -126,22 +126,8 @@
 
     function App() {
       const [activeTab, setActiveTab] = useState('dashboard');
-      const [introVisible, setIntroVisible] = useState(true);
-      const [introClosing, setIntroClosing] = useState(false);
       const [stockList, setStockList] = useState(INITIAL_STOCK);
 
-      // Abertura cinematográfica: o vídeo toca uma vez e depois libera o sistema.
-      const encerrarIntro = () => {
-        if (introClosing) return;
-        setIntroClosing(true);
-        setTimeout(() => setIntroVisible(false), 700);
-      };
-
-      useEffect(() => {
-        // Fallback caso o navegador não dispare o evento "ended".
-        const timer = setTimeout(encerrarIntro, 11500);
-        return () => clearTimeout(timer);
-      }, []);
       const [selectedPart, setSelectedPart] = useState(null);
       const [activeImageIdx, setActiveImageIdx] = useState(0);
       const [searchTerm, setSearchTerm] = useState('');
@@ -233,41 +219,6 @@
       return (
         <div className="min-h-screen bg-[#0B0F17] text-slate-100 flex font-sans antialiased">
 
-          {/* ================= ANIMAÇÃO DE ABERTURA ================= */}
-          {introVisible && (
-            <div
-              className={`fixed inset-0 z-[9999] bg-[#05070C] transition-opacity duration-700 ${introClosing ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
-            >
-              <video
-                autoPlay
-                muted
-                playsInline
-                preload="auto"
-                onEnded={encerrarIntro}
-                onError={encerrarIntro}
-                className="absolute inset-0 w-full h-full object-cover"
-              >
-                <source src="./iveco_animacao.mp4" type="video/mp4" />
-              </video>
-
-              <div className="absolute inset-0 bg-black/20 pointer-events-none"></div>
-
-              <div className="absolute inset-0 flex flex-col items-center justify-end pb-8 pointer-events-none">
-                <button
-                  type="button"
-                  onClick={encerrarIntro}
-                  className="pointer-events-auto bg-white/15 hover:bg-white/25 backdrop-blur-md border border-white/30 text-white text-xs font-bold px-6 py-3 rounded-full transition shadow-xl"
-                >
-                  Pular animação
-                </button>
-              </div>
-
-              <div className="absolute top-5 left-5 flex items-center gap-2 text-[11px] text-white/70 font-semibold">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                ECOOFICINA 4.0
-              </div>
-            </div>
-          )}
 
           {/* NOTIFICAÇÃO TOAST */}
           {toastMessage && (
@@ -342,21 +293,27 @@
             {activeTab === 'dashboard' && (
               <div className="space-y-6">
 
-                <div className="relative rounded-3xl overflow-hidden border border-slate-800 min-h-[420px] flex items-end p-6 md:p-10 shadow-2xl">
+                <div className="relative rounded-3xl overflow-hidden border border-slate-800 min-h-[520px] md:min-h-[590px] flex items-end p-6 md:p-10 shadow-2xl shadow-black/40">
                   
-                  {/* VÍDEO DO CAMINHÃO COM FALLBACK ONLINE GARANTIDO */}
+                  {/* VÍDEO PRINCIPAL — APRESENTAÇÃO DA ECOOFICINA */}
                   <video 
                     autoPlay 
                     loop 
                     muted 
                     playsInline 
-                    preload="auto"
-                    className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
-                    <source src="IVECO22222.mp4" type="video/mp4" />
-                    <source src="https://assets.mixkit.co/videos/preview/mixkit-semi-truck-driving-on-a-highway-41525-large.mp4" type="video/mp4" />
+                    preload="metadata"
+                    className="absolute inset-0 w-full h-full object-cover z-0 opacity-55">
+                    <source src="./iveco_animacao.mp4" type="video/mp4" />
                   </video>
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F17] via-[#0B0F17]/70 to-transparent z-10"></div>
+                  {/* Camadas para manter o texto legível sem esconder o vídeo */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#05070C]/95 via-[#05070C]/65 to-[#05070C]/20 z-10"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F17] via-transparent to-[#0B0F17]/20 z-10"></div>
+
+                  <div className="absolute top-5 right-5 z-20 flex items-center gap-2 rounded-full border border-white/10 bg-black/30 px-3 py-1.5 backdrop-blur-md">
+                    <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span className="text-[10px] font-bold tracking-wider text-white/80">ECOOFICINA 4.0 • AO VIVO</span>
+                  </div>
 
                   <div className="relative z-20 space-y-4 max-w-2xl">
                     <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-bold text-[11px] px-3 py-1 rounded-full uppercase tracking-wider inline-flex items-center gap-1.5">
@@ -364,12 +321,12 @@
                       MANUFATURA ADITIVA & SUSTENTABILIDADE IVECO
                     </span>
 
-                    <h1 className="text-3xl md:text-5xl font-black text-white tracking-tight leading-tight">
-                      Descarbonização & Peças 3D Sob Demanda
+                    <h1 className="text-4xl md:text-6xl font-black text-white tracking-tight leading-[1.02] drop-shadow-2xl">
+                      Transformando manutenção em inovação.
                     </h1>
 
                     <p className="text-xs md:text-sm text-slate-300 leading-relaxed">
-                      Acelerando a transição sustentável da frota pesada através do recondicionamento inteligente, estoque digital homologado e polímeros reforçados com fibra de carbono (PA12-CF / PEEK) — gerando até <strong className="text-emerald-400">65% de alívio de massa</strong> e <strong className="text-cyan-400">eliminação total de frete logístico</strong>.
+                      Uma plataforma inteligente que conecta diagnóstico por IA, engenharia, estoque digital e manufatura aditiva para criar um ciclo mais eficiente e circular para a frota IVECO.
                     </p>
 
                     <div className="pt-2 flex flex-wrap items-center gap-3">
@@ -383,16 +340,16 @@
 
                     <div className="grid grid-cols-3 gap-3 pt-4 border-t border-slate-800/80">
                       <div className="bg-slate-950/70 border border-slate-800 p-2.5 rounded-xl text-center backdrop-blur-md">
-                        <p className="text-emerald-400 font-black text-base md:text-lg">-65%</p>
-                        <p className="text-[10px] text-slate-400">Alívio de Peso (PA12-CF)</p>
+                        <p className="text-emerald-400 font-black text-base md:text-lg">PA12-CF</p>
+                        <p className="text-[10px] text-slate-400">Material técnico reforçado</p>
                       </div>
                       <div className="bg-slate-950/70 border border-slate-800 p-2.5 rounded-xl text-center backdrop-blur-md">
-                        <p className="text-cyan-400 font-black text-base md:text-lg">Zero Frete</p>
-                        <p className="text-[10px] text-slate-400">Estoque Digital Local</p>
+                        <p className="text-cyan-400 font-black text-base md:text-lg">Sob demanda</p>
+                        <p className="text-[10px] text-slate-400">Produção digital local</p>
                       </div>
                       <div className="bg-slate-950/70 border border-slate-800 p-2.5 rounded-xl text-center backdrop-blur-md">
-                        <p className="text-blue-400 font-black text-base md:text-lg">100%</p>
-                        <p className="text-[10px] text-slate-400">Homologado Engenharia</p>
+                        <p className="text-blue-400 font-black text-base md:text-lg">CAD</p>
+                        <p className="text-[10px] text-slate-400">Modelos controlados</p>
                       </div>
                     </div>
                   </div>
