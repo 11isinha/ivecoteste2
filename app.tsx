@@ -11,43 +11,83 @@ import {
   Bell,
   Search,
   CheckCircle2,
-  AlertCircle,
   Clock,
   ArrowUpRight,
   ChevronRight,
-  TrendingUp,
   X,
-  Upload,
-  User,
   ShieldCheck,
   MapPin,
-  Check,
-  FileText
+  Printer,
+  Thermometer,
+  Wrench,
+  Layers,
+  Eye,
+  XCircle
 } from 'lucide-react';
 
-// --- DADOS INICIAIS BASEADOS NO VÍDEO ---
+// --- DADOS INICIAIS ROBUSTOS ---
 const INITIAL_STOCK = [
-  { id: '1', name: 'Alternador 28V 100A', code: 'IVE-ALT-281', status: 'Disponível', location: 'SP - Anchieta', isReconditioned: true },
-  { id: '2', name: 'Compressor de Ar Monocilíndrico', code: 'IVE-CMP-001', status: 'Indisponível', location: 'SP - Leste', isReconditioned: false },
-  { id: '3', name: 'Turbo Compressor Garrett Dual Stage', code: 'IVE-TUR-992', status: 'Disponível', location: 'Curitiba - PR', isReconditioned: true },
-  { id: '4', name: 'Farol Direito Full LED Matrix', code: 'IVE-LED-104', status: 'Descarte Reciclável', location: 'SP - Anchieta', isReconditioned: false },
-  { id: '5', name: 'Disco de Freio Ventilado Dianteiro', code: 'IVE-DSC-883', status: 'Disponível', location: 'Campinas - SP', isReconditioned: true }
+  { 
+    id: '1', 
+    name: 'ALAVANCA COMANDO VALVULA IVECO STRALIS', 
+    code: '425141', 
+    status: 'Disponível', 
+    quantity: 2,
+    condition: 'Recuperável',
+    year: 2024,
+    location: 'Almoxarifado B – Prateleira 04 – Gaveta 12',
+    compatibility: 'IVECO S-WAY / STRALIS',
+    material: 'PA12-CF (Reforçado Fibra de Carbono)',
+    images: [
+      'https://perimpecas.com.br/fotos/425141.jpg',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrURse1orkGDX9fJPsbo4i67fbuRuMEYqbjxKKfQB3cV07ios1kNFhhME&s=10'
+    ]
+  },
+  { 
+    id: '2', 
+    name: 'Engrenagem do Acionamento de Acessórios', 
+    code: 'IVE-SUP-881', 
+    status: 'Disponível', 
+    quantity: 5,
+    condition: 'Novo 3D Homologado',
+    year: 2026,
+    location: 'Almoxarifado A – Prateleira 01 – Gaveta 03',
+    compatibility: 'IVECO S-WAY / TECTOR',
+    material: 'PEEK Alta Resistência Termal',
+    images: [
+      'https://images.tcdn.com.br/img/img_prod/920964/engrenagem_do_comando_de_valvula_para_iveco_cursor_8_euro_3_99436187_17565_1_4e7fa24537e2bc9521e272a7a40cdedb.jpg'
+    ]
+  },
+  { 
+    id: '3', 
+    name: 'Coletor de Admissão Secundário', 
+    code: 'IVE-COL-009', 
+    status: 'Indisponível', 
+    quantity: 0,
+    condition: 'Aguardando Impressão',
+    year: 2025,
+    location: 'Hub 3D - Fila de Produção',
+    compatibility: 'IVECO DAILY / HI-WAY',
+    material: 'PA12-CF',
+    images: [
+      'https://images.tcdn.com.br/img/img_prod/834811/coletor_admissao_secundario_palio_brava_1_6_16v_1993_a_2000_46541292_original_19829_3_a7323bef4fa578e0110a05364d9255fb.jpeg'
+    ]
+  }
 ];
 
 const INITIAL_REQUESTS = [
-  { id: 'REQ-8821', part: 'Suporte do Tampão de Óleo', status: 'Aguardando Aprovação', requestedBy: 'VECO Campinas', date: 'Hoje, 10 text:30' },
+  { id: 'REQ-8821', part: 'Suporte do Tampão de Óleo', status: 'Aguardando Aprovação', requestedBy: 'IVECO Campinas', date: 'Hoje, 10:30' },
   { id: 'REQ-8820', part: 'Coletor de Ar Secundário', status: 'Aprovado para Envio', requestedBy: 'IVECO BH', date: 'Ontem' },
   { id: 'REQ-8819', part: 'Módulo de Injeção Eletrônica', status: 'Em Análise de Viabilidade', requestedBy: 'SP - Anchieta', date: '04 de Set' }
 ];
 
 export default function App() {
-  // Estado de Navegação da Sidebar (Baseado no Vídeo)
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'esg' | 'ai' | 'stock' | 'requests' | 'scanner'>('dashboard');
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'esg' | 'ai' | 'stock' | 'requests' | 'scanner' | 'hub3d'>('dashboard');
 
   // Estados dos Dados
   const [stockList, setStockList] = useState(INITIAL_STOCK);
   const [requestList, setRequestList] = useState(INITIAL_REQUESTS);
-  const [stockFilter, setStockFilter] = useState<'Todos' | 'Disponível' | 'Indisponível' | 'Descarte'>('Todos');
+  const [stockFilter, setStockFilter] = useState<'Todos' | 'Disponível' | 'Indisponível'>('Todos');
   const [searchTerm, setSearchTerm] = useState('');
 
   // Modais e Alertas
@@ -56,60 +96,125 @@ export default function App() {
   const [notificationCount, setNotificationCount] = useState(3);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  // Estados do Scanner e Câmera
-  const [scannerMode, setScannerMode] = useState<'camera' | 'upload' | 'manual'>('camera');
+  // Detalhes da Peça Selecionada
+  const [selectedPart, setSelectedPart] = useState<any | null>(null);
+  const [activeImageIdx, setActiveImageIdx] = useState(0);
+
+  // Estados do Scanner e Câmera WebRTC Real
+  const [scannerMode, setScannerMode] = useState<'camera' | 'upload'>('camera');
+  const [cameraActive, setCameraActive] = useState(false);
+  const [cameraError, setCameraError] = useState('');
   const [isScanning, setIsScanning] = useState(false);
   const [scannedResult, setScannedResult] = useState<any | null>(null);
-  const [cameraError, setCameraError] = useState(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const streamRef = useRef<MediaStream | null>(null);
 
-  // Formulário de Cadastro Rápido de Peça
+  // Formulário de Cadastro Rápido de Peça (TOTALMENTE FUNCIONAL)
   const [newPartName, setNewPartName] = useState('');
   const [newPartCode, setNewPartCode] = useState('');
   const [newPartStatus, setNewPartStatus] = useState('Disponível');
+  const [newPartQuantity, setNewPartQuantity] = useState('1');
+  const [newPartLocation, setNewPartLocation] = useState('Almoxarifado Principal');
+  const [newPartImageUrl, setNewPartImageUrl] = useState('');
 
-  // Notificação Temporária (Toast)
+  // Hub 3D & Fila de Impressão
+  const [printQueue, setPrintQueue] = useState([
+    { id: 'Q-101', name: 'Suporte Tampão Óleo Motor', material: 'PA12-CF', timeEst: '45 min', requestedBy: 'IVECO Campinas' },
+    { id: 'Q-102', name: 'Coletor de Ar Secundário', material: 'PEEK', timeEst: '1h 20m', requestedBy: 'IVECO SP - Anchieta' }
+  ]);
+
   const triggerToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(null), 3500);
   };
 
-  // Cadastrar Nova Peça
+  // Cadastrar Nova Peça no Estoque
   const handleCadastrarPeca = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newPartName) return;
+    if (!newPartName.trim()) return;
 
     const newPart = {
-      id: String(stockList.length + 1),
-      name: newPartName,
-      code: newPartCode || `IVE-PRT-${Math.floor(100 + Math.random() * 900)}`,
+      id: String(Date.now()),
+      name: newPartName.toUpperCase(),
+      code: newPartCode.trim() || `IVE-${Math.floor(1000 + Math.random() * 9000)}`,
       status: newPartStatus,
-      location: 'IVECO - Matriz SP',
-      isReconditioned: true
+      quantity: Number(newPartQuantity) || 1,
+      condition: 'Novo Cadastrado',
+      year: new Date().getFullYear(),
+      location: newPartLocation,
+      compatibility: 'IVECO Frota Pesada',
+      material: 'PA12-CF Polímero Reforçado',
+      images: [
+        newPartImageUrl.trim() || 'https://images.tcdn.com.br/img/img_prod/920964/engrenagem_do_comando_de_valvula_para_iveco_cursor_8_euro_3_99436187_17565_1_4e7fa24537e2bc9521e272a7a40cdedb.jpg'
+      ]
     };
 
     setStockList([newPart, ...stockList]);
     setShowCadastrarModal(false);
     setNewPartName('');
     setNewPartCode('');
-    triggerToast(`Peça "${newPart.name}" cadastrada com sucesso!`);
+    setNewPartQuantity('1');
+    setNewPartImageUrl('');
+    triggerToast(`Peça "${newPart.name}" cadastrada com sucesso no estoque!`);
   };
 
-  // Simular Leitura do Scanner
+  // Câmera WebRTC
+  const startCamera = async () => {
+    setCameraError('');
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } },
+        audio: false
+      });
+      streamRef.current = stream;
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+      setCameraActive(true);
+    } catch (err) {
+      setCameraError('Permissão de câmera negada ou dispositivo indisponível.');
+      setCameraActive(false);
+    }
+  };
+
+  const stopCamera = () => {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop());
+      streamRef.current = null;
+    }
+    setCameraActive(false);
+  };
+
   const handleRunScan = () => {
     setIsScanning(true);
     setScannedResult(null);
-    setCameraError(false);
-
     setTimeout(() => {
       setIsScanning(false);
       setScannedResult({
-        name: 'Alternador 28V 100A IVECO',
-        code: 'IVE-ALT-281',
-        condition: 'Recondicionável (85% aproveitável)',
-        actionSuggested: 'Cadastrar no Estoque de Reuso',
-        co2Savings: '42.5 kg'
+        name: 'SENSOR DE PRESSÃO DO RAIL COMMON',
+        code: 'IVE-SNS-440',
+        condition: 'Desgaste moderado (Recuperável via 3D)',
+        material: 'PA12-CF',
+        co2Savings: '14.2 kg CO₂',
+        timeToPrint: '45 min'
       });
+      stopCamera();
     }, 2200);
+  };
+
+  const sendTo3DPrinter = (partName: string) => {
+    setPrintQueue(prev => [
+      ...prev,
+      {
+        id: `Q-${Date.now().toString().slice(-3)}`,
+        name: partName,
+        material: 'PA12-CF',
+        timeEst: '55 min',
+        requestedBy: 'IVECO Oficina SP'
+      }
+    ]);
+    triggerToast(`Peça "${partName}" enviada para a fila de Impressão 3D!`);
+    setActiveTab('hub3d');
   };
 
   // Filtro do Estoque
@@ -117,78 +222,68 @@ export default function App() {
     const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
                           item.code.toLowerCase().includes(searchTerm.toLowerCase());
     if (stockFilter === 'Todos') return matchesSearch;
-    if (stockFilter === 'Disponível') return matchesSearch && item.status === 'Disponível';
-    if (stockFilter === 'Indisponível') return matchesSearch && item.status === 'Indisponível';
-    if (stockFilter === 'Descarte') return matchesSearch && item.status === 'Descarte Reciclável';
-    return matchesSearch;
+    return matchesSearch && item.status === stockFilter;
   });
 
   return (
     <div className="min-h-screen bg-[#0B0F17] text-slate-100 flex font-sans antialiased">
 
-      {/* TOAST FLUTUANTE DE AVISO */}
+      {/* TOAST FLUTUANTE */}
       {toastMessage && (
-        <div className="fixed top-5 right-5 z-50 bg-emerald-600 text-white font-semibold text-xs px-4 py-3 rounded-xl shadow-2xl border border-emerald-400/40 flex items-center gap-2 animate-bounce">
+        <div className="fixed top-5 right-5 z-50 bg-emerald-500 text-slate-950 font-extrabold text-xs px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 border border-emerald-300 animate-bounce">
           <CheckCircle2 className="w-4 h-4" />
           <span>{toastMessage}</span>
         </div>
       )}
 
-      {/* ================= BARRA LATERAL (SIDEBAR) ================= */}
+      {/* ================= SIDEBAR LATERAL ================= */}
       <aside className="w-64 bg-[#0F172A] border-r border-slate-800 flex flex-col justify-between shrink-0 hidden md:flex">
         <div>
-          {/* Logo IVECO ECOOFICINA 4.0 */}
-          <div className="p-5 border-b border-slate-800/80 flex items-center gap-3">
-            <div className="bg-emerald-500 font-black text-slate-950 text-base px-2.5 py-1 rounded tracking-tighter">
-              IV
+          <div className="p-5 border-b border-slate-800 flex items-center gap-3">
+            <div className="bg-blue-600 font-black text-white text-base px-2.5 py-1 rounded tracking-tighter shadow-lg shadow-blue-600/30">
+              IVECO
             </div>
             <div>
               <h1 className="font-extrabold text-sm tracking-wide text-white flex items-center gap-1">
                 ECOOFICINA <span className="text-emerald-400 text-xs">4.0</span>
               </h1>
-              <p className="text-[10px] text-slate-400 font-mono">REDE UNIDADE SP-01</p>
+              <p className="text-[10px] text-slate-400 font-mono">REDE BRASIL DE REUSO</p>
             </div>
           </div>
 
-          {/* Selector de Unidade */}
           <div className="p-3">
             <div className="bg-slate-900 border border-slate-800 rounded-lg p-2.5 flex items-center justify-between text-xs">
               <div className="flex items-center gap-2">
                 <MapPin className="w-3.5 h-3.5 text-emerald-400" />
                 <span className="font-semibold text-slate-200">IVECO São Paulo</span>
               </div>
-              <span className="text-[10px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded">Trocar</span>
+              <span className="text-[10px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded">Matriz</span>
             </div>
           </div>
 
-          {/* Menu Principal */}
           <nav className="p-3 space-y-1 text-xs">
             <div className="px-3 py-1 text-[10px] font-bold text-slate-500 uppercase tracking-wider">Principal</div>
 
             <button
-              onClick={() => setActiveTab('dashboard')}
-              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg font-medium transition ${
+              onClick={() => { setActiveTab('dashboard'); stopCamera(); }}
+              className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg font-medium transition ${
                 activeTab === 'dashboard' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
               }`}>
-              <div className="flex items-center gap-2.5">
-                <LayoutDashboard className="w-4 h-4" />
-                <span>Início / Dashboard</span>
-              </div>
+              <LayoutDashboard className="w-4 h-4" />
+              <span>Início / Dashboard</span>
             </button>
 
             <button
-              onClick={() => setActiveTab('esg')}
-              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg font-medium transition ${
+              onClick={() => { setActiveTab('esg'); stopCamera(); }}
+              className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg font-medium transition ${
                 activeTab === 'esg' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
               }`}>
-              <div className="flex items-center gap-2.5">
-                <Leaf className="w-4 h-4 text-emerald-400" />
-                <span>Impacto ESG & CO₂</span>
-              </div>
+              <Leaf className="w-4 h-4 text-emerald-400" />
+              <span>Impacto ESG & CO₂</span>
             </button>
 
             <button
-              onClick={() => setActiveTab('ai')}
+              onClick={() => { setActiveTab('ai'); stopCamera(); }}
               className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg font-medium transition ${
                 activeTab === 'ai' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
               }`}>
@@ -199,10 +294,10 @@ export default function App() {
               <span className="bg-purple-500/20 text-purple-300 text-[9px] font-bold px-1.5 py-0.5 rounded-full">NOVO</span>
             </button>
 
-            <div className="px-3 pt-3 py-1 text-[10px] font-bold text-slate-500 uppercase tracking-wider">Gestão da Unidade</div>
+            <div className="px-3 pt-3 py-1 text-[10px] font-bold text-slate-500 uppercase tracking-wider">Gestão & Produção</div>
 
             <button
-              onClick={() => setActiveTab('stock')}
+              onClick={() => { setActiveTab('stock'); stopCamera(); }}
               className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg font-medium transition ${
                 activeTab === 'stock' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
               }`}>
@@ -210,41 +305,45 @@ export default function App() {
                 <PackageCheck className="w-4 h-4" />
                 <span>Estoque de Peças</span>
               </div>
-              <span className="bg-slate-800 text-slate-300 text-[10px] px-1.5 py-0.5 rounded-full">{stockList.length}</span>
+              <span className="bg-slate-800 text-slate-300 text-[10px] px-2 py-0.5 rounded-full">{stockList.length}</span>
             </button>
 
             <button
-              onClick={() => setActiveTab('requests')}
-              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg font-medium transition ${
-                activeTab === 'requests' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
+              onClick={() => { setActiveTab('hub3d'); stopCamera(); }}
+              className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg font-medium transition ${
+                activeTab === 'hub3d' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
               }`}>
-              <div className="flex items-center gap-2.5">
-                <RefreshCw className="w-4 h-4" />
-                <span>Solicitações de Troca</span>
-              </div>
+              <Printer className="w-4 h-4 text-blue-400" />
+              <span>Hub Impressão 3D</span>
             </button>
 
-            <div className="px-3 pt-3 py-1 text-[10px] font-bold text-slate-500 uppercase tracking-wider">Leitura & IA</div>
+            <button
+              onClick={() => { setActiveTab('requests'); stopCamera(); }}
+              className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg font-medium transition ${
+                activeTab === 'requests' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
+              }`}>
+              <RefreshCw className="w-4 h-4" />
+              <span>Solicitações de Troca</span>
+            </button>
+
+            <div className="px-3 pt-3 py-1 text-[10px] font-bold text-slate-500 uppercase tracking-wider">Inovação</div>
 
             <button
               onClick={() => setActiveTab('scanner')}
-              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg font-medium transition ${
+              className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg font-medium transition ${
                 activeTab === 'scanner' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
               }`}>
-              <div className="flex items-center gap-2.5">
-                <ScanLine className="w-4 h-4 text-emerald-400" />
-                <span>Escanear Peça / Câmera</span>
-              </div>
+              <ScanLine className="w-4 h-4 text-cyan-400" />
+              <span>Escanear Peça / IA</span>
             </button>
           </nav>
         </div>
 
-        {/* Usuário Conectado */}
-        <div className="p-3 border-t border-slate-800/80">
+        <div className="p-3 border-t border-slate-800">
           <div className="flex items-center justify-between bg-slate-900 p-2.5 rounded-xl border border-slate-800">
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center font-bold text-xs text-emerald-400">
-                AD
+                AM
               </div>
               <div>
                 <p className="text-xs font-bold text-white leading-tight">Adriano M.</p>
@@ -256,20 +355,19 @@ export default function App() {
         </div>
       </aside>
 
-      {/* ================= ÁREA DE CONTEÚDO PRINCIPAL ================= */}
+      {/* ================= CONTEÚDO PRINCIPAL ================= */}
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
 
-        {/* TOPO DA TELA (HEADER PRINCIPAL) */}
+        {/* HEADER */}
         <header className="bg-[#0F172A] border-b border-slate-800 p-4 sticky top-0 z-30 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <h2 className="text-sm font-bold text-slate-200">Visão Geral de Oficina <span className="text-emerald-400">IVECO</span></h2>
+            <h2 className="text-sm font-bold text-slate-200">Oficina IVECO • <span className="text-emerald-400">Gestão 4.0</span></h2>
           </div>
 
           <div className="flex items-center gap-3">
-            {/* Botão Notificações */}
             <button
               onClick={() => { setShowNotificationModal(true); setNotificationCount(0); }}
-              className="relative p-2 bg-slate-900 hover:bg-slate-800 border border-slate-700/80 rounded-xl transition text-slate-300">
+              className="relative p-2 bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-xl transition text-slate-300">
               <Bell className="w-4 h-4" />
               {notificationCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-emerald-500 text-slate-950 text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
@@ -278,7 +376,7 @@ export default function App() {
               )}
             </button>
 
-            {/* Botão Cadastrar Peça */}
+            {/* BOTÃO CADASTRAR PEÇA */}
             <button
               onClick={() => setShowCadastrarModal(true)}
               className="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 shadow-lg shadow-emerald-950/40">
@@ -286,32 +384,29 @@ export default function App() {
               <span>+ Cadastrar Peça</span>
             </button>
 
-            {/* Botão Escanear por IA */}
             <button
               onClick={() => setActiveTab('scanner')}
               className="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-bold px-3.5 py-2 rounded-xl transition flex items-center gap-1.5">
               <ScanLine className="w-4 h-4 text-emerald-400" />
-              <span>Escanear & IA</span>
+              <span>Escanear</span>
             </button>
           </div>
         </header>
 
-        {/* CORPO DE CONTEÚDO VÁRIAS ABAS */}
+        {/* CORPO DINÂMICO */}
         <main className="p-4 md:p-6 space-y-6 max-w-6xl w-full mx-auto">
 
-          {/* ================= 1. DASHBOARD PRINCIPAL ================= */}
+          {/* 1. DASHBOARD */}
           {activeTab === 'dashboard' && (
             <div className="space-y-6">
-              
-              {/* Card Boas Vindas */}
-              <div className="bg-gradient-to-r from-emerald-950/40 via-slate-900 to-slate-900 border border-emerald-500/30 rounded-2xl p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div className="bg-gradient-to-r from-emerald-950/40 via-slate-900 to-slate-900 border border-emerald-500/30 rounded-2xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div>
                   <div className="flex items-center gap-2 text-emerald-400 text-xs font-semibold mb-1">
                     <Sparkles className="w-4 h-4" />
                     <span>Rede Conectada IVECO</span>
                   </div>
                   <h1 className="text-xl font-bold text-white">Bem-vindo, Adriano!</h1>
-                  <p className="text-xs text-slate-400 mt-0.5">Plataforma conectada a 4 unidades ativas na rede.</p>
+                  <p className="text-xs text-slate-400 mt-0.5">Estoque digital, manufatura aditiva e sustentabilidade integrados.</p>
                 </div>
                 <button
                   onClick={() => setActiveTab('stock')}
@@ -321,19 +416,7 @@ export default function App() {
                 </button>
               </div>
 
-              {/* Banner de Destaque IA */}
-              <div className="bg-slate-900 border border-slate-800 rounded-xl p-3.5 flex items-center justify-between text-xs">
-                <div className="flex items-center gap-2 text-slate-300">
-                  <span className="bg-emerald-500/20 text-emerald-400 font-bold px-2 py-0.5 rounded text-[10px]">IA OPORTUNIDADE</span>
-                  <span>Peça compatível encontrada na <b>IVECO Curitiba</b></span>
-                </div>
-                <button onClick={() => setActiveTab('ai')} className="text-emerald-400 hover:underline font-semibold flex items-center gap-1">
-                  <span>Ver Oportunidade</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
-
-              {/* GRID DE INDICADORES / CARDS */}
+              {/* CARDS DE INDICADORES */}
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-1">
                   <div className="flex justify-between items-center text-slate-400 text-xs font-medium">
@@ -345,7 +428,7 @@ export default function App() {
 
                 <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-1">
                   <div className="flex justify-between items-center text-slate-400 text-xs font-medium">
-                    <span>Disponíveis Troca</span>
+                    <span>Disponíveis</span>
                     <RefreshCw className="w-4 h-4 text-emerald-400" />
                   </div>
                   <p className="text-2xl font-bold text-emerald-400">
@@ -370,48 +453,194 @@ export default function App() {
                 </div>
               </div>
 
-              {/* ATIVIDADES RECENTES */}
-              <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-bold text-sm text-white">Atividades Recentes na Oficina</h3>
-                  <button onClick={() => setActiveTab('requests')} className="text-xs text-emerald-400 hover:underline">Ver Histórico</button>
+              {/* DESTAQUE DE PEÇAS RECENTES */}
+              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+                <div className="flex justify-between items-center">
+                  <h3 className="font-bold text-sm text-white flex items-center gap-2">
+                    <Wrench className="w-4 h-4 text-emerald-400" /> Peças em Destaque no Estoque
+                  </h3>
+                  <button onClick={() => setActiveTab('stock')} className="text-xs text-emerald-400 hover:underline">
+                    Ver Catálogo Completo →
+                  </button>
                 </div>
 
-                <div className="space-y-2.5 text-xs">
-                  <div className="p-3 bg-slate-950/60 rounded-xl border border-slate-800 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-2 h-2 rounded-full bg-emerald-400"></div>
-                      <div>
-                        <p className="font-semibold text-slate-200">Nova solicitação de peça recebida</p>
-                        <p className="text-[11px] text-slate-400">IVECO Campinas solicitou 1x Tampão do Óleo.</p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {stockList.slice(0, 3).map(item => (
+                    <div 
+                      key={item.id} 
+                      onClick={() => { setSelectedPart(item); setActiveImageIdx(0); }}
+                      className="bg-slate-950 border border-slate-800 rounded-xl p-3 flex gap-3 items-center hover:border-emerald-500/50 cursor-pointer transition">
+                      <img src={item.images[0]} alt={item.name} className="w-14 h-14 object-cover rounded-lg shrink-0 border border-slate-800" />
+                      <div className="overflow-hidden">
+                        <p className="font-bold text-xs text-slate-200 truncate">{item.name}</p>
+                        <p className="text-[10px] font-mono text-slate-500 mt-0.5">CÓD: {item.code}</p>
+                        <span className="inline-block mt-1 text-[9px] font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                          {item.status} ({item.quantity} un)
+                        </span>
                       </div>
                     </div>
-                    <span className="text-[10px] text-slate-500 font-mono">10 min atrás</span>
-                  </div>
-
-                  <div className="p-3 bg-slate-950/60 rounded-xl border border-slate-800 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-2 h-2 rounded-full bg-blue-400"></div>
-                      <div>
-                        <p className="font-semibold text-slate-200">Peça cadastrada por scanner</p>
-                        <p className="text-[11px] text-slate-400">Alternador 28V 100A adicionado ao estoque local.</p>
-                      </div>
-                    </div>
-                    <span className="text-[10px] text-slate-500 font-mono">2 horas atrás</span>
-                  </div>
+                  ))}
                 </div>
               </div>
-
             </div>
           )}
 
-          {/* ================= 2. IMPACTO ESG & CO2 ================= */}
+          {/* 2. ESTOQUE DE PEÇAS (TOTALMENTE FUNCIONAL E COM CADASTRO) */}
+          {activeTab === 'stock' && (
+            <div className="space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-900 p-4 rounded-xl border border-slate-800">
+                <div>
+                  <h2 className="font-bold text-base text-white">Estoque da Unidade - São Paulo</h2>
+                  <p className="text-xs text-slate-400">Consulte, cadastre e gerencie componentes da oficina.</p>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <div className="flex gap-1 bg-slate-950 p-1 rounded-lg border border-slate-800 text-xs font-medium">
+                    {(['Todos', 'Disponível', 'Indisponível'] as const).map(f => (
+                      <button
+                        key={f}
+                        onClick={() => setStockFilter(f)}
+                        className={`px-3 py-1 rounded-md transition ${
+                          stockFilter === f ? 'bg-emerald-500 text-slate-950 font-bold' : 'text-slate-400 hover:text-slate-200'
+                        }`}>
+                        {f}
+                      </button>
+                    ))}
+                  </div>
+
+                  <button
+                    onClick={() => setShowCadastrarModal(true)}
+                    className="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-3 py-2 rounded-lg transition flex items-center gap-1">
+                    <PlusCircle className="w-3.5 h-3.5" />
+                    <span>Nova Peça</span>
+                  </button>
+                </div>
+              </div>
+
+              <div className="relative">
+                <Search className="w-4 h-4 text-slate-500 absolute left-3.5 top-3" />
+                <input
+                  type="text"
+                  placeholder="Buscar por nome da peça ou código..."
+                  value={searchTerm}
+                  onChange={e => setSearchTerm(e.target.value)}
+                  className="w-full bg-slate-900 border border-slate-800 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500"
+                />
+              </div>
+
+              {/* LISTA DE ESTOQUE EM CARDS GRID */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                {filteredStock.length > 0 ? (
+                  filteredStock.map(item => (
+                    <div key={item.id} className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden flex flex-col justify-between hover:border-slate-700 transition">
+                      <div>
+                        <div className="relative aspect-video bg-slate-950 overflow-hidden">
+                          <img src={item.images[0]} alt={item.name} className="w-full h-full object-cover" />
+                          <span className={`absolute top-2 right-2 text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                            item.status === 'Disponível' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-slate-800 text-slate-400'
+                          }`}>
+                            {item.status}
+                          </span>
+                        </div>
+
+                        <div className="p-4 space-y-2">
+                          <h4 className="font-bold text-xs text-white leading-snug">{item.name}</h4>
+                          <p className="text-[10px] font-mono text-emerald-400">Código: {item.code}</p>
+
+                          <div className="space-y-1 pt-2 border-t border-slate-800 text-[11px] text-slate-400">
+                            <p><strong className="text-slate-300">Qtd:</strong> {item.quantity} un.</p>
+                            <p className="truncate"><strong className="text-slate-300">Local:</strong> {item.location}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="p-4 pt-0 flex gap-2">
+                        <button 
+                          onClick={() => { setSelectedPart(item); setActiveImageIdx(0); }} 
+                          className="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs py-2 rounded-xl transition flex items-center justify-center gap-1 border border-slate-700">
+                          <Eye className="w-3.5 h-3.5" /> Detalhes
+                        </button>
+                        <button 
+                          onClick={() => sendTo3DPrinter(item.name)} 
+                          className="bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 border border-blue-500/30 font-bold text-xs px-3 py-2 rounded-xl transition">
+                          <Printer className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="col-span-full p-12 text-center text-slate-500 text-xs bg-slate-900 border border-slate-800 rounded-xl">
+                    Nenhuma peça encontrada. Clique em "+ Cadastrar Peça" para adicionar novos itens ao estoque.
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* 3. HUB DE IMPRESSÃO 3D */}
+          {activeTab === 'hub3d' && (
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                  <Printer className="w-5 h-5 text-blue-400" /> Hub de Manufatura Aditiva On-Demand
+                </h3>
+                <p className="text-xs text-slate-400">Monitoramento de células industriais e fila de produção de polímeros reforçados.</p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
+                  <h4 className="font-bold text-xs text-white">Impressora 3D #01 (Industrial PEEK)</h4>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30 inline-block">
+                    Imprimindo
+                  </span>
+                  <div className="space-y-1 text-[10px] text-slate-400 font-mono">
+                    <div className="flex justify-between"><span>Progresso:</span><span>74%</span></div>
+                    <div className="w-full h-2 bg-slate-950 rounded-full overflow-hidden border border-slate-800">
+                      <div className="h-full bg-blue-500 w-[74%]"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
+                  <h4 className="font-bold text-xs text-white">Impressora 3D #02 (PA12-CF Heavy)</h4>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 inline-block">
+                    Disponível
+                  </span>
+                  <p className="text-[11px] text-slate-400">Pronta para receber novos arquivos CAD da rede.</p>
+                </div>
+              </div>
+
+              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5">
+                <h4 className="font-bold text-xs text-white mb-3">Fila de Produção Atual</h4>
+                <div className="space-y-2">
+                  {printQueue.map((item, idx) => (
+                    <div key={item.id} className="bg-slate-950 border border-slate-800 rounded-xl p-3 flex justify-between items-center text-xs">
+                      <div>
+                        <p className="font-bold text-slate-200">{idx + 1}. {item.name}</p>
+                        <p className="text-[10px] text-slate-400">Material: <span className="text-cyan-400">{item.material}</span> • Solicitante: {item.requestedBy}</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] font-mono text-slate-400 bg-slate-900 px-2 py-1 rounded border border-slate-800">
+                          {item.timeEst}
+                        </span>
+                        <button onClick={() => setPrintQueue(printQueue.filter(q => q.id !== item.id))} className="text-red-400 hover:text-red-300">
+                          <XCircle className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* 4. IMPACTO ESG & CO2 */}
           {activeTab === 'esg' && (
             <div className="space-y-6">
               <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
                 <div className="flex items-center gap-2 text-emerald-400 font-bold text-xs uppercase tracking-wider">
                   <Leaf className="w-4 h-4" />
-                  <span>Indicadores de Sustentabilidade & ESG IVECO</span>
+                  <span>Sustentabilidade & ESG IVECO</span>
                 </div>
                 <h2 className="text-xl font-extrabold text-white">Economia Circular & Redução de Impacto</h2>
 
@@ -431,14 +660,14 @@ export default function App() {
                   <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-1">
                     <span className="text-slate-400 text-xs">Taxa de Reaproveitamento</span>
                     <p className="text-3xl font-black text-cyan-400">78%</p>
-                    <p className="text-[11px] text-slate-500">Meta IVECO 2026 superada com sucesso.</p>
+                    <p className="text-[11px] text-slate-500">Meta IVECO superada com sucesso.</p>
                   </div>
                 </div>
               </div>
             </div>
           )}
 
-          {/* ================= 3. OPORTUNIDADES IA ================= */}
+          {/* 5. OPORTUNIDADES IA */}
           {activeTab === 'ai' && (
             <div className="space-y-4">
               <div className="bg-slate-900 border border-slate-800 rounded-xl p-5">
@@ -447,106 +676,122 @@ export default function App() {
                   <span>Inteligência da Rede IVECO</span>
                 </div>
                 <h2 className="text-base font-bold text-white">Oportunidades de Troca Inteligente</h2>
-                <p className="text-xs text-slate-400 mt-1">A IA identificou peças paradas em outras concessionárias que servem para reparos locais.</p>
+                <p className="text-xs text-slate-400 mt-1">A IA identificou peças paradas em outras concessionárias para reparos locais.</p>
               </div>
 
-              <div className="bg-slate-900 border border-purple-500/20 rounded-xl p-4 space-y-3">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <span className="bg-purple-500/20 text-purple-300 text-[10px] font-bold px-2 py-0.5 rounded">OPORTUNIDADE RECOMENDADA</span>
-                    <h3 className="font-bold text-white text-sm mt-1">Farol Direito Full LED Matrix</h3>
-                    <p className="text-xs text-slate-400">Parado há 120 dias na unidade <b>IVECO Curitiba</b>.</p>
+              <div className="bg-slate-900 border border-purple-500/20 rounded-xl p-4 flex items-center justify-between text-xs">
+                <div>
+                  <span className="bg-purple-500/20 text-purple-300 font-bold px-2 py-0.5 rounded text-[10px]">RECOMENDADO</span>
+                  <h3 className="font-bold text-white text-sm mt-1">Farol Direito Full LED Matrix</h3>
+                  <p className="text-slate-400">Disponível na unidade <b>IVECO Curitiba</b>.</p>
+                </div>
+                <button 
+                  onClick={() => {
+                    setRequestList([{ id: `REQ-${Math.floor(1000+Math.random()*9000)}`, part: 'Farol LED Matrix', status: 'Solicitada', requestedBy: 'IVECO Curitiba', date: 'Agora' }, ...requestList]);
+                    triggerToast('Solicitação enviada para Curitiba!');
+                  }}
+                  className="bg-purple-600 hover:bg-purple-500 text-white px-3 py-2 rounded-lg font-bold">
+                  Solicitar Peça
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* 6. SCANNER & VISÃO POR IA */}
+          {activeTab === 'scanner' && (
+            <div className="max-w-2xl mx-auto space-y-6">
+              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center">
+                <h3 className="text-lg font-bold text-white mb-2 flex items-center justify-center gap-2">
+                  <Camera className="w-5 h-5 text-emerald-400" /> Diagnóstico por Visão Computacional
+                </h3>
+                <p className="text-xs text-slate-400 mb-6">Aponte a câmera para a peça danificada para avaliar rachaduras e sugerir fabricação 3D.</p>
+
+                <div className="relative aspect-video bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 flex items-center justify-center mb-4">
+                  {cameraActive ? (
+                    <video ref={videoRef} autoPlay playsInline muted className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="text-center p-6 space-y-3">
+                      <ScanLine className="w-12 h-12 text-slate-600 mx-auto animate-pulse" />
+                      <p className="text-xs text-slate-400">Câmera desativada. Clique para iniciar.</p>
+                    </div>
+                  )}
+
+                  {isScanning && (
+                    <div className="absolute inset-0 bg-emerald-950/70 border-2 border-emerald-400 flex flex-col items-center justify-center backdrop-blur-sm z-20">
+                      <RefreshCw className="w-8 h-8 text-emerald-400 animate-spin mb-2" />
+                      <p className="text-xs font-bold text-white">Identificando geometria via Inteligência Artificial...</p>
+                    </div>
+                  )}
+                </div>
+
+                {cameraError && <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-xs text-red-400">{cameraError}</div>}
+
+                <div className="flex gap-3 justify-center">
+                  {!cameraActive ? (
+                    <button onClick={startCamera} className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs px-5 py-3 rounded-xl transition flex items-center gap-2">
+                      <Camera className="w-4 h-4" /> Ligar Câmera
+                    </button>
+                  ) : (
+                    <>
+                      <button onClick={handleRunScan} disabled={isScanning} className="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs px-5 py-3 rounded-xl transition flex items-center gap-2">
+                        <ScanLine className="w-4 h-4" /> Escanear Peça
+                      </button>
+                      <button onClick={stopCamera} className="bg-slate-800 text-slate-300 font-bold text-xs px-4 py-3 rounded-xl">Desligar</button>
+                    </>
+                  )}
+                </div>
+              </div>
+
+              {scannedResult && (
+                <div className="bg-slate-900 border border-emerald-500/30 rounded-2xl p-5 space-y-4 text-xs">
+                  <div className="flex justify-between items-center border-b border-slate-800 pb-3">
+                    <div>
+                      <h4 className="font-bold text-sm text-white">{scannedResult.name}</h4>
+                      <p className="text-[11px] font-mono text-emerald-400">CÓDIGO: {scannedResult.code}</p>
+                    </div>
+                    <span className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-bold px-2.5 py-1 rounded-full">Reconhecido</span>
                   </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="bg-slate-950 p-3 rounded-lg border border-slate-800">
+                      <span className="text-slate-400 block text-[10px]">Diagnóstico:</span>
+                      <span className="font-semibold text-slate-200">{scannedResult.condition}</span>
+                    </div>
+                    <div className="bg-slate-950 p-3 rounded-lg border border-slate-800">
+                      <span className="text-slate-400 block text-[10px]">Material:</span>
+                      <span className="font-semibold text-cyan-400">{scannedResult.material}</span>
+                    </div>
+                  </div>
+
                   <button 
                     onClick={() => {
-                      const newReq = { id: `REQ-${Math.floor(1000 + Math.random()*9000)}`, part: 'Farol Direito LED Matrix', status: 'Solicitada', requestedBy: 'IVECO Curitiba', date: 'Agora' };
-                      setRequestList([newReq, ...requestList]);
-                      triggerToast('Solicitação enviada para a IVECO Curitiba!');
-                    }}
-                    className="bg-purple-600 hover:bg-purple-500 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition">
-                    Solicitar Peça
+                      const newP = {
+                        id: String(Date.now()),
+                        name: scannedResult.name,
+                        code: scannedResult.code,
+                        status: 'Disponível',
+                        quantity: 1,
+                        condition: 'Escaneado via IA',
+                        year: 2026,
+                        location: 'Almoxarifado Principal',
+                        compatibility: 'Frota IVECO',
+                        material: scannedResult.material,
+                        images: ['https://images.tcdn.com.br/img/img_prod/920964/engrenagem_do_comando_de_valvula_para_iveco_cursor_8_euro_3_99436187_17565_1_4e7fa24537e2bc9521e272a7a40cdedb.jpg']
+                      };
+                      setStockList([newP, ...stockList]);
+                      setScannedResult(null);
+                      setActiveTab('stock');
+                      triggerToast('Peça escaneada e salva no estoque com sucesso!');
+                    }} 
+                    className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs py-3 rounded-xl transition flex items-center justify-center gap-2">
+                    <PlusCircle className="w-4 h-4" /> Salvar Peça no Estoque Imediatamente
                   </button>
                 </div>
-              </div>
+              )}
             </div>
           )}
 
-          {/* ================= 4. ESTOQUE DA UNIDADE ================= */}
-          {activeTab === 'stock' && (
-            <div className="space-y-4">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-900 p-4 rounded-xl border border-slate-800">
-                <div>
-                  <h2 className="font-bold text-base text-white">Estoque da Unidade - São Paulo</h2>
-                  <p className="text-xs text-slate-400">Consulte e gerencie as peças cadastradas na oficina.</p>
-                </div>
-
-                {/* Filtros */}
-                <div className="flex gap-1.5 bg-slate-950 p-1 rounded-lg border border-slate-800 text-xs font-medium">
-                  {(['Todos', 'Disponível', 'Indisponível', 'Descarte'] as const).map(f => (
-                    <button
-                      key={f}
-                      onClick={() => setStockFilter(f)}
-                      className={`px-3 py-1 rounded-md transition ${
-                        stockFilter === f ? 'bg-emerald-500 text-slate-950 font-bold' : 'text-slate-400 hover:text-slate-200'
-                      }`}>
-                      {f}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Busca */}
-              <div className="relative">
-                <Search className="w-4 h-4 text-slate-500 absolute left-3.5 top-3" />
-                <input
-                  type="text"
-                  placeholder="Buscar por nome da peça ou código..."
-                  value={searchTerm}
-                  onChange={e => setSearchTerm(e.target.value)}
-                  className="w-full bg-slate-900 border border-slate-800 rounded-xl pl-10 pr-4 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500"
-                />
-              </div>
-
-              {/* Lista do Estoque */}
-              <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden divide-y divide-slate-800/80">
-                {filteredStock.length > 0 ? (
-                  filteredStock.map(item => (
-                    <div key={item.id} className="p-4 flex items-center justify-between text-xs hover:bg-slate-850 transition">
-                      <div className="space-y-0.5">
-                        <div className="flex items-center gap-2">
-                          <span className="font-bold text-slate-100 text-sm">{item.name}</span>
-                          {item.isReconditioned && (
-                            <span className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[9px] font-bold px-1.5 py-0.5 rounded">
-                              REUSO RECONDICIONADO
-                            </span>
-                          )}
-                        </div>
-                        <div className="text-slate-400 flex items-center gap-3 text-[11px]">
-                          <span>Cód: <strong className="text-slate-300 font-mono">{item.code}</strong></span>
-                          <span>•</span>
-                          <span>{item.location}</span>
-                        </div>
-                      </div>
-
-                      <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold ${
-                        item.status === 'Disponível' ? 'bg-emerald-500/20 text-emerald-400' :
-                        item.status === 'Indisponível' ? 'bg-slate-800 text-slate-400' :
-                        'bg-amber-500/20 text-amber-400'
-                      }`}>
-                        {item.status}
-                      </span>
-                    </div>
-                  ))
-                ) : (
-                  <div className="p-8 text-center text-slate-500 text-xs">
-                    Nenhuma peça encontrada para os filtros selecionados.
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-
-          {/* ================= 5. SOLICITAÇÕES DE TROCA ================= */}
+          {/* 7. SOLICITAÇÕES DE TROCA */}
           {activeTab === 'requests' && (
             <div className="space-y-4">
               <div className="bg-slate-900 border border-slate-800 rounded-xl p-4">
@@ -571,143 +816,17 @@ export default function App() {
             </div>
           )}
 
-          {/* ================= 6. SCANNER E CÂMERA (CORRIGIDO) ================= */}
-          {activeTab === 'scanner' && (
-            <div className="space-y-4">
-              <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 flex items-center justify-between">
-                <div>
-                  <h2 className="font-bold text-base text-white flex items-center gap-2">
-                    <ScanLine className="w-5 h-5 text-emerald-400" />
-                    Leitor de Peça & Visão por IA
-                  </h2>
-                  <p className="text-xs text-slate-400">Escaneie o código da peça ou tire uma foto do defeito para diagnóstico automático.</p>
-                </div>
-
-                {/* Seleção do Modo de Leitura */}
-                <div className="flex bg-slate-950 p-1 rounded-lg border border-slate-800 text-xs">
-                  <button 
-                    onClick={() => setScannerMode('camera')}
-                    className={`px-3 py-1 rounded font-semibold ${scannerMode === 'camera' ? 'bg-emerald-500 text-slate-950' : 'text-slate-400'}`}>
-                    Câmera
-                  </button>
-                  <button 
-                    onClick={() => setScannerMode('upload')}
-                    className={`px-3 py-1 rounded font-semibold ${scannerMode === 'upload' ? 'bg-emerald-500 text-slate-950' : 'text-slate-400'}`}>
-                    Enviar Foto
-                  </button>
-                </div>
-              </div>
-
-              {/* TELA DE SCANNER */}
-              <div className="bg-slate-950 border-2 border-slate-800 border-dashed rounded-2xl min-h-[320px] flex flex-col items-center justify-center relative overflow-hidden p-6">
-                
-                {scannerMode === 'camera' && !isScanning && !scannedResult && (
-                  <div className="text-center space-y-3 max-w-sm">
-                    <div className="w-16 h-16 bg-slate-900 border border-slate-800 rounded-full flex items-center justify-center mx-auto text-emerald-400">
-                      <Camera className="w-8 h-8" />
-                    </div>
-                    <p className="text-xs text-slate-300">Aponte a câmera do seu celular ou computador para a peça ou etiqueta QR Code.</p>
-                    <button
-                      onClick={handleRunScan}
-                      className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-6 py-3 rounded-xl transition shadow-lg flex items-center gap-2 mx-auto">
-                      <ScanLine className="w-4 h-4" />
-                      <span>INICIAR ESCANEAMENTO AO VIVO</span>
-                    </button>
-                  </div>
-                )}
-
-                {scannerMode === 'upload' && !isScanning && !scannedResult && (
-                  <div className="text-center space-y-3">
-                    <Upload className="w-10 h-10 text-slate-500 mx-auto" />
-                    <p className="text-xs text-slate-300">Arraste a foto da peça ou clique para escolher do seu dispositivo.</p>
-                    <button
-                      onClick={handleRunScan}
-                      className="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs px-5 py-2.5 rounded-xl transition">
-                      Selecionar Arquivo de Imagem
-                    </button>
-                  </div>
-                )}
-
-                {/* EM PROCESSAMENTO */}
-                {isScanning && (
-                  <div className="text-center space-y-4">
-                    <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
-                    <p className="text-xs font-bold text-emerald-400 animate-pulse">
-                      Identificando componente via Inteligência Artificial IVECO...
-                    </p>
-                  </div>
-                )}
-
-                {/* RESULTADO DA LEITURA */}
-                {scannedResult && (
-                  <div className="w-full bg-slate-900 border border-emerald-500/40 rounded-xl p-5 space-y-4">
-                    <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-                      <div className="flex items-center gap-2 text-emerald-400 font-bold text-sm">
-                        <CheckCircle2 className="w-5 h-5" />
-                        <span>Diagnóstico Concluído</span>
-                      </div>
-                      <span className="text-[10px] font-mono bg-slate-800 text-slate-400 px-2 py-0.5 rounded">
-                        Assertividade: 99.2%
-                      </span>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                      <div className="bg-slate-950 p-3 rounded-lg border border-slate-800">
-                        <span className="text-slate-400 text-[10px] block">Peça Reconhecida:</span>
-                        <strong className="text-white text-sm block mt-0.5">{scannedResult.name}</strong>
-                        <span className="text-[11px] text-slate-400 font-mono">Cód: {scannedResult.code}</span>
-                      </div>
-
-                      <div className="bg-slate-950 p-3 rounded-lg border border-slate-800">
-                        <span className="text-slate-400 text-[10px] block">Condição Detectada:</span>
-                        <span className="text-emerald-400 font-bold block mt-0.5">{scannedResult.condition}</span>
-                        <span className="text-[11px] text-slate-400">Economia estimada: {scannedResult.co2Savings} de CO₂</span>
-                      </div>
-                    </div>
-
-                    <div className="flex gap-2 pt-2">
-                      <button
-                        onClick={() => setScannedResult(null)}
-                        className="flex-1 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs rounded-xl transition">
-                        Escanear Outra Peça
-                      </button>
-                      <button
-                        onClick={() => {
-                          const newP = {
-                            id: String(stockList.length + 1),
-                            name: scannedResult.name,
-                            code: scannedResult.code,
-                            status: 'Disponível',
-                            location: 'SP - Matriz',
-                            isReconditioned: true
-                          };
-                          setStockList([newP, ...stockList]);
-                          setScannedResult(null);
-                          setActiveTab('stock');
-                          triggerToast('Peça escaneada e adicionada ao Estoque!');
-                        }}
-                        className="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl transition">
-                        Adicionar ao Estoque Agora
-                      </button>
-                    </div>
-                  </div>
-                )}
-
-              </div>
-            </div>
-          )}
-
         </main>
       </div>
 
-      {/* ================= MODAL CADASTRAR PEÇA ================= */}
+      {/* ================= MODAL CADASTRAR NOVA PEÇA (TOTALMENTE FUNCIONAL) ================= */}
       {showCadastrarModal && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
           <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
             <div className="flex justify-between items-center border-b border-slate-800 pb-3">
               <h3 className="font-bold text-base text-white flex items-center gap-2">
                 <PlusCircle className="w-5 h-5 text-emerald-400" />
-                Cadastrar Peça na Oficina
+                Cadastrar Nova Peça no Estoque
               </h3>
               <button onClick={() => setShowCadastrarModal(false)} className="text-slate-400 hover:text-white">
                 <X className="w-5 h-5" />
@@ -716,37 +835,70 @@ export default function App() {
 
             <form onSubmit={handleCadastrarPeca} className="space-y-3 text-xs">
               <div>
-                <label className="text-slate-300 font-medium block mb-1">Nome do Componente/Peça:</label>
+                <label className="text-slate-300 font-medium block mb-1">Nome do Componente / Peça *</label>
                 <input
                   type="text"
                   required
-                  placeholder="Ex: Coletor de Admissão Turbina"
+                  placeholder="Ex: Bomba de Alta Pressão Common Rail"
                   value={newPartName}
                   onChange={e => setNewPartName(e.target.value)}
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-slate-200 focus:outline-none focus:border-emerald-500"
                 />
               </div>
 
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="text-slate-300 font-medium block mb-1">Código IVECO</label>
+                  <input
+                    type="text"
+                    placeholder="Ex: IVE-9921"
+                    value={newPartCode}
+                    onChange={e => setNewPartCode(e.target.value)}
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-slate-200 focus:outline-none focus:border-emerald-500"
+                  />
+                </div>
+                <div>
+                  <label className="text-slate-300 font-medium block mb-1">Quantidade</label>
+                  <input
+                    type="number"
+                    min="1"
+                    value={newPartQuantity}
+                    onChange={e => setNewPartQuantity(e.target.value)}
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-slate-200 focus:outline-none focus:border-emerald-500"
+                  />
+                </div>
+              </div>
+
               <div>
-                <label className="text-slate-300 font-medium block mb-1">Código IVECO (Opcional):</label>
+                <label className="text-slate-300 font-medium block mb-1">Localização no Almoxarifado</label>
                 <input
                   type="text"
-                  placeholder="Ex: IVE-9921-X"
-                  value={newPartCode}
-                  onChange={e => setNewPartCode(e.target.value)}
+                  placeholder="Ex: Prateleira 02 - Gaveta 05"
+                  value={newPartLocation}
+                  onChange={e => setNewPartLocation(e.target.value)}
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-slate-200 focus:outline-none focus:border-emerald-500"
                 />
               </div>
 
               <div>
-                <label className="text-slate-300 font-medium block mb-1">Status do Item:</label>
+                <label className="text-slate-300 font-medium block mb-1">Link da Imagem (Opcional)</label>
+                <input
+                  type="url"
+                  placeholder="https://exemplo.com/foto-peca.jpg"
+                  value={newPartImageUrl}
+                  onChange={e => setNewPartImageUrl(e.target.value)}
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-slate-200 focus:outline-none focus:border-emerald-500"
+                />
+              </div>
+
+              <div>
+                <label className="text-slate-300 font-medium block mb-1">Status do Item</label>
                 <select
                   value={newPartStatus}
                   onChange={e => setNewPartStatus(e.target.value)}
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-slate-200 focus:outline-none focus:border-emerald-500">
-                  <option value="Disponível">Disponível para Troca</option>
+                  <option value="Disponível">Disponível para Troca / Uso</option>
                   <option value="Indisponível">Em Uso / Indisponível</option>
-                  <option value="Descarte Reciclável">Descarte Reciclável</option>
                 </select>
               </div>
 
@@ -759,11 +911,47 @@ export default function App() {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl transition">
-                  Salvar Peça
+                  className="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl transition shadow-lg shadow-emerald-950">
+                  Cadastrar Peça
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* ================= MODAL DETALHES DA PEÇA ================= */}
+      {selectedPart && (
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 w-full max-w-xl space-y-4 shadow-2xl">
+            <div className="flex justify-between items-center border-b border-slate-800 pb-3">
+              <h3 className="text-sm font-extrabold text-white">Detalhes do Componente</h3>
+              <button onClick={() => setSelectedPart(null)} className="text-slate-400 hover:text-white font-bold text-xs bg-slate-800 px-3 py-1 rounded-lg">Fechar [X]</button>
+            </div>
+
+            <div className="relative aspect-video bg-slate-950 rounded-2xl overflow-hidden border border-slate-800">
+              <img src={selectedPart.images[activeImageIdx]} alt="Peça" className="w-full h-full object-cover" />
+            </div>
+
+            <div className="bg-slate-950 rounded-2xl p-4 border border-slate-800 space-y-3 text-xs">
+              <div>
+                <h4 className="font-extrabold text-sm text-white uppercase">{selectedPart.name}</h4>
+                <p className="text-[11px] font-mono text-emerald-400">Código: {selectedPart.code}</p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3 border-t border-b border-slate-800 py-3">
+                <div><span className="text-slate-500 block text-[10px]">STATUS</span><span className="font-bold text-emerald-400">{selectedPart.status}</span></div>
+                <div><span className="text-slate-500 block text-[10px]">QUANTIDADE</span><span className="font-bold text-slate-200">{selectedPart.quantity} unidades</span></div>
+                <div><span className="text-slate-500 block text-[10px]">CONDIÇÃO</span><span className="font-bold text-slate-200">{selectedPart.condition}</span></div>
+                <div><span className="text-slate-500 block text-[10px]">LOCAL</span><span className="font-bold text-slate-200">{selectedPart.location}</span></div>
+              </div>
+            </div>
+
+            <button 
+              onClick={() => { sendTo3DPrinter(selectedPart.name); setSelectedPart(null); }} 
+              className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs py-3 rounded-xl transition flex items-center justify-center gap-2">
+              <Printer className="w-4 h-4" /> Solicitar Réplica no Hub 3D
+            </button>
           </div>
         </div>
       )}
@@ -774,30 +962,17 @@ export default function App() {
           <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-sm w-full p-5 space-y-4">
             <div className="flex justify-between items-center border-b border-slate-800 pb-2">
               <h3 className="font-bold text-sm text-white flex items-center gap-2">
-                <Bell className="w-4 h-4 text-emerald-400" />
-                Notificações Recentes
+                <Bell className="w-4 h-4 text-emerald-400" /> Notificações
               </h3>
-              <button onClick={() => setShowNotificationModal(false)} className="text-slate-400 hover:text-white">
-                <X className="w-4 h-4" />
-              </button>
+              <button onClick={() => setShowNotificationModal(false)} className="text-slate-400 hover:text-white"><X className="w-4 h-4" /></button>
             </div>
-
             <div className="space-y-2 text-xs">
               <div className="p-2.5 bg-slate-950 rounded-lg border border-slate-800">
                 <p className="font-bold text-slate-200">Peça Aprovada para Envio</p>
-                <p className="text-[11px] text-slate-400 mt-0.5">Sua solicitação de Módulo foi aceita pela matriz.</p>
-              </div>
-              <div className="p-2.5 bg-slate-950 rounded-lg border border-slate-800">
-                <p className="font-bold text-slate-200">Nova solicitação na Rede</p>
-                <p className="text-[11px] text-slate-400 mt-0.5">IVECO BH solicitou verificação de estoque.</p>
+                <p className="text-[11px] text-slate-400 mt-0.5">Sua solicitação de Módulo foi aceita.</p>
               </div>
             </div>
-
-            <button
-              onClick={() => setShowNotificationModal(false)}
-              className="w-full py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs rounded-xl">
-              Fechar
-            </button>
+            <button onClick={() => setShowNotificationModal(false)} className="w-full py-2 bg-slate-800 text-slate-200 font-bold text-xs rounded-xl">Fechar</button>
           </div>
         </div>
       )}
