@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IVECO ECOOFICINA 4.0 • Hub de Manufatura Aditiva & ESG</title>
   
-  <!-- Google Fonts & Tailwind CSS CDN -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -24,7 +23,6 @@
     }
   </script>
 
-  <!-- React 18, Babel & Lucide Icons -->
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -43,7 +41,6 @@
   <script type="text/babel">
     const { useState, useEffect, useRef } = React;
 
-    // Helper para Ícones Lucide
     const LucideIcon = ({ name, className = "w-4 h-4", ...props }) => {
       const spanRef = useRef(null);
       useEffect(() => {
@@ -72,8 +69,19 @@
     const Eye = (p) => <LucideIcon name="eye" {...p} />;
     const PlusCircle = (p) => <LucideIcon name="plus-circle" {...p} />;
     const X = (p) => <LucideIcon name="x" {...p} />;
+    const Network = (p) => <LucideIcon name="network" {...p} />;
+    const Building2 = (p) => <LucideIcon name="building-2" {...p} />;
+    const SendHorizontal = (p) => <LucideIcon name="send-horizontal" {...p} />;
+    const Truck = (p) => <LucideIcon name="truck" {...p} />;
+    const MapPin = (p) => <LucideIcon name="map-pin" {...p} />;
+    const Share2 = (p) => <LucideIcon name="share-2" {...p} />;
+    const Phone = (p) => <LucideIcon name="phone" {...p} />;
+    const Mail = (p) => <LucideIcon name="mail" {...p} />;
+    const Clock = (p) => <LucideIcon name="clock" {...p} />;
+    const Search = (p) => <LucideIcon name="search" {...p} />;
+    const Wifi = (p) => <LucideIcon name="wifi" {...p} />;
 
-    // ESTOQUE COM IMAGENS REAIS DE PEÇAS MECÂNICAS PESADAS
+    // ESTOQUE LOCAL
     const INITIAL_STOCK = [
       { 
         id: '1', 
@@ -86,11 +94,7 @@
         location: 'Almoxarifado B – Prateleira 04 – Gaveta 12',
         compatibility: 'IVECO S-WAY / STRALIS',
         material: 'PA12-CF (Reforçado Fibra de Carbono)',
-        images: [
-          'https://perimpecas.com.br/fotos/425141.jpg',
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrURse1orkGDX9fJPsbo4i67fbuRuMEYqbjxKKfQB3cV07ios1kNFhhME&s=10',
-          'https://www.tagaautopartes.com.br/fotos/morelate/106054.png'
-        ]
+        images: ['https://perimpecas.com.br/fotos/425141.jpg']
       },
       { 
         id: '2', 
@@ -103,10 +107,7 @@
         location: 'Almoxarifado A – Prateleira 01 – Gaveta 03',
         compatibility: 'IVECO S-WAY / TECTOR',
         material: 'PEEK Alta Resistência Termal',
-        images: [
-          'https://images.tcdn.com.br/img/img_prod/920964/engrenagem_do_comando_de_valvula_para_iveco_cursor_8_euro_3_99436187_17565_1_4e7fa24537e2bc9521e272a7a40cdedb.jpg',
-          'https://recycleapp-images-publish-copia.s3.amazonaws.com/tistu_idEmpresa356_gmail.com_1bzszos8n3ni8x41ee8l5.jpg'
-        ]
+        images: ['https://images.tcdn.com.br/img/img_prod/920964/engrenagem_do_comando_de_valvula_para_iveco_cursor_8_euro_3_99436187_17565_1_4e7fa24537e2bc9521e272a7a40cdedb.jpg']
       },
       { 
         id: '3', 
@@ -119,23 +120,113 @@
         location: 'Hub 3D - Fila de Produção',
         compatibility: 'IVECO DAILY / HI-WAY',
         material: 'PA12-CF',
-        images: [
-          'https://images.tcdn.com.br/img/img_prod/834811/coletor_admissao_secundario_palio_brava_1_6_16v_1993_a_2000_46541292_original_19829_3_a7323bef4fa578e0110a05364d9255fb.jpeg',
-          'https://images.tcdn.com.br/img/img_prod/834811/coletor_admissao_secundario_palio_1_6_16v_1993_a_2000_original_21133_5_c8a659edec2bfcc4da2fb90025c73982.jpeg'
-        ]
+        images: ['https://images.tcdn.com.br/img/img_prod/834811/coletor_admissao_secundario_palio_brava_1_6_16v_1993_a_2000_46541292_original_19829_3_a7323bef4fa578e0110a05364d9255fb.jpeg']
+      }
+    ];
+
+    // 🔹 NOVO: ESTOQUE DA REDE IVECO (outras concessionárias)
+    const NETWORK_STOCK = [
+      {
+        id: 'NET-101',
+        name: 'BOMBA DE INJEÇÃO ALTA PRESSÃO COMMON RAIL',
+        code: 'IVE-INJ-990',
+        unit: 'IVECO Campinas',
+        unitCity: 'Campinas - SP',
+        distance: '98 km',
+        deliveryEst: '2-3 dias úteis',
+        quantity: 1,
+        status: 'Disponível na Rede',
+        condition: 'Recondicionado Homologado',
+        location: 'Almoxarifado Central - Prateleira 02',
+        compatibility: 'IVECO STRALIS / HI-WAY',
+        material: 'Aço Forjado / Valvulado',
+        contact: { phone: '(19) 3251-4400', email: 'campinas@iveco.com.br' },
+        images: ['https://perimpecas.com.br/fotos/425141.jpg']
+      },
+      {
+        id: 'NET-102',
+        name: 'FAROL DIANTEIRO DIREITO FULL LED MATRIX',
+        code: 'IVE-LED-303',
+        unit: 'IVECO Curitiba',
+        unitCity: 'Curitiba - PR',
+        distance: '408 km',
+        deliveryEst: '3-4 dias úteis',
+        quantity: 3,
+        status: 'Disponível na Rede',
+        condition: 'Seminovo Testado',
+        location: 'Setor Eletrônico - A3',
+        compatibility: 'IVECO S-WAY',
+        material: 'Policarbonato / LED',
+        contact: { phone: '(41) 3025-7800', email: 'curitiba@iveco.com.br' },
+        images: ['https://images.tcdn.com.br/img/img_prod/920964/engrenagem_do_comando_de_valvula_para_iveco_cursor_8_euro_3_99436187_17565_1_4e7fa24537e2bc9521e272a7a40cdedb.jpg']
+      },
+      {
+        id: 'NET-103',
+        name: 'MÓDULO ELETRÔNICO DE CONTROLE DE FREIO ABS',
+        code: 'IVE-ABS-404',
+        unit: 'IVECO Belo Horizonte',
+        unitCity: 'Belo Horizonte - MG',
+        distance: '586 km',
+        deliveryEst: '4-5 dias úteis',
+        quantity: 2,
+        status: 'Disponível na Rede',
+        condition: 'Novo em Estoque',
+        location: 'Prateleira E-1',
+        compatibility: 'IVECO DAILY / TECTOR',
+        material: 'Alumínio / Placa SMD',
+        contact: { phone: '(31) 3298-2200', email: 'bh@iveco.com.br' },
+        images: ['https://images.tcdn.com.br/img/img_prod/834811/coletor_admissao_secundario_palio_brava_1_6_16v_1993_a_2000_46541292_original_19829_3_a7323bef4fa578e0110a05364d9255fb.jpeg']
+      },
+      {
+        id: 'NET-104',
+        name: 'TURBINA DO MOTOR N67 - IVECO TECTOR',
+        code: 'IVE-TRB-707',
+        unit: 'IVECO Rio de Janeiro',
+        unitCity: 'Rio de Janeiro - RJ',
+        distance: '435 km',
+        deliveryEst: '3-4 dias úteis',
+        quantity: 1,
+        status: 'Disponível na Rede',
+        condition: 'Revisado com Laudo',
+        location: 'Setor Motor - B2',
+        compatibility: 'IVECO TECTOR / DAILY',
+        material: 'Liga de Titânio',
+        contact: { phone: '(21) 3555-9100', email: 'rio@iveco.com.br' },
+        images: ['https://perimpecas.com.br/fotos/425141.jpg']
+      },
+      {
+        id: 'NET-105',
+        name: 'RADIADOR DE ÁGUA COMPLETO IVECO S-WAY',
+        code: 'IVE-RAD-215',
+        unit: 'IVECO Porto Alegre',
+        unitCity: 'Porto Alegre - RS',
+        distance: '1.109 km',
+        deliveryEst: '5-7 dias úteis',
+        quantity: 2,
+        status: 'Disponível na Rede',
+        condition: 'Seminovo Testado',
+        location: 'Prateleira C-7',
+        compatibility: 'IVECO S-WAY',
+        material: 'Alumínio / Cobre',
+        contact: { phone: '(51) 3222-6600', email: 'poa@iveco.com.br' },
+        images: ['https://images.tcdn.com.br/img/img_prod/920964/engrenagem_do_comando_de_valvula_para_iveco_cursor_8_euro_3_99436187_17565_1_4e7fa24537e2bc9521e272a7a40cdedb.jpg']
       }
     ];
 
     function App() {
       const [activeTab, setActiveTab] = useState('dashboard');
       const [stockList, setStockList] = useState(INITIAL_STOCK);
+      const [networkStockList] = useState(NETWORK_STOCK);
+      const [stockScope, setStockScope] = useState('local'); // 'local' | 'network'
+      const [requestList, setRequestList] = useState([]);
+      const [showRequestsModal, setShowRequestsModal] = useState(false);
 
       const [selectedPart, setSelectedPart] = useState(null);
+      const [selectedNetworkPart, setSelectedNetworkPart] = useState(null);
       const [activeImageIdx, setActiveImageIdx] = useState(0);
       const [searchTerm, setSearchTerm] = useState('');
-      const [stockFilter, setStockFilter] = useState('Todos');
 
-      // Modal de Cadastro de Peças
+      // Modal de Cadastro
       const [showCadastrarModal, setShowCadastrarModal] = useState(false);
       const [newPartName, setNewPartName] = useState('');
       const [newPartCode, setNewPartCode] = useState('');
@@ -144,7 +235,7 @@
       const [newPartImageUrl, setNewPartImageUrl] = useState('');
       const [newPartStatus, setNewPartStatus] = useState('Disponível');
 
-      // Câmera Real WebRTC
+      // Câmera
       const [cameraActive, setCameraActive] = useState(false);
       const [cameraError, setCameraError] = useState('');
       const [isScanning, setIsScanning] = useState(false);
@@ -152,7 +243,7 @@
       const videoRef = useRef(null);
       const streamRef = useRef(null);
 
-      // HUB IMPRESSÃO 3D DETALHADO
+      // Hub 3D
       const [printers] = useState([
         { id: '1', name: 'Impressora 3D #01 (Industrial PEEK)', status: 'Imprimindo', progress: 74, tempBed: '120°C', tempNozzle: '380°C', file: 'ALAVANCA_STR_425141.gcode' },
         { id: '2', name: 'Impressora 3D #02 (PA12-CF Heavy)', status: 'Disponível', progress: 100, tempBed: '25°C', tempNozzle: '25°C', file: 'Aguardando trabalho...' },
@@ -160,8 +251,7 @@
       ]);
 
       const [printQueue, setPrintQueue] = useState([
-        { id: 'Q-101', name: 'Suporte Tampão Óleo Motor', material: 'PA12-CF', timeEst: '45 min', requestedBy: 'IVECO Campinas' },
-        { id: 'Q-102', name: 'Coletor de Ar Secundário', material: 'PEEK', timeEst: '1h 20m', requestedBy: 'IVECO SP - Anchieta' }
+        { id: 'Q-101', name: 'Suporte Tampão Óleo Motor', material: 'PA12-CF', timeEst: '45 min', requestedBy: 'IVECO Campinas' }
       ]);
 
       const [toastMessage, setToastMessage] = useState(null);
@@ -171,7 +261,28 @@
         setTimeout(() => setToastMessage(null), 3500);
       };
 
-      // Função para Cadastrar Nova Peça no Estoque
+      // 🔹 NOVO: SOLICITAR PEÇA DA REDE
+      const handleSolicitarPecaRede = (item) => {
+        const newReq = {
+          id: `REQ-${Math.floor(1000 + Math.random() * 9000)}`,
+          part: item.name,
+          code: item.code,
+          fromUnit: item.unit,
+          fromCity: item.unitCity,
+          distance: item.distance,
+          status: 'Solicitado via Rede',
+          date: new Date().toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })
+        };
+        setRequestList(prev => [newReq, ...prev]);
+        triggerToast(`✅ Solicitação enviada para ${item.unit}!`);
+        setSelectedNetworkPart(null);
+      };
+
+      // 🔹 NOVO: CONTATAR UNIDADE
+      const handleContatarUnidade = (item) => {
+        triggerToast(`📞 ${item.contact.phone} • ${item.contact.email}`);
+      };
+
       const handleCadastrarPeca = (e) => {
         e.preventDefault();
         if (!newPartName.trim()) return;
@@ -187,9 +298,7 @@
           location: newPartLocation,
           compatibility: 'IVECO Frota Pesada',
           material: 'PA12-CF Polímero Reforçado',
-          images: [
-            newPartImageUrl.trim() || 'https://images.tcdn.com.br/img/img_prod/920964/engrenagem_do_comando_de_valvula_para_iveco_cursor_8_euro_3_99436187_17565_1_4e7fa24537e2bc9521e272a7a40cdedb.jpg'
-          ]
+          images: [newPartImageUrl.trim() || 'https://images.tcdn.com.br/img/img_prod/920964/engrenagem_do_comando_de_valvula_para_iveco_cursor_8_euro_3_99436187_17565_1_4e7fa24537e2bc9521e272a7a40cdedb.jpg']
         };
 
         setStockList([newPart, ...stockList]);
@@ -198,8 +307,9 @@
         setNewPartCode('');
         setNewPartQuantity('1');
         setNewPartImageUrl('');
-        triggerToast(`Peça "${newPart.name}" cadastrada com sucesso no estoque!`);
+        triggerToast(`Peça "${newPart.name}" cadastrada no estoque local!`);
         setActiveTab('stock');
+        setStockScope('local');
       };
 
       const startCamera = async () => {
@@ -254,25 +364,24 @@
         setActiveTab('hub3d');
       };
 
-      const filteredStock = stockList.filter(item => {
-        const matches = item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                        item.code.toLowerCase().includes(searchTerm.toLowerCase());
-        if (stockFilter === 'Todos') return matches;
-        return matches && item.status === stockFilter;
+      const currentList = stockScope === 'local' ? stockList : networkStockList;
+
+      const filteredList = currentList.filter(item => {
+        return item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+               item.code.toLowerCase().includes(searchTerm.toLowerCase());
       });
 
       return (
         <div className="min-h-screen bg-[#0B0F17] text-slate-100 flex font-sans antialiased">
 
-          {/* NOTIFICAÇÃO TOAST */}
           {toastMessage && (
-            <div className="fixed top-5 right-5 z-50 bg-emerald-500 text-slate-950 font-extrabold text-xs px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 border border-emerald-300 animate-bounce">
+            <div className="fixed top-5 right-5 z-[60] bg-emerald-500 text-slate-950 font-extrabold text-xs px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 border border-emerald-300 animate-bounce">
               <CheckCircle2 className="w-4 h-4" />
               <span>{toastMessage}</span>
             </div>
           )}
 
-          {/* SIDEBAR LATERAL */}
+          {/* SIDEBAR */}
           <aside className="w-64 bg-[#0F172A] border-r border-slate-800 flex flex-col justify-between shrink-0 hidden md:flex">
             <div>
               <div className="p-5 border-b border-slate-800 flex items-center gap-3">
@@ -309,16 +418,23 @@
               </nav>
             </div>
 
+            {/* 🔹 NOVO: STATUS DA REDE NO RODAPÉ */}
             <div className="p-4 border-t border-slate-800 bg-slate-950/50">
-              <div className="flex items-center gap-2 text-xs text-slate-300 mb-1">
+              <div className="flex items-center gap-2 text-xs text-slate-300 mb-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span className="font-bold">Hub 3D Ativo • Descarbonização</span>
+                <span className="font-bold">Rede IVECO Online</span>
               </div>
-              <p className="text-[10px] text-slate-500">Frota Conectada IVECO 2026</p>
+              <p className="text-[10px] text-slate-500 mb-2">5 concessionárias conectadas</p>
+              <button
+                onClick={() => setShowRequestsModal(true)}
+                className="w-full text-[10px] bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30 font-bold py-2 rounded-lg transition flex items-center justify-center gap-1.5">
+                <Truck className="w-3 h-3" />
+                Minhas Solicitações ({requestList.length})
+              </button>
             </div>
           </aside>
 
-          {/* MAIN CONTENT */}
+          {/* MAIN */}
           <main className="flex-1 overflow-y-auto p-4 md:p-8">
 
             <header className="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-800 pb-5 mb-6 gap-4">
@@ -329,7 +445,19 @@
                 <h2 className="text-xl font-bold text-white mt-1">HUB DE INOVAÇÃO & DESCARBONIZAÇÃO</h2>
               </div>
               
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 flex-wrap">
+                {/* 🔹 NOVO: BOTÃO DE SOLICITAÇÕES NO TOPO */}
+                <button
+                  onClick={() => setShowRequestsModal(true)}
+                  className="relative bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-2 border border-slate-700">
+                  <Truck className="w-4 h-4 text-blue-400" />
+                  <span>Solicitações</span>
+                  {requestList.length > 0 && (
+                    <span className="bg-blue-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full">
+                      {requestList.length}
+                    </span>
+                  )}
+                </button>
                 <button onClick={() => setShowCadastrarModal(true)} className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-2 shadow-lg">
                   <PlusCircle className="w-4 h-4" /> + Cadastrar Peça
                 </button>
@@ -339,45 +467,29 @@
               </div>
             </header>
 
-            {/* TAB: DASHBOARD COM VÍDEO DO CAMINHÃO FUNCIONAL */}
+            {/* DASHBOARD */}
             {activeTab === 'dashboard' && (
               <div className="space-y-6">
-
                 <div className="relative rounded-3xl overflow-hidden border border-slate-800 min-h-[520px] md:min-h-[590px] flex items-end p-6 md:p-10 shadow-2xl shadow-black/40">
-                  
-                  {/* VÍDEO PRINCIPAL — APRESENTAÇÃO DA ECOOFICINA */}
-                  <video 
-                    autoPlay 
-                    loop 
-                    muted 
-                    playsInline 
-                    preload="metadata"
-                    className="absolute inset-0 w-full h-full object-cover z-0 opacity-55">
+                  <video autoPlay loop muted playsInline preload="metadata" className="absolute inset-0 w-full h-full object-cover z-0 opacity-55">
                     <source src="./iveco_animacao.mp4" type="video/mp4" />
                   </video>
-
                   <div className="absolute inset-0 bg-gradient-to-r from-[#05070C]/95 via-[#05070C]/65 to-[#05070C]/20 z-10"></div>
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F17] via-transparent to-[#0B0F17]/20 z-10"></div>
-
                   <div className="absolute top-5 right-5 z-20 flex items-center gap-2 rounded-full border border-white/10 bg-black/30 px-3 py-1.5 backdrop-blur-md">
                     <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
                     <span className="text-[10px] font-bold tracking-wider text-white/85">ECOOFICINA 4.0 • AO VIVO</span>
                   </div>
-
                   <div className="relative z-20 space-y-4 max-w-2xl">
                     <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-bold text-[11px] px-3 py-1 rounded-full uppercase tracking-wider inline-flex items-center gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5" />
-                      MANUFATURA ADITIVA & SUSTENTABILIDADE IVECO
+                      <Sparkles className="w-3.5 h-3.5" /> MANUFATURA ADITIVA & SUSTENTABILIDADE IVECO
                     </span>
-
                     <h1 className="text-4xl md:text-6xl font-black text-white tracking-tight leading-[1.02] drop-shadow-2xl">
                       Transformando manutenção em inovação.
                     </h1>
-
                     <p className="text-xs md:text-sm text-slate-300 leading-relaxed">
                       Uma plataforma inteligente que conecta diagnóstico por IA, engenharia, estoque digital e manufatura aditiva para criar um ciclo mais eficiente e circular para a frota IVECO.
                     </p>
-
                     <div className="pt-2 flex flex-wrap items-center gap-3">
                       <button onClick={() => setActiveTab('scanner')} className="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-5 py-3 rounded-xl transition flex items-center gap-2 shadow-lg shadow-blue-600/30">
                         <ScanLine className="w-4 h-4" /> Iniciar Diagnóstico IA
@@ -386,25 +498,9 @@
                         <Layers className="w-4 h-4 text-cyan-400" /> Catálogo CAD Digital
                       </button>
                     </div>
-
-                    <div className="grid grid-cols-3 gap-3 pt-4 border-t border-slate-800/80">
-                      <div className="bg-slate-950/70 border border-slate-800 p-2.5 rounded-xl text-center backdrop-blur-md">
-                        <p className="text-emerald-400 font-black text-base md:text-lg">PA12-CF</p>
-                        <p className="text-[10px] text-slate-400">Material técnico reforçado</p>
-                      </div>
-                      <div className="bg-slate-950/70 border border-slate-800 p-2.5 rounded-xl text-center backdrop-blur-md">
-                        <p className="text-cyan-400 font-black text-base md:text-lg">Sob demanda</p>
-                        <p className="text-[10px] text-slate-400">Produção digital local</p>
-                      </div>
-                      <div className="bg-slate-950/70 border border-slate-800 p-2.5 rounded-xl text-center backdrop-blur-md">
-                        <p className="text-blue-400 font-black text-base md:text-lg">CAD</p>
-                        <p className="text-[10px] text-slate-400">Modelos controlados</p>
-                      </div>
-                    </div>
                   </div>
                 </div>
 
-                {/* COMPONENTES DESTAQUE */}
                 <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5">
                   <div className="flex justify-between items-center mb-4">
                     <h3 className="font-bold text-sm text-white flex items-center gap-2">
@@ -414,7 +510,6 @@
                       Ver Catálogo Completo →
                     </button>
                   </div>
-
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {stockList.map(item => (
                       <div key={item.id} onClick={() => { setSelectedPart(item); setActiveImageIdx(0); }} className="bg-slate-950 border border-slate-800 rounded-xl p-3 flex gap-3 items-center hover:border-emerald-500/50 cursor-pointer transition group">
@@ -433,7 +528,7 @@
               </div>
             )}
 
-            {/* TAB: ESTOQUE DE PEÇAS COM CADASTRO E BUSCA */}
+            {/* ESTOQUE DE PEÇAS — COM TOGGLE LOCAL / REDE */}
             {activeTab === 'stock' && (
               <div className="space-y-6">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -441,7 +536,7 @@
                     <h3 className="text-lg font-bold text-white flex items-center gap-2">
                       <PackageCheck className="w-5 h-5 text-emerald-400" /> Catálogo de Componentes e Estoque
                     </h3>
-                    <p className="text-xs text-slate-400">Consulte fotos técnicas, disponibilidade e adicione novas peças</p>
+                    <p className="text-xs text-slate-400">Consulte o estoque local ou peça emprestado de outra unidade IVECO</p>
                   </div>
 
                   <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
@@ -458,20 +553,82 @@
                   </div>
                 </div>
 
+                {/* 🔹 NOVO: TOGGLE LOCAL vs REDE */}
+                <div className="bg-slate-900 p-2 rounded-2xl border border-slate-800 flex items-center justify-between gap-2 flex-wrap">
+                  <div className="flex items-center gap-2 bg-slate-950 p-1 rounded-xl border border-slate-800 flex-wrap">
+                    <button
+                      onClick={() => setStockScope('local')}
+                      className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition ${
+                        stockScope === 'local' 
+                          ? 'bg-emerald-500 text-slate-950 shadow-lg shadow-emerald-500/20' 
+                          : 'text-slate-400 hover:text-white'
+                      }`}>
+                      <Building2 className="w-4 h-4" />
+                      <span>Estoque Local (Sua Unidade)</span>
+                      <span className="bg-slate-900/60 px-2 py-0.5 rounded text-[10px]">{stockList.length}</span>
+                    </button>
+
+                    <button
+                      onClick={() => setStockScope('network')}
+                      className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition ${
+                        stockScope === 'network' 
+                          ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20' 
+                          : 'text-slate-400 hover:text-white'
+                      }`}>
+                      <Network className="w-4 h-4" />
+                      <span>Rede IVECO Integrada</span>
+                      <span className="bg-blue-500/30 px-2 py-0.5 rounded text-[10px] text-blue-200">{networkStockList.length}</span>
+                    </button>
+                  </div>
+
+                  {stockScope === 'network' && (
+                    <div className="flex items-center gap-2 text-[10px] text-emerald-400 font-bold bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-lg">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                      <Wifi className="w-3 h-3" />
+                      5 unidades conectadas em tempo real
+                    </div>
+                  )}
+                </div>
+
+                {/* 🔹 NOVO: BANNER INFORMATIVO NA REDE */}
+                {stockScope === 'network' && (
+                  <div className="bg-gradient-to-r from-blue-950/50 to-slate-900 border border-blue-500/20 rounded-2xl p-4 flex items-start gap-3">
+                    <div className="bg-blue-500/20 p-2 rounded-xl shrink-0">
+                      <Share2 className="w-5 h-5 text-blue-400" />
+                    </div>
+                    <div className="space-y-1">
+                      <h3 className="text-xs font-bold text-blue-300">Estoque Compartilhado entre Concessionárias IVECO</h3>
+                      <p className="text-[11px] text-slate-400 leading-relaxed">
+                        Peças disponíveis em outras unidades podem ser transferidas para sua oficina. 
+                        Clique em <strong className="text-blue-300">"Solicitar Transferência"</strong> e a logística da rede cuida do resto.
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {/* CARDS */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                  {filteredStock.map(item => (
+                  {filteredList.map(item => (
                     <div key={item.id} className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-slate-700 transition flex flex-col justify-between">
                       <div>
                         <div className="relative aspect-video bg-slate-950 overflow-hidden">
                           <img src={item.images[0]} alt={item.name} className="w-full h-full object-cover" />
                           <span className={`absolute top-2 right-2 text-[10px] font-extrabold px-2.5 py-1 rounded-full border shadow-lg ${
-                            item.status === 'Disponível' ? 'bg-emerald-500 text-slate-950 border-emerald-300' : 'bg-amber-500 text-slate-950 border-amber-300'
+                            item.status === 'Disponível' ? 'bg-emerald-500 text-slate-950 border-emerald-300' : 
+                            item.status === 'Disponível na Rede' ? 'bg-blue-500 text-white border-blue-300' :
+                            'bg-amber-500 text-slate-950 border-amber-300'
                           }`}>
                             {item.status}
                           </span>
                         </div>
 
                         <div className="p-4 space-y-2">
+                          {stockScope === 'network' && (
+                            <div className="flex items-center gap-1 text-[10px] font-bold text-blue-300">
+                              <MapPin className="w-3 h-3" />
+                              {item.unit} • {item.unitCity}
+                            </div>
+                          )}
                           <h4 className="font-bold text-xs text-white leading-snug">{item.name}</h4>
                           <p className="text-[10px] font-mono text-emerald-400">Código: {item.code}</p>
 
@@ -480,24 +637,54 @@
                             <p><strong className="text-slate-300">Quantidade:</strong> {item.quantity} unidades</p>
                             <p className="truncate"><strong className="text-slate-300">Local:</strong> {item.location}</p>
                           </div>
+
+                          {/* 🔹 NOVO: DISTÂNCIA/ENTREGA NA REDE */}
+                          {stockScope === 'network' && item.distance && (
+                            <div className="bg-slate-950 border border-slate-800 rounded-lg p-2 flex items-center gap-2 text-[10px] text-slate-400 mt-2">
+                              <Truck className="w-3 h-3 text-blue-400 shrink-0" />
+                              <span>Distância: <strong className="text-slate-200">{item.distance}</strong></span>
+                              <span className="text-slate-600">•</span>
+                              <span>Entrega: <strong className="text-slate-200">{item.deliveryEst}</strong></span>
+                            </div>
+                          )}
                         </div>
                       </div>
 
                       <div className="p-4 pt-0 flex gap-2">
-                        <button onClick={() => { setSelectedPart(item); setActiveImageIdx(0); }} className="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs py-2 rounded-xl transition flex items-center justify-center gap-1.5 border border-slate-700">
-                          <Eye className="w-3.5 h-3.5" /> Ver Detalhes
-                        </button>
-                        <button onClick={() => sendTo3DPrinter(item.name)} className="bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 border border-blue-500/30 font-bold text-xs px-3 py-2 rounded-xl transition">
-                          <Printer className="w-3.5 h-3.5" />
-                        </button>
+                        {stockScope === 'local' ? (
+                          <>
+                            <button onClick={() => { setSelectedPart(item); setActiveImageIdx(0); }} className="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs py-2 rounded-xl transition flex items-center justify-center gap-1.5 border border-slate-700">
+                              <Eye className="w-3.5 h-3.5" /> Ver Detalhes
+                            </button>
+                            <button onClick={() => sendTo3DPrinter(item.name)} className="bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 border border-blue-500/30 font-bold text-xs px-3 py-2 rounded-xl transition">
+                              <Printer className="w-3.5 h-3.5" />
+                            </button>
+                          </>
+                        ) : (
+                          <>
+                            <button onClick={() => setSelectedNetworkPart(item)} className="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs py-2 px-3 rounded-xl transition flex items-center justify-center gap-1.5 border border-slate-700">
+                              <Eye className="w-3.5 h-3.5" />
+                            </button>
+                            <button onClick={() => handleSolicitarPecaRede(item)} className="flex-1 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs py-2 rounded-xl transition flex items-center justify-center gap-1.5 shadow-lg shadow-blue-600/20">
+                              <SendHorizontal className="w-3.5 h-3.5" /> Solicitar Transferência
+                            </button>
+                          </>
+                        )}
                       </div>
                     </div>
                   ))}
                 </div>
+
+                {filteredList.length === 0 && (
+                  <div className="text-center py-12 bg-slate-900 border border-slate-800 rounded-2xl">
+                    <PackageCheck className="w-12 h-12 text-slate-600 mx-auto mb-2" />
+                    <p className="text-sm text-slate-400">Nenhuma peça encontrada.</p>
+                  </div>
+                )}
               </div>
             )}
 
-            {/* TAB: HUB DE IMPRESSÃO 3D FUNCIONAL */}
+            {/* HUB 3D */}
             {activeTab === 'hub3d' && (
               <div className="space-y-6">
                 <div>
@@ -569,7 +756,7 @@
               </div>
             )}
 
-            {/* TAB: RELATÓRIO DE DESCARBONIZAÇÃO ESG */}
+            {/* ESG */}
             {activeTab === 'esg' && (
               <div className="space-y-6">
                 <div>
@@ -599,7 +786,7 @@
               </div>
             )}
 
-            {/* TAB: SCANNER CÂMERA REAL WEBRTC */}
+            {/* SCANNER */}
             {activeTab === 'scanner' && (
               <div className="max-w-2xl mx-auto space-y-6">
                 <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center">
@@ -675,7 +862,7 @@
 
           </main>
 
-          {/* MODAL CADASTRAR NOVA PEÇA */}
+          {/* MODAL CADASTRO */}
           {showCadastrarModal && (
             <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
               <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
@@ -767,11 +954,10 @@
             </div>
           )}
 
-          {/* MODAL DETALHES DA PEÇA */}
+          {/* MODAL DETALHES PEÇA LOCAL */}
           {selectedPart && (
             <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto">
               <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 w-full max-w-2xl space-y-5 shadow-2xl relative">
-                
                 <div className="flex justify-between items-center border-b border-slate-800 pb-3">
                   <div className="flex items-center gap-2">
                     <span className="text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">IVECO São Paulo</span>
@@ -780,10 +966,8 @@
                   <button onClick={() => setSelectedPart(null)} className="text-slate-400 hover:text-white font-bold text-xs bg-slate-800 px-3 py-1.5 rounded-lg">Fechar [X]</button>
                 </div>
 
-                <div className="space-y-3">
-                  <div className="relative aspect-video bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 flex items-center justify-center">
-                    <img src={selectedPart.images[activeImageIdx]} alt="Componente IVECO" className="w-full h-full object-cover" />
-                  </div>
+                <div className="relative aspect-video bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 flex items-center justify-center">
+                  <img src={selectedPart.images[activeImageIdx]} alt="Componente IVECO" className="w-full h-full object-cover" />
                 </div>
 
                 <div className="bg-slate-950 rounded-2xl p-4 border border-slate-800 space-y-3 text-xs">
@@ -803,7 +987,129 @@
                 <button onClick={() => { sendTo3DPrinter(selectedPart.name); setSelectedPart(null); }} className="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs py-3 rounded-xl transition flex items-center justify-center gap-2">
                   <Printer className="w-4 h-4" /> Solicitar Réplica no Hub 3D
                 </button>
+              </div>
+            </div>
+          )}
 
+          {/* 🔹 NOVO: MODAL DETALHES PEÇA DA REDE */}
+          {selectedNetworkPart && (
+            <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto">
+              <div className="bg-slate-900 border border-blue-500/30 rounded-3xl p-6 w-full max-w-2xl space-y-5 shadow-2xl">
+                <div className="flex justify-between items-center border-b border-slate-800 pb-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-bold bg-blue-500/10 text-blue-400 border border-blue-500/30 px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                      <Network className="w-3 h-3" /> Rede IVECO
+                    </span>
+                    <h3 className="text-sm font-extrabold text-white">Peça em Outra Unidade</h3>
+                  </div>
+                  <button onClick={() => setSelectedNetworkPart(null)} className="text-slate-400 hover:text-white font-bold text-xs bg-slate-800 px-3 py-1.5 rounded-lg">Fechar [X]</button>
+                </div>
+
+                <div className="relative aspect-video bg-slate-950 rounded-2xl overflow-hidden border border-slate-800">
+                  <img src={selectedNetworkPart.images[0]} alt={selectedNetworkPart.name} className="w-full h-full object-cover" />
+                </div>
+
+                <div className="bg-slate-950 rounded-2xl p-4 border border-slate-800 space-y-3 text-xs">
+                  <div>
+                    <h4 className="font-extrabold text-sm text-white uppercase">{selectedNetworkPart.name}</h4>
+                    <p className="text-[11px] font-mono text-slate-400">Código: {selectedNetworkPart.code}</p>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 border-t border-b border-slate-800 py-3">
+                    <div>
+                      <span className="text-[10px] text-slate-500 block uppercase font-bold">UNIDADE ORIGEM</span>
+                      <span className="font-bold text-blue-400">{selectedNetworkPart.unit}</span>
+                      <p className="text-[10px] text-slate-500 mt-0.5">{selectedNetworkPart.unitCity}</p>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-slate-500 block uppercase font-bold">DISTÂNCIA</span>
+                      <span className="font-bold text-slate-200">{selectedNetworkPart.distance}</span>
+                      <p className="text-[10px] text-slate-500 mt-0.5">Entrega: {selectedNetworkPart.deliveryEst}</p>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-slate-500 block uppercase font-bold">QUANTIDADE</span>
+                      <span className="font-bold text-slate-200">{selectedNetworkPart.quantity} unidades</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-slate-500 block uppercase font-bold">CONDIÇÃO</span>
+                      <span className="font-bold text-slate-200">{selectedNetworkPart.condition}</span>
+                    </div>
+                  </div>
+
+                  <div className="bg-blue-950/30 border border-blue-500/20 rounded-xl p-3 space-y-2">
+                    <span className="text-[10px] font-bold text-blue-300 uppercase">Contato da Unidade</span>
+                    <div className="flex items-center gap-2 text-slate-300">
+                      <Phone className="w-3 h-3 text-blue-400" />
+                      <span className="font-mono">{selectedNetworkPart.contact.phone}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-slate-300">
+                      <Mail className="w-3 h-3 text-blue-400" />
+                      <span className="font-mono text-[11px]">{selectedNetworkPart.contact.email}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex gap-2">
+                  <button onClick={() => handleContatarUnidade(selectedNetworkPart)} className="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs py-3 rounded-xl transition flex items-center justify-center gap-2 border border-slate-700">
+                    <Phone className="w-4 h-4" /> Contatar Unidade
+                  </button>
+                  <button onClick={() => handleSolicitarPecaRede(selectedNetworkPart)} className="flex-1 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs py-3 rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20">
+                    <SendHorizontal className="w-4 h-4" /> Solicitar Transferência
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* 🔹 NOVO: MODAL DE SOLICITAÇÕES */}
+          {showRequestsModal && (
+            <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto">
+              <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 w-full max-w-2xl space-y-5 shadow-2xl">
+                <div className="flex justify-between items-center border-b border-slate-800 pb-3">
+                  <div className="flex items-center gap-2">
+                    <Truck className="w-5 h-5 text-blue-400" />
+                    <h3 className="text-sm font-extrabold text-white">Minhas Solicitações à Rede IVECO</h3>
+                  </div>
+                  <button onClick={() => setShowRequestsModal(false)} className="text-slate-400 hover:text-white font-bold text-xs bg-slate-800 px-3 py-1.5 rounded-lg">Fechar [X]</button>
+                </div>
+
+                {requestList.length === 0 ? (
+                  <div className="text-center py-12 space-y-3">
+                    <Truck className="w-12 h-12 text-slate-700 mx-auto" />
+                    <p className="text-xs text-slate-400">Nenhuma solicitação feita ainda.</p>
+                    <p className="text-[10px] text-slate-500">Vá em "Estoque de Peças" → "Rede IVECO Integrada" e solicite uma transferência.</p>
+                  </div>
+                ) : (
+                  <div className="space-y-3 max-h-[500px] overflow-y-auto">
+                    {requestList.map(req => (
+                      <div key={req.id} className="bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-2">
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <p className="text-[10px] font-mono text-blue-400 font-bold">{req.id}</p>
+                            <h4 className="font-bold text-xs text-white mt-0.5">{req.part}</h4>
+                            <p className="text-[10px] font-mono text-slate-500">Cód: {req.code}</p>
+                          </div>
+                          <span className="bg-amber-500/10 text-amber-400 border border-amber-500/30 text-[10px] font-bold px-2.5 py-1 rounded-full">
+                            {req.status}
+                          </span>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-3 pt-2 border-t border-slate-800 text-[10px]">
+                          <div>
+                            <span className="text-slate-500 block">Origem</span>
+                            <span className="font-bold text-slate-200">{req.fromUnit}</span>
+                            <p className="text-slate-500">{req.fromCity}</p>
+                          </div>
+                          <div>
+                            <span className="text-slate-500 block">Distância</span>
+                            <span className="font-bold text-slate-200">{req.distance}</span>
+                            <p className="text-slate-500">Solicitado em {req.date}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           )}
