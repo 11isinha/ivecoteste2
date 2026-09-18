@@ -120,7 +120,7 @@ const INITIAL_REQUESTS = [
 ];
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'esg' | 'ai' | 'stock' | 'requests' | 'scanner' | 'hub3d'>('dashboard');
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'esg' | 'stock' | 'requests' | 'scanner' | 'hub3d'>('dashboard');
 
   // Controle de visão dentro da aba Estoque (Local vs Rede Inteira)
   const [stockScope, setStockScope] = useState<'local' | 'network'>('local');
@@ -130,7 +130,6 @@ export default function App() {
   const [networkStockList, setNetworkStockList] = useState(NETWORK_STOCK);
   const [requestList, setRequestList] = useState(INITIAL_REQUESTS);
 
-  const [stockFilter, setStockFilter] = useState<'Todos' | 'Disponível' | 'Indisponível'>('Todos');
   const [searchTerm, setSearchTerm] = useState('');
 
   // Modais e Alertas
@@ -278,7 +277,6 @@ export default function App() {
               <span>Início / Dashboard</span>
             </button>
 
-            {/* ABA DE ESTOQUE COMPLETO (LOCAL + REDE ACESSIBILIDADE) */}
             <button
               onClick={() => setActiveTab('stock')}
               className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg font-medium transition ${activeTab === 'stock' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'text-slate-400 hover:bg-slate-800/50'}`}>
@@ -392,10 +390,10 @@ export default function App() {
             </div>
           )}
 
-          {/* ABA DE ESTOQUE (AGORA INTEGRANDO ESTOQUE LOCAL + REDE IVECO) */}
+          {/* ABA DE ESTOQUE (LOCAL + REDE IVECO) */}
           {activeTab === 'stock' && (
             <div className="space-y-4">
-              {/* SELETOR NO CORAÇÃO DO ESTOQUE: ALTERNE ENTRE LOCAL E REDE */}
+              {/* SELETOR DE VISÃO NO ESTOQUE */}
               <div className="bg-slate-900 p-2 rounded-2xl border border-slate-800 flex items-center justify-between gap-2 flex-wrap">
                 <div className="flex items-center gap-2 bg-slate-950 p-1 rounded-xl border border-slate-800">
                   <button
@@ -430,13 +428,13 @@ export default function App() {
                 )}
               </div>
 
-              {/* BARRA DE PESQUISA E FILTROS */}
+              {/* BARRA DE PESQUISA */}
               <div className="flex flex-col md:flex-row gap-3 items-center justify-between">
                 <div className="relative flex-1 w-full">
                   <Search className="w-4 h-4 text-slate-500 absolute left-3.5 top-3" />
                   <input
                     type="text"
-                    placeholder={stockScope === 'local' ? "Pesquisar no seu estoque local por nome, código ou localização..." : "Buscar peças disponíveis em Campinas, BH, Curitiba..."}
+                    placeholder={stockScope === 'local' ? "Pesquisar no seu estoque local..." : "Buscar peças disponíveis em Campinas, BH, Curitiba..."}
                     value={searchTerm}
                     onChange={e => setSearchTerm(e.target.value)}
                     className="w-full bg-slate-900 border border-slate-800 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-slate-700"
@@ -444,7 +442,7 @@ export default function App() {
                 </div>
               </div>
 
-              {/* LISTA DE PEÇAS (EXIBE CONFORME A SELEÇÃO LOCAL OU REDE) */}
+              {/* LISTA DE PEÇAS */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {currentDisplayList
                   .filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()) || item.code.toLowerCase().includes(searchTerm.toLowerCase()))
