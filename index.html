@@ -80,6 +80,8 @@
     const Clock = (p) => <LucideIcon name="clock" {...p} />;
     const Search = (p) => <LucideIcon name="search" {...p} />;
     const Wifi = (p) => <LucideIcon name="wifi" {...p} />;
+    const Box = (p) => <LucideIcon name="box" {...p} />;
+    const Zap = (p) => <LucideIcon name="zap" {...p} />;
 
     // ESTOQUE LOCAL
     const INITIAL_STOCK = [
@@ -124,91 +126,126 @@
       }
     ];
 
-    // 🔹 NOVO: ESTOQUE DA REDE IVECO (outras concessionárias)
+    // 🔹 REDE IVECO — APENAS PEÇAS IMPRIMÍVEIS EM 3D
     const NETWORK_STOCK = [
       {
         id: 'NET-101',
-        name: 'BOMBA DE INJEÇÃO ALTA PRESSÃO COMMON RAIL',
-        code: 'IVE-INJ-990',
+        name: 'SUPORTE DO TAMPÃO DE ÓLEO MOTOR',
+        code: 'IVE-PRT-101',
         unit: 'IVECO Campinas',
         unitCity: 'Campinas - SP',
         distance: '98 km',
-        deliveryEst: '2-3 dias úteis',
-        quantity: 1,
-        status: 'Disponível na Rede',
-        condition: 'Recondicionado Homologado',
-        location: 'Almoxarifado Central - Prateleira 02',
-        compatibility: 'IVECO STRALIS / HI-WAY',
-        material: 'Aço Forjado / Valvulado',
+        deliveryEst: '1-2 dias úteis',
+        quantity: 4,
+        status: 'Pronta na Prateleira 3D',
+        condition: 'Impressa em PA12-CF',
+        location: 'Hub 3D - Prateleira A1',
+        compatibility: 'IVECO S-WAY / STRALIS',
+        material: 'PA12-CF (Nylon + Fibra de Carbono)',
+        printTime: '45 min',
+        weight: '180g',
+        co2Saved: '4,2 kg CO₂',
         contact: { phone: '(19) 3251-4400', email: 'campinas@iveco.com.br' },
-        images: ['https://perimpecas.com.br/fotos/425141.jpg']
-      },
-      {
-        id: 'NET-102',
-        name: 'FAROL DIANTEIRO DIREITO FULL LED MATRIX',
-        code: 'IVE-LED-303',
-        unit: 'IVECO Curitiba',
-        unitCity: 'Curitiba - PR',
-        distance: '408 km',
-        deliveryEst: '3-4 dias úteis',
-        quantity: 3,
-        status: 'Disponível na Rede',
-        condition: 'Seminovo Testado',
-        location: 'Setor Eletrônico - A3',
-        compatibility: 'IVECO S-WAY',
-        material: 'Policarbonato / LED',
-        contact: { phone: '(41) 3025-7800', email: 'curitiba@iveco.com.br' },
         images: ['https://images.tcdn.com.br/img/img_prod/920964/engrenagem_do_comando_de_valvula_para_iveco_cursor_8_euro_3_99436187_17565_1_4e7fa24537e2bc9521e272a7a40cdedb.jpg']
       },
       {
+        id: 'NET-102',
+        name: 'CAPA DO CONECTOR ELÉTRICO MULTIPINO',
+        code: 'IVE-PRT-202',
+        unit: 'IVECO Curitiba',
+        unitCity: 'Curitiba - PR',
+        distance: '408 km',
+        deliveryEst: '2-3 dias úteis',
+        quantity: 12,
+        status: 'Pronta na Prateleira 3D',
+        condition: 'Impressa em TPU Flexível',
+        location: 'Hub 3D - Prateleira B2',
+        compatibility: 'IVECO DAILY / TECTOR',
+        material: 'TPU 95A (Flexível / Vedação)',
+        printTime: '28 min',
+        weight: '45g',
+        co2Saved: '1,1 kg CO₂',
+        contact: { phone: '(41) 3025-7800', email: 'curitiba@iveco.com.br' },
+        images: ['https://perimpecas.com.br/fotos/425141.jpg']
+      },
+      {
         id: 'NET-103',
-        name: 'MÓDULO ELETRÔNICO DE CONTROLE DE FREIO ABS',
-        code: 'IVE-ABS-404',
+        name: 'PRESILHA DE MANGUEIRA INTERCOOLER',
+        code: 'IVE-PRT-303',
         unit: 'IVECO Belo Horizonte',
         unitCity: 'Belo Horizonte - MG',
         distance: '586 km',
-        deliveryEst: '4-5 dias úteis',
-        quantity: 2,
-        status: 'Disponível na Rede',
-        condition: 'Novo em Estoque',
-        location: 'Prateleira E-1',
-        compatibility: 'IVECO DAILY / TECTOR',
-        material: 'Alumínio / Placa SMD',
+        deliveryEst: '3-4 dias úteis',
+        quantity: 8,
+        status: 'Pronta na Prateleira 3D',
+        condition: 'Impressa em PETG-CF',
+        location: 'Hub 3D - Prateleira C1',
+        compatibility: 'IVECO S-WAY / HI-WAY',
+        material: 'PETG-CF (Resistente à Umidade)',
+        printTime: '35 min',
+        weight: '90g',
+        co2Saved: '2,3 kg CO₂',
         contact: { phone: '(31) 3298-2200', email: 'bh@iveco.com.br' },
         images: ['https://images.tcdn.com.br/img/img_prod/834811/coletor_admissao_secundario_palio_brava_1_6_16v_1993_a_2000_46541292_original_19829_3_a7323bef4fa578e0110a05364d9255fb.jpeg']
       },
       {
         id: 'NET-104',
-        name: 'TURBINA DO MOTOR N67 - IVECO TECTOR',
-        code: 'IVE-TRB-707',
+        name: 'SUPORTE DO INTERCOOLER (LEVE)',
+        code: 'IVE-PRT-404',
         unit: 'IVECO Rio de Janeiro',
         unitCity: 'Rio de Janeiro - RJ',
         distance: '435 km',
-        deliveryEst: '3-4 dias úteis',
-        quantity: 1,
-        status: 'Disponível na Rede',
-        condition: 'Revisado com Laudo',
-        location: 'Setor Motor - B2',
-        compatibility: 'IVECO TECTOR / DAILY',
-        material: 'Liga de Titânio',
+        deliveryEst: '2-3 dias úteis',
+        quantity: 2,
+        status: 'Sob Demanda - Hub 3D',
+        condition: 'Fila de Impressão Ativa',
+        location: 'Hub 3D - Fila de Produção',
+        compatibility: 'IVECO STRALIS / TECTOR',
+        material: 'PA12-CF (Alta Rigidez)',
+        printTime: '1h 15m',
+        weight: '320g',
+        co2Saved: '6,8 kg CO₂',
         contact: { phone: '(21) 3555-9100', email: 'rio@iveco.com.br' },
         images: ['https://perimpecas.com.br/fotos/425141.jpg']
       },
       {
         id: 'NET-105',
-        name: 'RADIADOR DE ÁGUA COMPLETO IVECO S-WAY',
-        code: 'IVE-RAD-215',
+        name: 'TAMPA PROTETORA DO MÓDULO ABS',
+        code: 'IVE-PRT-505',
         unit: 'IVECO Porto Alegre',
         unitCity: 'Porto Alegre - RS',
         distance: '1.109 km',
-        deliveryEst: '5-7 dias úteis',
-        quantity: 2,
-        status: 'Disponível na Rede',
-        condition: 'Seminovo Testado',
-        location: 'Prateleira C-7',
-        compatibility: 'IVECO S-WAY',
-        material: 'Alumínio / Cobre',
+        deliveryEst: '4-5 dias úteis',
+        quantity: 6,
+        status: 'Pronta na Prateleira 3D',
+        condition: 'Impressa em ABS Técnico',
+        location: 'Hub 3D - Prateleira D3',
+        compatibility: 'IVECO DAILY / TECTOR',
+        material: 'ABS Técnico (Anti-impacto)',
+        printTime: '40 min',
+        weight: '120g',
+        co2Saved: '3,1 kg CO₂',
         contact: { phone: '(51) 3222-6600', email: 'poa@iveco.com.br' },
+        images: ['https://images.tcdn.com.br/img/img_prod/920964/engrenagem_do_comando_de_valvula_para_iveco_cursor_8_euro_3_99436187_17565_1_4e7fa24537e2bc9521e272a7a40cdedb.jpg']
+      },
+      {
+        id: 'NET-106',
+        name: 'ENGRENAGEM DO COMANDO DE VÁLVULA (3D)',
+        code: 'IVE-PRT-606',
+        unit: 'IVECO Campinas',
+        unitCity: 'Campinas - SP',
+        distance: '98 km',
+        deliveryEst: '1-2 dias úteis',
+        quantity: 3,
+        status: 'Pronta na Prateleira 3D',
+        condition: 'Impressa em PEEK Alta Performance',
+        location: 'Hub 3D - Câmara Térmica',
+        compatibility: 'IVECO CURSOR / S-WAY',
+        material: 'PEEK (Resistência Térmica 250°C)',
+        printTime: '2h 30m',
+        weight: '210g',
+        co2Saved: '7,4 kg CO₂',
+        contact: { phone: '(19) 3251-4400', email: 'campinas@iveco.com.br' },
         images: ['https://images.tcdn.com.br/img/img_prod/920964/engrenagem_do_comando_de_valvula_para_iveco_cursor_8_euro_3_99436187_17565_1_4e7fa24537e2bc9521e272a7a40cdedb.jpg']
       }
     ];
@@ -217,7 +254,7 @@
       const [activeTab, setActiveTab] = useState('dashboard');
       const [stockList, setStockList] = useState(INITIAL_STOCK);
       const [networkStockList] = useState(NETWORK_STOCK);
-      const [stockScope, setStockScope] = useState('local'); // 'local' | 'network'
+      const [stockScope, setStockScope] = useState('local');
       const [requestList, setRequestList] = useState([]);
       const [showRequestsModal, setShowRequestsModal] = useState(false);
 
@@ -226,7 +263,6 @@
       const [activeImageIdx, setActiveImageIdx] = useState(0);
       const [searchTerm, setSearchTerm] = useState('');
 
-      // Modal de Cadastro
       const [showCadastrarModal, setShowCadastrarModal] = useState(false);
       const [newPartName, setNewPartName] = useState('');
       const [newPartCode, setNewPartCode] = useState('');
@@ -235,7 +271,6 @@
       const [newPartImageUrl, setNewPartImageUrl] = useState('');
       const [newPartStatus, setNewPartStatus] = useState('Disponível');
 
-      // Câmera
       const [cameraActive, setCameraActive] = useState(false);
       const [cameraError, setCameraError] = useState('');
       const [isScanning, setIsScanning] = useState(false);
@@ -243,7 +278,6 @@
       const videoRef = useRef(null);
       const streamRef = useRef(null);
 
-      // Hub 3D
       const [printers] = useState([
         { id: '1', name: 'Impressora 3D #01 (Industrial PEEK)', status: 'Imprimindo', progress: 74, tempBed: '120°C', tempNozzle: '380°C', file: 'ALAVANCA_STR_425141.gcode' },
         { id: '2', name: 'Impressora 3D #02 (PA12-CF Heavy)', status: 'Disponível', progress: 100, tempBed: '25°C', tempNozzle: '25°C', file: 'Aguardando trabalho...' },
@@ -261,7 +295,7 @@
         setTimeout(() => setToastMessage(null), 3500);
       };
 
-      // 🔹 NOVO: SOLICITAR PEÇA DA REDE
+      // SOLICITAR PEÇA DA REDE
       const handleSolicitarPecaRede = (item) => {
         const newReq = {
           id: `REQ-${Math.floor(1000 + Math.random() * 9000)}`,
@@ -270,7 +304,9 @@
           fromUnit: item.unit,
           fromCity: item.unitCity,
           distance: item.distance,
-          status: 'Solicitado via Rede',
+          material: item.material,
+          printTime: item.printTime,
+          status: item.status === 'Sob Demanda - Hub 3D' ? 'Aguardando Impressão' : 'Solicitado via Rede',
           date: new Date().toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })
         };
         setRequestList(prev => [newReq, ...prev]);
@@ -278,7 +314,6 @@
         setSelectedNetworkPart(null);
       };
 
-      // 🔹 NOVO: CONTATAR UNIDADE
       const handleContatarUnidade = (item) => {
         triggerToast(`📞 ${item.contact.phone} • ${item.contact.email}`);
       };
@@ -418,13 +453,12 @@
               </nav>
             </div>
 
-            {/* 🔹 NOVO: STATUS DA REDE NO RODAPÉ */}
             <div className="p-4 border-t border-slate-800 bg-slate-950/50">
               <div className="flex items-center gap-2 text-xs text-slate-300 mb-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
                 <span className="font-bold">Rede IVECO Online</span>
               </div>
-              <p className="text-[10px] text-slate-500 mb-2">5 concessionárias conectadas</p>
+              <p className="text-[10px] text-slate-500 mb-2">6 hubs 3D conectados</p>
               <button
                 onClick={() => setShowRequestsModal(true)}
                 className="w-full text-[10px] bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30 font-bold py-2 rounded-lg transition flex items-center justify-center gap-1.5">
@@ -446,7 +480,6 @@
               </div>
               
               <div className="flex items-center gap-3 flex-wrap">
-                {/* 🔹 NOVO: BOTÃO DE SOLICITAÇÕES NO TOPO */}
                 <button
                   onClick={() => setShowRequestsModal(true)}
                   className="relative bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-2 border border-slate-700">
@@ -528,7 +561,7 @@
               </div>
             )}
 
-            {/* ESTOQUE DE PEÇAS — COM TOGGLE LOCAL / REDE */}
+            {/* ESTOQUE DE PEÇAS */}
             {activeTab === 'stock' && (
               <div className="space-y-6">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -536,7 +569,7 @@
                     <h3 className="text-lg font-bold text-white flex items-center gap-2">
                       <PackageCheck className="w-5 h-5 text-emerald-400" /> Catálogo de Componentes e Estoque
                     </h3>
-                    <p className="text-xs text-slate-400">Consulte o estoque local ou peça emprestado de outra unidade IVECO</p>
+                    <p className="text-xs text-slate-400">Consulte o estoque local ou solicite peças 3D de outros hubs IVECO</p>
                   </div>
 
                   <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
@@ -553,7 +586,7 @@
                   </div>
                 </div>
 
-                {/* 🔹 NOVO: TOGGLE LOCAL vs REDE */}
+                {/* TOGGLE LOCAL vs REDE */}
                 <div className="bg-slate-900 p-2 rounded-2xl border border-slate-800 flex items-center justify-between gap-2 flex-wrap">
                   <div className="flex items-center gap-2 bg-slate-950 p-1 rounded-xl border border-slate-800 flex-wrap">
                     <button
@@ -576,7 +609,7 @@
                           : 'text-slate-400 hover:text-white'
                       }`}>
                       <Network className="w-4 h-4" />
-                      <span>Rede IVECO Integrada</span>
+                      <span>Rede IVECO 3D</span>
                       <span className="bg-blue-500/30 px-2 py-0.5 rounded text-[10px] text-blue-200">{networkStockList.length}</span>
                     </button>
                   </div>
@@ -585,22 +618,22 @@
                     <div className="flex items-center gap-2 text-[10px] text-emerald-400 font-bold bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-lg">
                       <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                       <Wifi className="w-3 h-3" />
-                      5 unidades conectadas em tempo real
+                      6 hubs 3D em tempo real
                     </div>
                   )}
                 </div>
 
-                {/* 🔹 NOVO: BANNER INFORMATIVO NA REDE */}
+                {/* BANNER INFORMATIVO NA REDE */}
                 {stockScope === 'network' && (
                   <div className="bg-gradient-to-r from-blue-950/50 to-slate-900 border border-blue-500/20 rounded-2xl p-4 flex items-start gap-3">
                     <div className="bg-blue-500/20 p-2 rounded-xl shrink-0">
-                      <Share2 className="w-5 h-5 text-blue-400" />
+                      <Printer className="w-5 h-5 text-blue-400" />
                     </div>
                     <div className="space-y-1">
-                      <h3 className="text-xs font-bold text-blue-300">Estoque Compartilhado entre Concessionárias IVECO</h3>
+                      <h3 className="text-xs font-bold text-blue-300">🖨️ Rede IVECO de Manufatura Aditiva Compartilhada</h3>
                       <p className="text-[11px] text-slate-400 leading-relaxed">
-                        Peças disponíveis em outras unidades podem ser transferidas para sua oficina. 
-                        Clique em <strong className="text-blue-300">"Solicitar Transferência"</strong> e a logística da rede cuida do resto.
+                        Todas as peças abaixo são <strong className="text-blue-300">imprimíveis em 3D</strong> (PA12-CF, PEEK, TPU, PETG-CF, ABS).
+                        Se outra unidade tem a peça pronta em estoque ou pode imprimi-la sob demanda, solicite a transferência e a rede cuida da logística.
                       </p>
                     </div>
                   </div>
@@ -615,7 +648,8 @@
                           <img src={item.images[0]} alt={item.name} className="w-full h-full object-cover" />
                           <span className={`absolute top-2 right-2 text-[10px] font-extrabold px-2.5 py-1 rounded-full border shadow-lg ${
                             item.status === 'Disponível' ? 'bg-emerald-500 text-slate-950 border-emerald-300' : 
-                            item.status === 'Disponível na Rede' ? 'bg-blue-500 text-white border-blue-300' :
+                            item.status === 'Pronta na Prateleira 3D' ? 'bg-emerald-500 text-slate-950 border-emerald-300' :
+                            item.status === 'Sob Demanda - Hub 3D' ? 'bg-cyan-500 text-slate-950 border-cyan-300' :
                             'bg-amber-500 text-slate-950 border-amber-300'
                           }`}>
                             {item.status}
@@ -638,13 +672,33 @@
                             <p className="truncate"><strong className="text-slate-300">Local:</strong> {item.location}</p>
                           </div>
 
-                          {/* 🔹 NOVO: DISTÂNCIA/ENTREGA NA REDE */}
-                          {stockScope === 'network' && item.distance && (
-                            <div className="bg-slate-950 border border-slate-800 rounded-lg p-2 flex items-center gap-2 text-[10px] text-slate-400 mt-2">
-                              <Truck className="w-3 h-3 text-blue-400 shrink-0" />
-                              <span>Distância: <strong className="text-slate-200">{item.distance}</strong></span>
-                              <span className="text-slate-600">•</span>
-                              <span>Entrega: <strong className="text-slate-200">{item.deliveryEst}</strong></span>
+                          {/* 🔹 DADOS DE IMPRESSÃO 3D NA REDE */}
+                          {stockScope === 'network' && (
+                            <div className="bg-slate-950 border border-blue-500/20 rounded-xl p-2.5 space-y-1.5 mt-2">
+                              <div className="flex items-center justify-between text-[10px] gap-2">
+                                <span className="text-slate-500 flex items-center gap-1 shrink-0">
+                                  <Layers className="w-3 h-3 text-cyan-400" /> Material:
+                                </span>
+                                <span className="font-bold text-cyan-300 text-right truncate">{item.material}</span>
+                              </div>
+                              <div className="flex items-center justify-between text-[10px]">
+                                <span className="text-slate-500 flex items-center gap-1">
+                                  <Clock className="w-3 h-3 text-amber-400" /> Impressão:
+                                </span>
+                                <span className="font-bold text-amber-300">{item.printTime}</span>
+                              </div>
+                              <div className="flex items-center justify-between text-[10px]">
+                                <span className="text-slate-500 flex items-center gap-1">
+                                  <Box className="w-3 h-3 text-emerald-400" /> Peso / CO₂:
+                                </span>
+                                <span className="font-bold text-emerald-300">{item.weight} • {item.co2Saved}</span>
+                              </div>
+                              <div className="flex items-center gap-2 text-[10px] text-slate-400 pt-1.5 border-t border-slate-800">
+                                <Truck className="w-3 h-3 text-blue-400 shrink-0" />
+                                <span>{item.distance}</span>
+                                <span className="text-slate-600">•</span>
+                                <span>{item.deliveryEst}</span>
+                              </div>
                             </div>
                           )}
                         </div>
@@ -991,22 +1045,28 @@
             </div>
           )}
 
-          {/* 🔹 NOVO: MODAL DETALHES PEÇA DA REDE */}
+          {/* MODAL DETALHES PEÇA DA REDE */}
           {selectedNetworkPart && (
             <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto">
               <div className="bg-slate-900 border border-blue-500/30 rounded-3xl p-6 w-full max-w-2xl space-y-5 shadow-2xl">
                 <div className="flex justify-between items-center border-b border-slate-800 pb-3">
                   <div className="flex items-center gap-2">
                     <span className="text-[10px] font-bold bg-blue-500/10 text-blue-400 border border-blue-500/30 px-2.5 py-0.5 rounded-full flex items-center gap-1">
-                      <Network className="w-3 h-3" /> Rede IVECO
+                      <Network className="w-3 h-3" /> Rede IVECO 3D
                     </span>
-                    <h3 className="text-sm font-extrabold text-white">Peça em Outra Unidade</h3>
+                    <h3 className="text-sm font-extrabold text-white">Peça em Outro Hub 3D</h3>
                   </div>
                   <button onClick={() => setSelectedNetworkPart(null)} className="text-slate-400 hover:text-white font-bold text-xs bg-slate-800 px-3 py-1.5 rounded-lg">Fechar [X]</button>
                 </div>
 
                 <div className="relative aspect-video bg-slate-950 rounded-2xl overflow-hidden border border-slate-800">
                   <img src={selectedNetworkPart.images[0]} alt={selectedNetworkPart.name} className="w-full h-full object-cover" />
+                  <span className={`absolute top-3 right-3 text-[10px] font-extrabold px-2.5 py-1 rounded-full border shadow-lg ${
+                    selectedNetworkPart.status === 'Pronta na Prateleira 3D' ? 'bg-emerald-500 text-slate-950 border-emerald-300' :
+                    'bg-cyan-500 text-slate-950 border-cyan-300'
+                  }`}>
+                    {selectedNetworkPart.status}
+                  </span>
                 </div>
 
                 <div className="bg-slate-950 rounded-2xl p-4 border border-slate-800 space-y-3 text-xs">
@@ -1036,6 +1096,32 @@
                     </div>
                   </div>
 
+                  {/* DADOS DE MANUFATURA ADITIVA */}
+                  <div className="bg-gradient-to-br from-cyan-950/40 to-slate-950 border border-cyan-500/20 rounded-xl p-3 space-y-2">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Printer className="w-3.5 h-3.5 text-cyan-400" />
+                      <span className="text-[10px] font-bold text-cyan-300 uppercase">Dados de Manufatura Aditiva</span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2 text-[10px]">
+                      <div>
+                        <span className="text-slate-500 block">Material</span>
+                        <span className="font-bold text-cyan-300">{selectedNetworkPart.material}</span>
+                      </div>
+                      <div>
+                        <span className="text-slate-500 block">Tempo de Impressão</span>
+                        <span className="font-bold text-amber-300">{selectedNetworkPart.printTime}</span>
+                      </div>
+                      <div>
+                        <span className="text-slate-500 block">Peso</span>
+                        <span className="font-bold text-slate-200">{selectedNetworkPart.weight}</span>
+                      </div>
+                      <div>
+                        <span className="text-slate-500 block">CO₂ Evitado</span>
+                        <span className="font-bold text-emerald-300">{selectedNetworkPart.co2Saved}</span>
+                      </div>
+                    </div>
+                  </div>
+
                   <div className="bg-blue-950/30 border border-blue-500/20 rounded-xl p-3 space-y-2">
                     <span className="text-[10px] font-bold text-blue-300 uppercase">Contato da Unidade</span>
                     <div className="flex items-center gap-2 text-slate-300">
@@ -1061,14 +1147,14 @@
             </div>
           )}
 
-          {/* 🔹 NOVO: MODAL DE SOLICITAÇÕES */}
+          {/* MODAL DE SOLICITAÇÕES */}
           {showRequestsModal && (
             <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto">
               <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 w-full max-w-2xl space-y-5 shadow-2xl">
                 <div className="flex justify-between items-center border-b border-slate-800 pb-3">
                   <div className="flex items-center gap-2">
                     <Truck className="w-5 h-5 text-blue-400" />
-                    <h3 className="text-sm font-extrabold text-white">Minhas Solicitações à Rede IVECO</h3>
+                    <h3 className="text-sm font-extrabold text-white">Minhas Solicitações à Rede IVECO 3D</h3>
                   </div>
                   <button onClick={() => setShowRequestsModal(false)} className="text-slate-400 hover:text-white font-bold text-xs bg-slate-800 px-3 py-1.5 rounded-lg">Fechar [X]</button>
                 </div>
@@ -1077,7 +1163,7 @@
                   <div className="text-center py-12 space-y-3">
                     <Truck className="w-12 h-12 text-slate-700 mx-auto" />
                     <p className="text-xs text-slate-400">Nenhuma solicitação feita ainda.</p>
-                    <p className="text-[10px] text-slate-500">Vá em "Estoque de Peças" → "Rede IVECO Integrada" e solicite uma transferência.</p>
+                    <p className="text-[10px] text-slate-500">Vá em "Estoque de Peças" → "Rede IVECO 3D" e solicite uma transferência.</p>
                   </div>
                 ) : (
                   <div className="space-y-3 max-h-[500px] overflow-y-auto">
@@ -1089,7 +1175,11 @@
                             <h4 className="font-bold text-xs text-white mt-0.5">{req.part}</h4>
                             <p className="text-[10px] font-mono text-slate-500">Cód: {req.code}</p>
                           </div>
-                          <span className="bg-amber-500/10 text-amber-400 border border-amber-500/30 text-[10px] font-bold px-2.5 py-1 rounded-full">
+                          <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border ${
+                            req.status === 'Aguardando Impressão' 
+                              ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30'
+                              : 'bg-amber-500/10 text-amber-400 border-amber-500/30'
+                          }`}>
                             {req.status}
                           </span>
                         </div>
@@ -1104,6 +1194,11 @@
                             <span className="text-slate-500 block">Distância</span>
                             <span className="font-bold text-slate-200">{req.distance}</span>
                             <p className="text-slate-500">Solicitado em {req.date}</p>
+                          </div>
+                          <div className="col-span-2">
+                            <span className="text-slate-500 block">Manufatura</span>
+                            <span className="font-bold text-cyan-300">{req.material}</span>
+                            <p className="text-slate-500">Tempo de impressão: {req.printTime}</p>
                           </div>
                         </div>
                       </div>
